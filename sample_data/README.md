@@ -60,11 +60,11 @@ Tracks real-world outcomes, network ripple effects, and feedback for model tunin
 
 ```mermaid
 flowchart TD
-    %% Styling
-    classDef source fill:#f2f0eb,stroke:#333,stroke-width:1px;
-    classDef g_rel fill:#e6eed6,stroke:#2b542c,stroke-width:2px;
-    classDef agent fill:#fbeeb8,stroke:#b8860b,stroke-width:2px;
-    classDef outcome fill:#d6e4ee,stroke:#1034a6,stroke-width:2px;
+    %% Styling (Forces black text inside your custom pastel backgrounds)
+    classDef source fill:#f2f0eb,stroke:#333,stroke-width:1px,color:#000;
+    classDef g_rel fill:#e6eed6,stroke:#2b542c,stroke-width:2px,color:#000;
+    classDef agent fill:#fbeeb8,stroke:#b8860b,stroke-width:2px,color:#000;
+    classDef outcome fill:#d6e4ee,stroke:#1034a6,stroke-width:2px,color:#000;
 
     %% Nodes
     A[01: MSME Profiles]:::source
@@ -88,7 +88,11 @@ flowchart TD
     G --> H
     H --> I
     H --> J
+
+    %% Link Styling (Forces arrows to stay visible on dark/light themes)
+    linkStyle default stroke:#888,stroke-width:2px;
 ```
+
 ---
 
 ## Prototype UI Mapping
