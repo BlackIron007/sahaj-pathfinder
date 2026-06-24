@@ -1,0 +1,81 @@
+outreach_id,opportunity_id,route_used,outreach_date,channel,status
+OUT001,OP037,Advisor,2026-06-28,Email,Responded
+OUT002,OP015,Advisor,2026-06-09,RM Visit,Opened
+OUT003,OP033,Transaction,2026-06-28,RM Visit,Sent
+OUT004,OP031,Advisor,2026-06-21,Email,Responded
+OUT005,OP001,Advisor,2026-06-09,RM Visit,Opened
+OUT006,OP046,Anchor,2026-06-14,Call,Opened
+OUT007,OP030,Anchor,2026-06-07,Call,Opened
+OUT008,OP044,Direct,2026-06-19,Email,Sent
+OUT009,OP033,Anchor,2026-06-18,RM Visit,Responded
+OUT010,OP039,Anchor,2026-06-10,RM Visit,Sent
+OUT011,OP031,Transaction,2026-06-11,Call,Responded
+OUT012,OP021,Anchor,2026-06-09,RM Visit,Responded
+OUT013,OP042,Anchor,2026-06-07,Email,Responded
+OUT014,OP049,Advisor,2026-06-02,RM Visit,Opened
+OUT015,OP043,Anchor,2026-06-22,Email,Responded
+OUT016,OP002,Direct,2026-06-10,Call,Opened
+OUT017,OP026,Direct,2026-06-24,Email,Responded
+OUT018,OP046,Advisor,2026-06-11,RM Visit,Responded
+OUT019,OP015,Direct,2026-06-22,Call,Responded
+OUT020,OP020,Advisor,2026-06-27,RM Visit,Responded
+OUT021,OP012,Anchor,2026-06-04,Call,Sent
+OUT022,OP048,Anchor,2026-06-24,RM Visit,Sent
+OUT023,OP044,Anchor,2026-06-21,Email,Sent
+OUT024,OP023,Advisor,2026-06-24,Call,Opened
+OUT025,OP022,Anchor,2026-06-09,RM Visit,Opened
+OUT026,OP030,Transaction,2026-06-16,Email,Responded
+OUT027,OP038,Transaction,2026-06-16,Email,Responded
+OUT028,OP008,Direct,2026-06-17,Call,Opened
+OUT029,OP004,Advisor,2026-06-05,Email,Opened
+OUT030,OP027,Direct,2026-06-05,Call,Responded
+OUT031,OP012,Transaction,2026-06-16,Call,Responded
+OUT032,OP012,Anchor,2026-06-21,Email,Sent
+OUT033,OP029,Anchor,2026-06-07,Email,Responded
+OUT034,OP049,Advisor,2026-06-16,Email,Sent
+OUT035,OP040,Direct,2026-06-21,Call,Opened
+OUT036,OP028,Direct,2026-06-13,Email,Sent
+OUT037,OP035,Advisor,2026-06-24,Call,Sent
+OUT038,OP021,Advisor,2026-06-01,RM Visit,Sent
+OUT039,OP041,Advisor,2026-06-08,RM Visit,Opened
+OUT040,OP020,Advisor,2026-06-04,Call,Responded
+OUT041,OP038,Anchor,2026-06-06,Email,Sent
+OUT042,OP020,Anchor,2026-06-15,RM Visit,Responded
+OUT043,OP039,Anchor,2026-06-14,RM Visit,Sent
+OUT044,OP022,Direct,2026-06-12,Email,Sent
+OUT045,OP026,Transaction,2026-06-08,Email,Responded
+OUT046,OP009,Advisor,2026-06-24,Email,Responded
+OUT047,OP033,Advisor,2026-06-04,Call,Responded
+OUT048,OP042,Transaction,2026-06-13,RM Visit,Opened
+OUT049,OP050,Transaction,2026-06-20,Email,Responded
+OUT050,OP007,Transaction,2026-06-02,RM Visit,Sent
+OUT051,OP027,Direct,2026-06-13,Email,Responded
+OUT052,OP017,Direct,2026-06-23,Email,Sent
+OUT053,OP045,Transaction,2026-06-10,Call,Responded
+OUT054,OP007,Anchor,2026-06-20,RM Visit,Responded
+OUT055,OP009,Direct,2026-06-27,Email,Responded
+OUT056,OP047,Transaction,2026-06-10,Email,Sent
+OUT057,OP032,Advisor,2026-06-20,Email,Opened
+OUT058,OP034,Advisor,2026-06-12,RM Visit,Opened
+OUT059,OP019,Advisor,2026-06-02,RM Visit,Opened
+OUT060,OP014,Direct,2026-06-11,Email,Sent
+OUT061,OP001,Transaction,2026-06-04,RM Visit,Responded
+OUT062,OP032,Advisor,2026-06-03,RM Visit,Sent
+OUT063,OP047,Transaction,2026-06-09,RM Visit,Sent
+OUT064,OP030,Anchor,2026-06-09,Call,Sent
+OUT065,OP007,Advisor,2026-06-28,Email,Opened
+OUT066,OP024,Anchor,2026-06-14,RM Visit,Sent
+OUT067,OP007,Transaction,2026-06-01,Email,Responded
+OUT068,OP042,Advisor,2026-06-11,Call,Opened
+OUT069,OP040,Anchor,2026-06-24,Email,Opened
+OUT070,OP022,Advisor,2026-06-04,Call,Opened
+OUT071,OP030,Anchor,2026-06-27,Call,Responded
+OUT072,OP031,Direct,2026-06-21,Email,Sent
+OUT073,OP009,Transaction,2026-06-28,Email,Sent
+OUT074,OP027,Direct,2026-06-26,RM Visit,Responded
+OUT075,OP029,Advisor,2026-06-20,Call,Opened
+OUT076,OP040,Transaction,2026-06-28,RM Visit,Responded
+OUT077,OP009,Direct,2026-06-16,Email,Opened
+OUT078,OP029,Transaction,2026-06-03,Call,Responded
+OUT079,OP021,Transaction,2026-06-23,RM Visit,Responded
+OUT080,OP050,Advisor,2026-06-22,Call,Responded

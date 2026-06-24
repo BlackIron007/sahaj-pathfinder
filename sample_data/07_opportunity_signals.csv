@@ -1,0 +1,201 @@
+signal_id,opportunity_id,signal_name,severity,signal_score
+SIG0001,OP001,Working Capital Stress,High,85
+SIG0002,OP001,Anchor Relationship,High,88
+SIG0003,OP001,Advisor Dependence,High,69
+SIG0004,OP001,Digital Readiness,Medium,45
+SIG0005,OP002,Working Capital Stress,High,47
+SIG0006,OP002,Anchor Relationship,High,50
+SIG0007,OP002,Advisor Dependence,Strong,74
+SIG0008,OP002,Digital Readiness,Low,51
+SIG0009,OP003,Working Capital Stress,Low,46
+SIG0010,OP003,Anchor Relationship,Low,45
+SIG0011,OP003,Advisor Dependence,High,72
+SIG0012,OP003,Digital Readiness,Strong,64
+SIG0013,OP004,Working Capital Stress,High,63
+SIG0014,OP004,Anchor Relationship,High,93
+SIG0015,OP004,Advisor Dependence,Strong,95
+SIG0016,OP004,Digital Readiness,Low,37
+SIG0017,OP005,Working Capital Stress,Strong,51
+SIG0018,OP005,Anchor Relationship,Low,50
+SIG0019,OP005,Advisor Dependence,Low,43
+SIG0020,OP005,Digital Readiness,High,59
+SIG0021,OP006,Working Capital Stress,High,35
+SIG0022,OP006,Anchor Relationship,High,61
+SIG0023,OP006,Advisor Dependence,High,90
+SIG0024,OP006,Digital Readiness,Low,79
+SIG0025,OP007,Working Capital Stress,Medium,52
+SIG0026,OP007,Anchor Relationship,High,83
+SIG0027,OP007,Advisor Dependence,Medium,71
+SIG0028,OP007,Digital Readiness,Medium,83
+SIG0029,OP008,Working Capital Stress,Low,64
+SIG0030,OP008,Anchor Relationship,High,77
+SIG0031,OP008,Advisor Dependence,High,94
+SIG0032,OP008,Digital Readiness,High,52
+SIG0033,OP009,Working Capital Stress,Medium,35
+SIG0034,OP009,Anchor Relationship,Strong,38
+SIG0035,OP009,Advisor Dependence,Strong,66
+SIG0036,OP009,Digital Readiness,Low,71
+SIG0037,OP010,Working Capital Stress,High,88
+SIG0038,OP010,Anchor Relationship,High,77
+SIG0039,OP010,Advisor Dependence,Medium,67
+SIG0040,OP010,Digital Readiness,Low,61
+SIG0041,OP011,Working Capital Stress,Strong,77
+SIG0042,OP011,Anchor Relationship,Strong,55
+SIG0043,OP011,Advisor Dependence,Medium,49
+SIG0044,OP011,Digital Readiness,High,82
+SIG0045,OP012,Working Capital Stress,High,59
+SIG0046,OP012,Anchor Relationship,Low,31
+SIG0047,OP012,Advisor Dependence,Low,30
+SIG0048,OP012,Digital Readiness,Strong,69
+SIG0049,OP013,Working Capital Stress,High,56
+SIG0050,OP013,Anchor Relationship,Medium,83
+SIG0051,OP013,Advisor Dependence,Strong,37
+SIG0052,OP013,Digital Readiness,Medium,65
+SIG0053,OP014,Working Capital Stress,High,35
+SIG0054,OP014,Anchor Relationship,Medium,82
+SIG0055,OP014,Advisor Dependence,Low,88
+SIG0056,OP014,Digital Readiness,High,42
+SIG0057,OP015,Working Capital Stress,Medium,80
+SIG0058,OP015,Anchor Relationship,High,37
+SIG0059,OP015,Advisor Dependence,Strong,46
+SIG0060,OP015,Digital Readiness,Medium,67
+SIG0061,OP016,Working Capital Stress,Low,70
+SIG0062,OP016,Anchor Relationship,Strong,71
+SIG0063,OP016,Advisor Dependence,Low,87
+SIG0064,OP016,Digital Readiness,Low,59
+SIG0065,OP017,Working Capital Stress,High,55
+SIG0066,OP017,Anchor Relationship,Medium,43
+SIG0067,OP017,Advisor Dependence,Medium,43
+SIG0068,OP017,Digital Readiness,Medium,87
+SIG0069,OP018,Working Capital Stress,Strong,70
+SIG0070,OP018,Anchor Relationship,Strong,45
+SIG0071,OP018,Advisor Dependence,Low,56
+SIG0072,OP018,Digital Readiness,Strong,69
+SIG0073,OP019,Working Capital Stress,Strong,63
+SIG0074,OP019,Anchor Relationship,High,41
+SIG0075,OP019,Advisor Dependence,Medium,68
+SIG0076,OP019,Digital Readiness,High,57
+SIG0077,OP020,Working Capital Stress,Low,48
+SIG0078,OP020,Anchor Relationship,High,61
+SIG0079,OP020,Advisor Dependence,Low,80
+SIG0080,OP020,Digital Readiness,High,68
+SIG0081,OP021,Working Capital Stress,Low,52
+SIG0082,OP021,Anchor Relationship,High,81
+SIG0083,OP021,Advisor Dependence,Strong,61
+SIG0084,OP021,Digital Readiness,High,89
+SIG0085,OP022,Working Capital Stress,High,47
+SIG0086,OP022,Anchor Relationship,High,31
+SIG0087,OP022,Advisor Dependence,High,58
+SIG0088,OP022,Digital Readiness,Medium,55
+SIG0089,OP023,Working Capital Stress,Strong,77
+SIG0090,OP023,Anchor Relationship,High,63
+SIG0091,OP023,Advisor Dependence,High,32
+SIG0092,OP023,Digital Readiness,High,55
+SIG0093,OP024,Working Capital Stress,Strong,46
+SIG0094,OP024,Anchor Relationship,High,72
+SIG0095,OP024,Advisor Dependence,High,35
+SIG0096,OP024,Digital Readiness,Strong,36
+SIG0097,OP025,Working Capital Stress,Medium,85
+SIG0098,OP025,Anchor Relationship,Strong,93
+SIG0099,OP025,Advisor Dependence,High,78
+SIG0100,OP025,Digital Readiness,Strong,52
+SIG0101,OP026,Working Capital Stress,Low,57
+SIG0102,OP026,Anchor Relationship,Medium,65
+SIG0103,OP026,Advisor Dependence,Low,87
+SIG0104,OP026,Digital Readiness,Medium,34
+SIG0105,OP027,Working Capital Stress,Medium,67
+SIG0106,OP027,Anchor Relationship,Strong,82
+SIG0107,OP027,Advisor Dependence,Strong,37
+SIG0108,OP027,Digital Readiness,High,65
+SIG0109,OP028,Working Capital Stress,Strong,47
+SIG0110,OP028,Anchor Relationship,Strong,55
+SIG0111,OP028,Advisor Dependence,Medium,32
+SIG0112,OP028,Digital Readiness,Strong,75
+SIG0113,OP029,Working Capital Stress,Strong,92
+SIG0114,OP029,Anchor Relationship,Low,94
+SIG0115,OP029,Advisor Dependence,Low,79
+SIG0116,OP029,Digital Readiness,Low,53
+SIG0117,OP030,Working Capital Stress,High,70
+SIG0118,OP030,Anchor Relationship,Medium,33
+SIG0119,OP030,Advisor Dependence,Low,37
+SIG0120,OP030,Digital Readiness,Strong,75
+SIG0121,OP031,Working Capital Stress,Medium,50
+SIG0122,OP031,Anchor Relationship,High,61
+SIG0123,OP031,Advisor Dependence,Medium,64
+SIG0124,OP031,Digital Readiness,High,58
+SIG0125,OP032,Working Capital Stress,Strong,75
+SIG0126,OP032,Anchor Relationship,Medium,52
+SIG0127,OP032,Advisor Dependence,Medium,70
+SIG0128,OP032,Digital Readiness,Low,33
+SIG0129,OP033,Working Capital Stress,Low,48
+SIG0130,OP033,Anchor Relationship,Medium,93
+SIG0131,OP033,Advisor Dependence,Low,52
+SIG0132,OP033,Digital Readiness,Strong,34
+SIG0133,OP034,Working Capital Stress,High,37
+SIG0134,OP034,Anchor Relationship,Medium,58
+SIG0135,OP034,Advisor Dependence,High,91
+SIG0136,OP034,Digital Readiness,High,72
+SIG0137,OP035,Working Capital Stress,Medium,46
+SIG0138,OP035,Anchor Relationship,Low,52
+SIG0139,OP035,Advisor Dependence,Low,37
+SIG0140,OP035,Digital Readiness,High,48
+SIG0141,OP036,Working Capital Stress,Medium,44
+SIG0142,OP036,Anchor Relationship,Low,39
+SIG0143,OP036,Advisor Dependence,Low,80
+SIG0144,OP036,Digital Readiness,High,73
+SIG0145,OP037,Working Capital Stress,Low,71
+SIG0146,OP037,Anchor Relationship,Medium,50
+SIG0147,OP037,Advisor Dependence,Strong,92
+SIG0148,OP037,Digital Readiness,Low,52
+SIG0149,OP038,Working Capital Stress,Low,58
+SIG0150,OP038,Anchor Relationship,Medium,78
+SIG0151,OP038,Advisor Dependence,Low,67
+SIG0152,OP038,Digital Readiness,Medium,52
+SIG0153,OP039,Working Capital Stress,High,80
+SIG0154,OP039,Anchor Relationship,High,53
+SIG0155,OP039,Advisor Dependence,Low,58
+SIG0156,OP039,Digital Readiness,High,93
+SIG0157,OP040,Working Capital Stress,Medium,72
+SIG0158,OP040,Anchor Relationship,High,60
+SIG0159,OP040,Advisor Dependence,Low,70
+SIG0160,OP040,Digital Readiness,Medium,41
+SIG0161,OP041,Working Capital Stress,Low,87
+SIG0162,OP041,Anchor Relationship,High,63
+SIG0163,OP041,Advisor Dependence,Medium,61
+SIG0164,OP041,Digital Readiness,High,74
+SIG0165,OP042,Working Capital Stress,Low,43
+SIG0166,OP042,Anchor Relationship,High,36
+SIG0167,OP042,Advisor Dependence,Strong,86
+SIG0168,OP042,Digital Readiness,Strong,51
+SIG0169,OP043,Working Capital Stress,Strong,93
+SIG0170,OP043,Anchor Relationship,Strong,74
+SIG0171,OP043,Advisor Dependence,Strong,42
+SIG0172,OP043,Digital Readiness,Strong,58
+SIG0173,OP044,Working Capital Stress,Medium,87
+SIG0174,OP044,Anchor Relationship,High,34
+SIG0175,OP044,Advisor Dependence,Low,32
+SIG0176,OP044,Digital Readiness,Low,63
+SIG0177,OP045,Working Capital Stress,High,39
+SIG0178,OP045,Anchor Relationship,Low,51
+SIG0179,OP045,Advisor Dependence,Strong,50
+SIG0180,OP045,Digital Readiness,High,41
+SIG0181,OP046,Working Capital Stress,Low,91
+SIG0182,OP046,Anchor Relationship,High,85
+SIG0183,OP046,Advisor Dependence,Medium,85
+SIG0184,OP046,Digital Readiness,Medium,36
+SIG0185,OP047,Working Capital Stress,High,72
+SIG0186,OP047,Anchor Relationship,Medium,54
+SIG0187,OP047,Advisor Dependence,Strong,63
+SIG0188,OP047,Digital Readiness,Low,68
+SIG0189,OP048,Working Capital Stress,Medium,42
+SIG0190,OP048,Anchor Relationship,High,80
+SIG0191,OP048,Advisor Dependence,Strong,49
+SIG0192,OP048,Digital Readiness,High,76
+SIG0193,OP049,Working Capital Stress,High,84
+SIG0194,OP049,Anchor Relationship,High,67
+SIG0195,OP049,Advisor Dependence,Strong,55
+SIG0196,OP049,Digital Readiness,High,33
+SIG0197,OP050,Working Capital Stress,Medium,51
+SIG0198,OP050,Anchor Relationship,Low,40
+SIG0199,OP050,Advisor Dependence,Strong,44
+SIG0200,OP050,Digital Readiness,Low,80

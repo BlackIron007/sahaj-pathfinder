@@ -1,0 +1,51 @@
+opportunity_id,msme_id,identified_date,opportunity_value_lakh,priority,recommended_route,conversion_probability,time_to_engage
+OP001,M001,2026-06-05,30,High,Advisor,91,7 Days
+OP002,M002,2026-06-05,24,Low,Anchor,65,7 Days
+OP003,M003,2026-06-05,14,Low,Anchor,72,30 Days
+OP004,M004,2026-06-05,9,Medium,Transaction,58,7 Days
+OP005,M005,2026-06-05,27,High,Advisor,70,Immediate
+OP006,M006,2026-06-05,12,Low,Anchor,80,7 Days
+OP007,M007,2026-06-05,23,Low,Advisor,72,30 Days
+OP008,M008,2026-06-05,17,Medium,Direct,59,30 Days
+OP009,M009,2026-06-05,17,Low,Transaction,72,30 Days
+OP010,M010,2026-06-05,19,Medium,Anchor,75,30 Days
+OP011,M011,2026-06-05,29,Low,Transaction,60,30 Days
+OP012,M012,2026-06-05,25,Low,Direct,77,Immediate
+OP013,M013,2026-06-05,11,Medium,Direct,68,7 Days
+OP014,M014,2026-06-05,15,Medium,Anchor,76,30 Days
+OP015,M015,2026-06-05,23,Medium,Advisor,76,30 Days
+OP016,M016,2026-06-05,6,High,Transaction,95,7 Days
+OP017,M017,2026-06-05,8,High,Transaction,83,7 Days
+OP018,M018,2026-06-05,18,High,Transaction,63,30 Days
+OP019,M019,2026-06-05,10,Medium,Anchor,60,30 Days
+OP020,M020,2026-06-05,13,High,Anchor,78,30 Days
+OP021,M021,2026-06-05,6,Medium,Advisor,95,7 Days
+OP022,M022,2026-06-05,18,Low,Advisor,60,30 Days
+OP023,M023,2026-06-05,5,High,Transaction,85,Immediate
+OP024,M024,2026-06-05,23,High,Advisor,88,30 Days
+OP025,M025,2026-06-05,5,High,Direct,76,Immediate
+OP026,M026,2026-06-05,27,High,Direct,85,Immediate
+OP027,M027,2026-06-05,17,High,Advisor,61,Immediate
+OP028,M028,2026-06-05,16,Medium,Anchor,63,7 Days
+OP029,M029,2026-06-05,25,Low,Advisor,64,Immediate
+OP030,M030,2026-06-05,24,Low,Transaction,65,7 Days
+OP031,M031,2026-06-05,28,High,Anchor,95,30 Days
+OP032,M032,2026-06-05,18,Low,Advisor,83,Immediate
+OP033,M033,2026-06-05,8,High,Transaction,62,30 Days
+OP034,M034,2026-06-05,16,Medium,Direct,75,Immediate
+OP035,M035,2026-06-05,13,Low,Advisor,60,Immediate
+OP036,M036,2026-06-05,29,Low,Anchor,56,30 Days
+OP037,M037,2026-06-05,11,Low,Anchor,93,30 Days
+OP038,M038,2026-06-05,28,Medium,Advisor,73,30 Days
+OP039,M039,2026-06-05,30,High,Transaction,86,7 Days
+OP040,M040,2026-06-05,12,Medium,Transaction,95,30 Days
+OP041,M041,2026-06-05,21,High,Transaction,78,7 Days
+OP042,M042,2026-06-05,17,Low,Advisor,81,7 Days
+OP043,M043,2026-06-05,29,Medium,Advisor,59,Immediate
+OP044,M044,2026-06-05,5,Medium,Transaction,68,Immediate
+OP045,M045,2026-06-05,30,Medium,Transaction,87,7 Days
+OP046,M046,2026-06-05,18,Low,Direct,80,Immediate
+OP047,M047,2026-06-05,13,High,Advisor,74,Immediate
+OP048,M048,2026-06-05,30,High,Advisor,89,7 Days
+OP049,M049,2026-06-05,23,Low,Direct,59,7 Days
+OP050,M050,2026-06-05,28,High,Direct,58,Immediate

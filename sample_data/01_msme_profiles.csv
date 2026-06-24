@@ -1,0 +1,51 @@
+msme_id,company_name,industry,city,state,annual_turnover_cr,employee_count,digital_readiness_score,existing_sbi_customer,customer_since,gst_registered,udyam_registered
+M001,Precision Chemicals Pvt Ltd,Auto Components,Surat,Gujarat,19.6,208,36,Yes,2021-01-01,Yes,Yes
+M002,Precision Components Pvt Ltd,Auto Components,Ahmedabad,Gujarat,20.1,174,31,Yes,2021-01-01,Yes,Yes
+M003,Dynamic Engineering Pvt Ltd,Engineering,Chennai,Tamil Nadu,38.6,227,85,Yes,2021-01-01,Yes,Yes
+M004,Dynamic Logistics Pvt Ltd,Pharma,Mumbai,Maharashtra,16.1,215,51,Yes,,Yes,Yes
+M005,Zenith Logistics Pvt Ltd,Pharma,Surat,Gujarat,50.0,206,59,Yes,2021-01-01,Yes,Yes
+M006,Metro Solutions Pvt Ltd,Pharma,Bengaluru,Karnataka,51.1,178,86,No,2021-01-01,Yes,Yes
+M007,Tara Engineering Pvt Ltd,Pharma,Surat,Gujarat,59.2,238,44,Yes,,Yes,Yes
+M008,Zenith Packaging Pvt Ltd,Chemicals,Hyderabad,Telangana,26.5,191,47,Yes,2021-01-01,Yes,Yes
+M009,Vikas Engineering Pvt Ltd,Logistics,Mumbai,Maharashtra,32.0,89,89,Yes,2021-01-01,Yes,Yes
+M010,Surya Industries Pvt Ltd,Chemicals,Ahmedabad,Gujarat,28.9,36,43,No,,Yes,Yes
+M011,Prime Works Pvt Ltd,Logistics,Hyderabad,Telangana,21.8,83,77,No,2021-01-01,Yes,Yes
+M012,Om Textiles Pvt Ltd,Chemicals,Bengaluru,Karnataka,19.4,55,62,No,,Yes,Yes
+M013,Apex Packaging Pvt Ltd,Logistics,Ahmedabad,Gujarat,49.2,128,68,Yes,,Yes,Yes
+M014,Arjun Chemicals Pvt Ltd,Distribution,Hyderabad,Telangana,52.8,22,73,Yes,2021-01-01,Yes,Yes
+M015,Vardhan Logistics Pvt Ltd,Textiles,Chennai,Tamil Nadu,23.3,60,59,Yes,2021-01-01,Yes,Yes
+M016,Arjun Packaging Pvt Ltd,Distribution,Jaipur,Rajasthan,55.5,242,70,No,2021-01-01,Yes,Yes
+M017,Galaxy Engineering Pvt Ltd,Logistics,Chennai,Tamil Nadu,27.4,61,64,Yes,2021-01-01,Yes,Yes
+M018,Precision Components Pvt Ltd,Chemicals,Hyderabad,Telangana,53.7,232,81,No,,Yes,Yes
+M019,Om Components Pvt Ltd,Textiles,Pune,Maharashtra,46.1,228,34,Yes,,Yes,Yes
+M020,Vikas Packaging Pvt Ltd,Pharma,Hyderabad,Telangana,35.4,175,57,Yes,2021-01-01,Yes,Yes
+M021,Shakti Textiles Pvt Ltd,Chemicals,Pune,Maharashtra,30.8,152,58,Yes,,Yes,Yes
+M022,Nova Industries Pvt Ltd,Distribution,Surat,Gujarat,20.0,76,30,Yes,2021-01-01,Yes,Yes
+M023,Surya Components Pvt Ltd,Manufacturing,Ahmedabad,Gujarat,52.7,38,62,Yes,,Yes,Yes
+M024,Narmada Solutions Pvt Ltd,Logistics,Hyderabad,Telangana,45.6,245,66,No,,Yes,Yes
+M025,Dynamic Engineering Pvt Ltd,Textiles,Hyderabad,Telangana,13.0,130,52,No,,Yes,Yes
+M026,Apex Industries Pvt Ltd,Packaging,Ahmedabad,Gujarat,45.9,224,85,Yes,,Yes,Yes
+M027,Vikas Works Pvt Ltd,Logistics,Pune,Maharashtra,29.9,91,59,Yes,2021-01-01,Yes,Yes
+M028,Elite Solutions Pvt Ltd,Textiles,Surat,Gujarat,10.6,158,83,Yes,2021-01-01,Yes,Yes
+M029,Rudra Textiles Pvt Ltd,Engineering,Pune,Maharashtra,33.0,241,55,Yes,,Yes,Yes
+M030,Prime Chemicals Pvt Ltd,Engineering,Ahmedabad,Gujarat,22.8,198,76,No,,Yes,Yes
+M031,Narmada Industries Pvt Ltd,Distribution,Jaipur,Rajasthan,11.2,100,33,Yes,2021-01-01,Yes,Yes
+M032,Arjun Packaging Pvt Ltd,Manufacturing,Chennai,Tamil Nadu,58.0,40,84,Yes,,Yes,Yes
+M033,Surya Textiles Pvt Ltd,Textiles,Surat,Gujarat,57.0,165,45,Yes,2021-01-01,Yes,Yes
+M034,Om Traders Pvt Ltd,Distribution,Bengaluru,Karnataka,24.5,86,43,No,,Yes,Yes
+M035,Pragati Chemicals Pvt Ltd,Engineering,Bengaluru,Karnataka,24.4,212,89,Yes,,Yes,Yes
+M036,Metro Solutions Pvt Ltd,Auto Components,Surat,Gujarat,34.3,53,89,No,2021-01-01,Yes,Yes
+M037,Zenith Chemicals Pvt Ltd,Logistics,Pune,Maharashtra,30.8,159,75,No,2021-01-01,Yes,Yes
+M038,Precision Solutions Pvt Ltd,Pharma,Chennai,Tamil Nadu,56.5,46,90,Yes,,Yes,Yes
+M039,Vikas Packaging Pvt Ltd,Pharma,Surat,Gujarat,22.7,73,75,No,,Yes,Yes
+M040,Arjun Works Pvt Ltd,Pharma,Jaipur,Rajasthan,55.1,236,33,Yes,2021-01-01,Yes,Yes
+M041,Tara Industries Pvt Ltd,Chemicals,Jaipur,Rajasthan,48.1,183,46,Yes,2021-01-01,Yes,Yes
+M042,Dynamic Solutions Pvt Ltd,Manufacturing,Chennai,Tamil Nadu,13.8,246,74,Yes,2021-01-01,Yes,Yes
+M043,Om Solutions Pvt Ltd,Logistics,Indore,Madhya Pradesh,30.3,30,49,No,2021-01-01,Yes,Yes
+M044,Zenith Engineering Pvt Ltd,Auto Components,Ahmedabad,Gujarat,42.7,110,79,No,2021-01-01,Yes,Yes
+M045,Surya Packaging Pvt Ltd,Logistics,Mumbai,Maharashtra,53.8,26,41,No,2021-01-01,Yes,Yes
+M046,Surya Chemicals Pvt Ltd,Logistics,Bengaluru,Karnataka,48.9,47,54,Yes,2021-01-01,Yes,Yes
+M047,Narmada Works Pvt Ltd,Chemicals,Pune,Maharashtra,23.9,223,85,Yes,,Yes,Yes
+M048,Prime Logistics Pvt Ltd,Pharma,Pune,Maharashtra,52.9,217,47,No,2021-01-01,Yes,Yes
+M049,Vikas Logistics Pvt Ltd,Manufacturing,Bengaluru,Karnataka,14.0,86,41,No,,Yes,Yes
+M050,Zenith Logistics Pvt Ltd,Packaging,Bengaluru,Karnataka,39.5,150,37,No,2021-01-01,Yes,Yes
