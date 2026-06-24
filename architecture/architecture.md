@@ -5,7 +5,7 @@
 ## High-Level Architecture
 *(Reference: `sahaj_pathfinder_architecture.jpg`)*
 
-![Sahaj PathFinder Architecture](sahaj_pathfinder_architecture.jpg)
+![Sahaj PathFinder Architecture](sahaj_pathfinder_architecture.png)
 
 ## The 6 Intelligence Layers
 
