@@ -9,16 +9,16 @@
 
 ---
 
-> [!NOTE] **`COMPLETED`**
-> ### PHASE 1: IDEATION & BLUEPRINTS
+> [!NOTE]
+> ### PHASE 1: IDEATION & BLUEPRINTS `[COMPLETED]`
 > * **Problem Definition** &bull; _Strategic SBI alignment locked._
 > * **Product Design** &bull; _Acquisition routes and PDD finalized._
 > * **Architecture** &bull; _LangGraph orchestration mapped._
 > * **UI Prototype** &bull; _High-fidelity executive screens built._
 > * **Synthetic Dataset** &bull; _12 relational DB tables generated._
 
-> [!TIP] **`AWAITING`**
-> ### PHASE 2: HACKATHON SPRINT
+> [!TIP]
+> ### PHASE 2: HACKATHON SPRINT `[NEXT]`
 > * **MVP Development** &bull; _Next.js SPA frontend initialization._
 > * **Backend Core** &bull; _FastAPI endpoints & data ingestion._
 > * **Agent Engine** &bull; _Multi-LLM reasoning & tool binding._
