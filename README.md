@@ -10,6 +10,23 @@
 
 ---
 
+> [!NOTE]
+> ### ✅ PHASE 1: IDEATION & BLUEPRINTS `COMPLETED`
+> * **Problem Definition** &bull; _Strategic SBI alignment locked._
+> * **Product Design** &bull; _Acquisition routes and PDD finalized._
+> * **Architecture** &bull; _LangGraph orchestration mapped._
+> * **UI Prototype** &bull; _High-fidelity executive screens built._
+> * **Synthetic Dataset** &bull; _12 relational DB tables generated._
+
+> [!TIP]
+> ### 📌 PHASE 2: HACKATHON SPRINT `ACTIVE NEXT`
+> * **MVP Development** &bull; _Next.js SPA frontend initialization._
+> * **Backend Core** &bull; _FastAPI endpoints & data ingestion._
+> * **Agent Engine** &bull; _Multi-LLM reasoning & tool binding._
+> * **Deployment** &bull; _Cloud hosting & demo environment._
+
+---
+
 ## 30-Second Executive Summary
 State Bank of India possesses massive amounts of transaction and supply-chain data via **MSME Sahaj**, **YONO Business**, and corporate ledgers. Yet, customer acquisition remains a manual, outbound, "one-size-fits-all" process.
 
@@ -91,7 +108,7 @@ The repository contains high-fidelity UI screens demonstrating the end-to-end ex
 
 * **Customer Acquisition:** Drastically reduces Customer Acquisition Cost (CAC) by converting transactional friction into warm inbound leads.
 * **Digital Adoption:** Forces multi-product adoption by linking immediate liquidity to **MSME Sahaj** and **YONO Business** onboarding.
-* **Ecosystem Expansion:** Creates a geometric growth loop—every newly acquired MSME exposes their own ledger of sub-suppliers to the Discovery Engine.
+* **Ecosystem Expansion:** Creates a geometric growth loop where every newly acquired MSME exposes their own ledger of sub-suppliers to the Discovery Engine.
 
 ---
 
@@ -129,9 +146,8 @@ The repository contains high-fidelity UI screens demonstrating the end-to-end ex
 
 To understand how Sahaj PathFinder bridges the gap between abstract AI and aggressive commercial banking growth, **start here:**
 
-**[View the Executive Pitch Deck](https://www.google.com/search?q=.%2Fpresentation%2FSahaj_PathFinder_Pitch_Deck.pdf)**
-
-**[Read the Demo Storyboard](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/presentation/Demo_Storyboard.md)**
+* **For Business Judges:** **[View the Executive Pitch Deck](https://www.google.com/search?q=.%2Fpresentation%2FSahaj_PathFinder_Pitch_Deck.pdf)** and the **[Demo Storyboard](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/presentation/Demo_Storyboard.md)**
+* **For Technical Judges:** Review my **[Proposed Technology Stack](./docs/Technology_Stack.md)** and the aggressive 30-day **[Implementation Roadmap](./docs/Implementation_Roadmap.md)** for Phase 2.
 
 ---
 
