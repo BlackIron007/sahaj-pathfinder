@@ -2,24 +2,23 @@
 **Agentic MSME Acquisition Intelligence Engine**
 
 [![Event](https://img.shields.io/badge/SBI_Global_Fintech_Fest-2026-0055A5?style=for-the-badge)](https://hackculture.io/hackathons/sbi-hackathon-gff-2026)
-[![Track](https://img.shields.io/badge/Track-Customer_Acquisition-28a745?style=for-the-badge)]()
-[![Theme](https://img.shields.io/badge/Theme-Agentic_AI-8a2be2?style=for-the-badge)]()
-[![Status](https://img.shields.io/badge/Status-Prototype_Ready-ffc107?style=for-the-badge)]()
+[![Track](https://img.shields.io/badge/Track-Customer_Acquisition-28a745?style=for-the-badge)](https://hackculture.io/hackathons/sbi-hackathon-gff-2026)
+[![Theme](https://img.shields.io/badge/Theme-Agentic_AI-8a2be2?style=for-the-badge)](https://hackculture.io/hackathons/sbi-hackathon-gff-2026)
 
 > ### *"Every MSME Enters SBI Through a Different Door."*
 
 ---
 
-> [!NOTE]
-> ### ✅ PHASE 1: IDEATION & BLUEPRINTS `COMPLETED`
+> [!NOTE] **`COMPLETED`**
+> ### PHASE 1: IDEATION & BLUEPRINTS
 > * **Problem Definition** &bull; _Strategic SBI alignment locked._
 > * **Product Design** &bull; _Acquisition routes and PDD finalized._
 > * **Architecture** &bull; _LangGraph orchestration mapped._
 > * **UI Prototype** &bull; _High-fidelity executive screens built._
 > * **Synthetic Dataset** &bull; _12 relational DB tables generated._
 
-> [!TIP]
-> ### 📌 PHASE 2: HACKATHON SPRINT `ACTIVE NEXT`
+> [!TIP] **`AWAITING`**
+> ### PHASE 2: HACKATHON SPRINT
 > * **MVP Development** &bull; _Next.js SPA frontend initialization._
 > * **Backend Core** &bull; _FastAPI endpoints & data ingestion._
 > * **Agent Engine** &bull; _Multi-LLM reasoning & tool binding._
