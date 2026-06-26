@@ -14,17 +14,20 @@ import {
   Activity
 } from "lucide-react";
 
+import { usePathname } from "next/navigation";
+
 interface SidebarProps {
   currentTab?: string;
   isOpen?: boolean;
   onClose?: () => void;
 }
 
-export function Sidebar({ currentTab = "Dashboard", isOpen = false, onClose }: SidebarProps) {
+export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
+  const pathname = usePathname();
   const menuItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
-    { name: "Acquisition Intelligence", href: "/opportunities", icon: Search },
-    { name: "Offer Workspace", href: "#", icon: Briefcase },
+    { name: "Acquisition Intelligence", href: "/acquisition-intelligence", icon: Search },
+    { name: "Offer Workspace", href: "/offer-workspace", icon: Briefcase },
     { name: "Impact Center", href: "#", icon: TrendingUp },
     { name: "Architecture", href: "#", icon: Network },
     { name: "Settings", href: "#", icon: Settings },
@@ -51,7 +54,13 @@ export function Sidebar({ currentTab = "Dashboard", isOpen = false, onClose }: S
       
       <nav className="flex-1 px-4 py-6 space-y-1">
         {menuItems.map((item) => {
-          const isActive = currentTab === item.name;
+          let isActive = false;
+          if (item.href === "/") {
+            isActive = pathname === "/";
+          } else {
+            isActive = pathname.startsWith(item.href) && item.href !== "#";
+          }
+          
           const Icon = item.icon;
           return (
             <Link

@@ -156,7 +156,7 @@ export function OpportunityTable({ opportunities, isLoading }: OpportunityTableP
                   <td className="p-4 font-mono text-secondary">{opp.conversion_probability}%</td>
                   <td className="p-4 text-right">
                     <Link 
-                      href={`/opportunities/${opp.opportunity_id}`}
+                      href={`/acquisition-intelligence/${opp.opportunity_id}`}
                       className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded border border-primary/20 text-primary hover:bg-soft hover:border-primary/45 transition-colors"
                     >
                       View Intelligence

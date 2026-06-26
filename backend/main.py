@@ -6,6 +6,8 @@ from fastapi.responses import JSONResponse
 
 from backend.core.config import settings
 from backend.api.routes.system import router as system_router
+from backend.api.routes.opportunities import router as opportunities_router
+from backend.api.routes.offers import router as offers_router
 from backend.services.data_loader import data_loader_service
 
 # Configure professional logging format
@@ -57,6 +59,8 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # Include routers
 app.include_router(system_router, prefix=settings.API_V1_STR, tags=["System"])
+app.include_router(opportunities_router, prefix=settings.API_V1_STR, tags=["Opportunities"])
+app.include_router(offers_router, prefix=settings.API_V1_STR, tags=["Offers"])
 
 if __name__ == "__main__":
     import uvicorn
