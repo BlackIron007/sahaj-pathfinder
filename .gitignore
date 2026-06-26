@@ -50,3 +50,7 @@ env/
 # Logs
 logs/
 *.log
+
+# Compiled source
+backend.zip
+frontend.zip
