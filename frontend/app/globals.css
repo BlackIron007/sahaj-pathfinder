@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --background: #fff9ee;
+  --foreground: #373223;
+  --border: #b9b29c;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* High density corporate layouts */
+input, select, textarea {
+  background-color: #fffbf2;
+  border: 1px solid #b9b29c;
+  color: #373223;
+}
+

@@ -122,7 +122,9 @@ The repository contains high-fidelity UI screens demonstrating the end-to-end ex
 &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [<kbd>sahaj_pathfinder_architecture.jpg</kbd>](./architecture/sahaj_pathfinder_architecture.jpg)  
 &nbsp;&nbsp;├── [<kbd>**docs/**</kbd>](./docs/) _(Core Product Documentation)_  
 &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [<kbd>Problem_Statement.md</kbd>](./docs/Problem_Statement.md)  
-&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [<kbd>Product_Definition_Document.md</kbd>](./docs/Product_Definition_Document.md)  
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [<kbd>Product_Definition_Document.md</kbd>](./docs/Product_Definition_Document.md)
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [<kbd>Implementation_Roadmap.md</kbd>](./docs/Implementation_Roadmap.md)  
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [<kbd>Technology_Stack.md</kbd>](./docs/Technology_Stack.md)  
 &nbsp;&nbsp;├── [<kbd>**presentation/**</kbd>](./presentation/) _(Executive Pitch Materials)_  
 &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [<kbd>Demo_Storyboard.md</kbd>](./presentation/Demo_Storyboard.md)  
 &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [<kbd>Sahaj_PathFinder_Pitch_Deck.pdf</kbd>](./presentation/Sahaj_PathFinder_Pitch_Deck.pdf)  

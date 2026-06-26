@@ -1,0 +1,27 @@
+[project]
+name = "sahaj-pathfinder-backend"
+version = "1.0.0"
+description = "Agentic Acquisition Intelligence Platform - Backend"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "pandas>=2.2.0",
+    "networkx>=3.2.0",
+    "langchain>=0.1.0",
+    "langgraph>=0.0.10",
+]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I", "W"]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.setuptools]
+packages = ["api", "core", "agents", "graph", "services", "routes", "models", "schemas", "utils"]
