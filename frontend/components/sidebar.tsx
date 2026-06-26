@@ -28,7 +28,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
     { name: "Acquisition Intelligence", href: "/acquisition-intelligence", icon: Search },
     { name: "Offer Workspace", href: "/offer-workspace", icon: Briefcase },
-    { name: "Impact Center", href: "#", icon: TrendingUp },
+    { name: "Impact Center", href: "/impact-center", icon: TrendingUp },
     { name: "Architecture", href: "#", icon: Network },
     { name: "Settings", href: "#", icon: Settings },
   ];
