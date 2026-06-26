@@ -88,7 +88,7 @@ flowchart TD
 
 ```
 
-*For deeper technical implementation details, see [`architecture/architecture_explanation.md`](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/architecture/architecture_explanation.md).*
+*For deeper technical implementation details, see [`Architecture Explanation`](./architecture/architecture_explanation.md).*
 
 ---
 
@@ -96,10 +96,10 @@ flowchart TD
 
 The repository contains high-fidelity UI screens demonstrating the end-to-end executive workflow:
 
-* **[Screen 1: Discovery Dashboard](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/prototype/screen_01_dashboard.png)** - Tracks macro network growth and discovers MSME opportunities hidden within SBI ecosystems.
-* **[Screen 2: Acquisition Intelligence](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/prototype/screen_02_acquisition_intelligence.png)** - Exposes the AI's internal logic, signal analysis, and comparative route evaluation.
-* **[Screen 3: Offer Workspace](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/prototype/screen_03_offer_workspace.png)** - The RM interface to review the generated strategy, verify compliance, and launch the journey.
-* **[Screen 4: Impact Center](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/prototype/screen_04_impact_center.png)** - Tracks conversion outcomes, loan book expansion, and the agent's continuous learning loop.
+* **[Screen 1: Discovery Dashboard](./prototype/screen_01_dashboard.png)** - Tracks macro network growth and discovers MSME opportunities hidden within SBI ecosystems.
+* **[Screen 2: Acquisition Intelligence](./prototype/screen_02_acquisition_intelligence.png)** - Exposes the AI's internal logic, signal analysis, and comparative route evaluation.
+* **[Screen 3: Offer Workspace](./prototype/screen_03_offer_workspace.png)** - The RM interface to review the generated strategy, verify compliance, and launch the journey.
+* **[Screen 4: Impact Center](./prototype/screen_04_impact_center.png)** - Tracks conversion outcomes, loan book expansion, and the agent's continuous learning loop.
 
 ---
 
@@ -145,7 +145,7 @@ The repository contains high-fidelity UI screens demonstrating the end-to-end ex
 
 To understand how Sahaj PathFinder bridges the gap between abstract AI and aggressive commercial banking growth, **start here:**
 
-* **For Business Judges:** **[View the Executive Pitch Deck](https://www.google.com/search?q=.%2Fpresentation%2FSahaj_PathFinder_Pitch_Deck.pdf)** and the **[Demo Storyboard](https://github.com/BlackIron007/sahaj-pathfinder/blob/main/presentation/Demo_Storyboard.md)**
+* **For Business Judges:** **[View the Executive Pitch Deck](./presentation/Sahaj_PathFinder_Pitch_Deck.pdf)** and the **[Demo Storyboard](./presentation/Demo_Storyboard.md)**
 * **For Technical Judges:** Review my **[Proposed Technology Stack](./docs/Technology_Stack.md)** and the aggressive 30-day **[Implementation Roadmap](./docs/Implementation_Roadmap.md)** for Phase 2.
 
 ---
