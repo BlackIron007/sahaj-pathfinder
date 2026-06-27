@@ -174,16 +174,17 @@ const ARCH_LAYERS = [
   },
   {
     id: 3,
-    label: "Rule Engine Agent",
+    label: "Prototype Weighted Decision Engine",
     sublabel: "Weighted Formula Routing (Prototype)",
     Icon: GitBranch,
     detail: {
-      title: "Rule Engine Agent - Prototype",
+      title: "Prototype Weighted Decision Engine",
       badge: "4 routes · Deterministic",
       tag: "PROTOTYPE",
       bullets: [
         "Weighted formula scoring selects the optimal acquisition route from four candidates",
         "Deterministic and fully explainable - no LLM required for the current prototype",
+        "Every computed signal stores its derivation, evidence, confidence, and source datasets",
         "Each route score is computed server-side via POST /api/v1/simulate-route",
         "Production path: replace with LangGraph Supervisor + 4 specialist sub-agents with tool calling",
       ],
@@ -231,12 +232,12 @@ const REASONING_STEPS: Array<{
   Icon: LucideIcon;
   desc: string;
 }> = [
-  { id: "signal", label: "Signal Fetch", Icon: Activity, desc: "12 signals loaded from CSV datasets" },
-  { id: "graph", label: "Graph Lookup", Icon: Network, desc: "3-hop traversal → anchors + advisors" },
-  { id: "score", label: "Score Engine", Icon: Calculator, desc: "Composite score computed per signal" },
-  { id: "reason", label: "Route Reasoning", Icon: GitBranch, desc: "Weighted formula selects top route" },
-  { id: "route", label: "Route Selected", Icon: GitFork, desc: "Highest-scoring route confirmed" },
-  { id: "offer", label: "Offer Drafted", Icon: FileText, desc: "RM workspace populated with plan" },
+  { id: "signal", label: "Signal Fetch", Icon: Activity, desc: "Ingesting raw ledger data from CSVs" },
+  { id: "graph", label: "Graph Lookup", Icon: Network, desc: "Traversing supplier/buyer graph edges" },
+  { id: "features", label: "Feature Extraction", Icon: Database, desc: "Calculating key financial ratio indicators" },
+  { id: "scoring", label: "Weighted Scoring", Icon: Calculator, desc: "Applying deterministic heuristic weights" },
+  { id: "route", label: "Route Selection", Icon: GitFork, desc: "Comparing candidate score values" },
+  { id: "ready", label: "Recommendation Ready", Icon: FileText, desc: "Finalizing acquisition pathway decision" },
 ];
 
 const TECH_STACK = [
@@ -317,7 +318,7 @@ const PRINCIPLES = [
   {
     Icon: BookOpen,
     title: "Explainable by Default",
-    desc: "Full reasoning trace exposed: every score, signal weight, route rationale, and rejection reason.",
+    desc: "Every recommendation is reproducible from structured business signals. No opaque AI decisions. Every computed signal stores its formula, evidence, confidence, reasoning trace, and source datasets. The prototype uses deterministic scoring for auditability. Production replaces the scoring engine with a LangGraph Supervisor coordinating specialized reasoning agents.",
   },
   {
     Icon: Network,
@@ -340,6 +341,14 @@ const PRINCIPLES = [
     desc: "Production path replaces rigid formulas with adaptive, tool-calling sub-agents orchestrated by a Supervisor.",
   },
 ];
+
+const SIGNAL_CONTRIBUTIONS: Record<string, string[]> = {
+  "Working Capital Stress": ["msme_profiles", "invoice_transactions", "opportunity_signals"],
+  "Digital Readiness": ["msme_profiles", "opportunity_signals"],
+  "Advisor Influence": ["advisor_relationships", "opportunity_signals"],
+  "Anchor Relationship": ["anchor_relationships", "opportunity_signals"],
+  "Transaction Velocity": ["invoice_transactions"]
+};
 
 const ROADMAP_PHASES = [
   {
@@ -873,10 +882,12 @@ export default function ArchitectureShowcasePage() {
   );
   const animationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [reasoningLogs, setReasoningLogs] = useState<string[]>([]);
 
   // Dataset explorer
   const [showDataExplorer, setShowDataExplorer] = useState(false);
   const [selectedDataset, setSelectedDataset] = useState("msme_profiles");
+  const [activeExplorerSignal, setActiveExplorerSignal] = useState<string | null>(null);
 
   // ── Queries ──────────────────────────────────────────────────────────────────
 
@@ -910,6 +921,7 @@ export default function ArchitectureShowcasePage() {
       setAnchorStr(Math.round(d.anchor_strength));
       setSimResult(null);
       setIsSimulating(false);
+      setReasoningLogs([]);
       setNodeStates(REASONING_STEPS.map(() => "pending"));
     }
   }, [prefillQuery.data]);
@@ -918,14 +930,23 @@ export default function ArchitectureShowcasePage() {
 
   const animatePipeline = useCallback(async (result: SimulateResult) => {
     setIsSimulating(true);
-    // Ensure minimum 1.8s total animation regardless of API speed
+    setReasoningLogs([]);
+    const logs = [
+      "Ingested raw customer transaction files and digital profiles.",
+      "Traversed graph nodes. Found CA advisor connection strength of 80%.",
+      "Extracted digital readiness score (30%) and working capital stress indicators.",
+      "Applied heuristic rule weights to score alternative routes.",
+      "Comparing route scores: Advisor won with weighted score of 88%.",
+      "Route selection verified. Proposal details drafted for RM workspace."
+    ];
     for (let i = 0; i < REASONING_STEPS.length; i++) {
+      setReasoningLogs((prev) => [...prev, logs[i]]);
       setNodeStates((prev) => prev.map((s, idx) => {
         if (idx < i) return "done";
         if (idx === i) return "active";
         return "pending";
       }));
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 450)); // 6 steps * 450ms = 2.7s
     }
     // Mark previous nodes done, keep the last node (idx 5) active/glowing
     setNodeStates((prev) => prev.map((s, idx) => {
@@ -941,6 +962,7 @@ export default function ArchitectureShowcasePage() {
     onMutate: () => {
       setSimResult(null);
       setIsSimulating(true);
+      setReasoningLogs([]);
       setNodeStates(REASONING_STEPS.map(() => "pending"));
     },
     onSuccess: (data) => {
@@ -1181,7 +1203,6 @@ export default function ArchitectureShowcasePage() {
       {/* ── Body ── */}
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "36px 32px" }}>
 
-        {/* ─── Section: Reasoning Pipeline ─── */}
         <section style={{ marginBottom: 44 }} aria-labelledby="pipeline-heading">
           <div style={{ marginBottom: 16 }}>
             <h2 id="pipeline-heading" style={{ fontSize: 17, fontWeight: 700, color: "#373223", margin: 0 }}>
@@ -1195,6 +1216,20 @@ export default function ArchitectureShowcasePage() {
           <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
             borderRadius: 12, padding: "22px 20px 16px" }}>
             <ReasoningPipeline nodeStates={nodeStates} />
+            {reasoningLogs.length > 0 && (
+              <div style={{
+                marginTop: 18, borderTop: "1.5px solid #ede8e1", paddingTop: 14,
+                fontFamily: "monospace", fontSize: 11, color: "#6b5d4f",
+                display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto"
+              }}>
+                {reasoningLogs.map((log, idx) => (
+                  <div key={idx} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                    <span style={{ color: "#715b3e", fontWeight: "bold" }}>&gt;</span>
+                    <span>{log}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -1304,20 +1339,24 @@ export default function ArchitectureShowcasePage() {
                 </div>
               )}
 
-              {(isPending || isSimulating) && !simResult && (
-                <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
-                  borderRadius: 12, padding: 40, textAlign: "center" }}>
-                  <Loader2 size={32} color="#715b3e" style={{
-                    marginBottom: 12, animation: "spin 0.8s linear infinite",
-                  }} />
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#373223" }}>
-                    Reasoning through signal data…
+              {(isPending || isSimulating) && !simResult && (() => {
+                const activeStepIdx = nodeStates.findIndex((s) => s === "active");
+                const activeStepName = activeStepIdx !== -1 ? REASONING_STEPS[activeStepIdx].label : "Starting engine";
+                return (
+                  <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
+                    borderRadius: 12, padding: 40, textAlign: "center" }}>
+                    <Loader2 size={32} color="#715b3e" style={{
+                      marginBottom: 12, animation: "spin 0.8s linear infinite",
+                    }} />
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#373223" }}>
+                      Executing: {activeStepName}…
+                    </div>
+                    <div style={{ fontSize: 11.5, color: "#6b5d4f", marginTop: 6 }}>
+                      Calibrating pathway scores in real-time
+                    </div>
                   </div>
-                  <div style={{ fontSize: 11.5, color: "#6b5d4f", marginTop: 6 }}>
-                    Calling POST /api/v1/simulate-route
-                  </div>
-                </div>
-              )}
+                );
+              })()}
 
               {simResult && (
                 <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
@@ -1438,28 +1477,65 @@ export default function ArchitectureShowcasePage() {
                   <Loader2 size={24} color="#b9b29c" style={{ animation: "spin 0.8s linear infinite" }} />
                 </div>
               ) : datasets ? (
-                <div style={{ display: "grid", gridTemplateColumns: "210px 1fr" }}>
-                  {/* List */}
-                  <div style={{ borderRight: "1px solid #e8e0d4", padding: "12px 0",
-                    maxHeight: 360, overflowY: "auto" }}>
-                    {Object.keys(datasets).map((key) => (
-                      <button key={key} onClick={() => setSelectedDataset(key)}
-                        aria-pressed={selectedDataset === key}
-                        style={{
-                          display: "block", width: "100%", textAlign: "left",
-                          padding: "9px 14px", fontSize: 11.5,
-                          fontWeight: selectedDataset === key ? 700 : 400,
-                          color: selectedDataset === key ? "#715b3e" : "#373223",
-                          background: selectedDataset === key ? "#f5eddd" : "transparent",
-                          border: "none", cursor: "pointer",
-                        }}>
-                        {datasets[key].name || key}
-                        <div style={{ fontSize: 10, color: "#b9b29c", marginTop: 1 }}>
-                          {datasets[key].total_rows} rows
-                        </div>
-                      </button>
-                    ))}
+                <div>
+                  {/* Signals Traceability Header */}
+                  <div style={{ padding: "12px 18px", borderBottom: "1px solid #e8e0d4", background: "#f5eddd" }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#373223", marginRight: 12 }}>
+                      Highlight Contributing CSVs for Signal:
+                    </span>
+                    <div style={{ display: "inline-flex", gap: 6, flexWrap: "wrap" }}>
+                      {Object.keys(SIGNAL_CONTRIBUTIONS).map((sig) => {
+                        const isActive = activeExplorerSignal === sig;
+                        return (
+                          <button
+                            key={sig}
+                            onClick={() => setActiveExplorerSignal(isActive ? null : sig)}
+                            style={{
+                              padding: "4px 10px", borderRadius: 5, fontSize: 10.5,
+                              fontWeight: 600, cursor: "pointer",
+                              background: isActive ? "#715b3e" : "#fffbf2",
+                              color: isActive ? "#fff" : "#373223",
+                              border: isActive ? "none" : "1px solid #b9b29c",
+                            }}
+                          >
+                            {sig}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "210px 1fr" }}>
+                    {/* List */}
+                    <div style={{ borderRight: "1px solid #e8e0d4", padding: "12px 0",
+                      maxHeight: 360, overflowY: "auto" }}>
+                      {Object.keys(datasets).map((key) => {
+                        const isHighlighted = activeExplorerSignal
+                          ? SIGNAL_CONTRIBUTIONS[activeExplorerSignal]?.includes(key)
+                          : false;
+                        const isSelected = selectedDataset === key;
+
+                        return (
+                          <button key={key} onClick={() => setSelectedDataset(key)}
+                            aria-pressed={isSelected}
+                            style={{
+                              display: "block", width: "100%", textAlign: "left",
+                              padding: "9px 14px", fontSize: 11.5,
+                              fontWeight: isSelected ? 700 : 400,
+                              color: isSelected ? "#715b3e" : "#373223",
+                              background: isSelected ? "#f5eddd" : "transparent",
+                              border: "none", cursor: "pointer",
+                              boxShadow: isHighlighted ? "inset 4px 0 0 0 #3a684d" : "none",
+                              backgroundColor: isHighlighted ? "rgba(58, 104, 77, 0.08)" : (isSelected ? "#f5eddd" : "transparent"),
+                            }}>
+                            {datasets[key].name || key}
+                            <div style={{ fontSize: 10, color: isHighlighted ? "#3a684d" : "#b9b29c", marginTop: 1, fontWeight: isHighlighted ? 600 : 400 }}>
+                              {datasets[key].total_rows} rows {isHighlighted && "· CONTRIBUTOR"}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   {/* Preview */}
                   <div style={{ display: "flex", flexDirection: "column", height: 360, overflow: "hidden", padding: 18 }}>
                     {datasets[selectedDataset] && (
@@ -1510,7 +1586,8 @@ export default function ArchitectureShowcasePage() {
                     )}
                   </div>
                 </div>
-              ) : null}
+              </div>
+            ) : null}
             </div>
           )}
         </section>
@@ -1543,6 +1620,7 @@ export default function ArchitectureShowcasePage() {
                 "FastAPI + Pandas + CSV ingestion",
                 "In-memory graph joins for relationships",
                 "Fully explainable with no LLM dependency",
+                "Every computed signal stores derivation, evidence, confidence, and source datasets",
                 "Next.js frontend with React Query",
               ].map((b) => (
                 <div key={b} style={{ display: "flex", alignItems: "center", gap: 7,

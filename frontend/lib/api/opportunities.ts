@@ -44,6 +44,12 @@ export interface SignalItem {
   confidence: number;
 }
 
+export interface InfluenceFactor {
+  factor: string;
+  weight: number;
+  impact: "positive" | "negative";
+}
+
 export interface RouteAnalysisItem {
   route: string;
   score: number;
@@ -53,6 +59,26 @@ export interface RouteAnalysisItem {
   pros: string[];
   cons: string[];
   evidence: string;
+  influence_factors?: InfluenceFactor[];
+}
+
+export interface SignalProvenance {
+  signal: string;
+  value: string;
+  confidence: number;
+  formula: string;
+  formula_weights?: Array<{ factor: string; weight: string; reason: string }>;
+  derived_from: string[];
+  datasets: string[];
+  supporting_records: string[];
+  business_reason: string;
+  why_weights?: string;
+  metadata?: {
+    signal_generated_time: string;
+    engine_version: string;
+    dataset_snapshot_version: string;
+    rule_version: string;
+  };
 }
 
 export interface EcosystemDetail {
@@ -95,3 +121,8 @@ export async function fetchOpportunityEcosystem(id: string): Promise<EcosystemDe
 export async function fetchOpportunityTimeline(id: string): Promise<ProgressStep[]> {
   return apiClient<ProgressStep[]>(`/opportunities/${id}/timeline`);
 }
+
+export async function fetchSignalProvenance(oppId: string, signalName: string): Promise<SignalProvenance> {
+  return apiClient<SignalProvenance>(`/opportunities/${oppId}/signals/${encodeURIComponent(signalName)}/provenance`);
+}
+

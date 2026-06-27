@@ -71,7 +71,7 @@ The PathFinder system maps specific technologies to distinct operational layers 
 
 To ensure this prototype transitions successfully from a hackathon concept to enterprise software, the codebase adheres to strict design principles:
 
-* **Explainable AI (XAI):** The `LangGraph` state machine forces the LLM to output its reasoning step-by-step before selecting a route, ensuring complete transparency for SBI auditors.
+* **Explainable AI (XAI):** The `LangGraph` state machine and our **Signal Provenance Engine** force the model to output its reasoning step-by-step and provide a direct trace to the underlying CSV files, supporting records, formulas, and confidence scores for absolute audit transparency.
 * **Human-in-the-Loop (HITL):** The system generates the strategy, but execution halts at the "Offer Workspace" until an authorized Relationship Manager explicitly approves the payload.
 * **Zero-Knowledge Routing:** The agent evaluates anonymized financial signals and graph edges; it does not require access to highly sensitive PII to determine the optimal acquisition route.
 * **Modular Architecture:** Built to evolve. The `NetworkX` graph can be replaced by a `Neo4j` connection string in production without rewriting the agent's logic.

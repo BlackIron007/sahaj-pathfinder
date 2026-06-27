@@ -8,9 +8,10 @@ interface SignalCardProps {
   evidence: string;
   explanation: string;
   confidence: number;
+  onExplain?: () => void;
 }
 
-export function SignalCard({ title, severity, evidence, explanation, confidence }: SignalCardProps) {
+export function SignalCard({ title, severity, evidence, explanation, confidence, onExplain }: SignalCardProps) {
   // Determine icon based on title or keywords
   const getIcon = () => {
     const t = title.toLowerCase();
@@ -31,14 +32,9 @@ export function SignalCard({ title, severity, evidence, explanation, confidence 
           <Badge variant={severity}>{severity}</Badge>
         </div>
         
-        <p className="text-xs text-foreground font-medium leading-relaxed">
+        <p className="text-xs text-secondary leading-relaxed">
           {explanation}
         </p>
-        
-        <div className="bg-soft/40 border border-border/40 rounded p-2.5 text-[10px] text-secondary leading-normal">
-          <span className="font-semibold text-foreground block mb-0.5">Evidence:</span>
-          {evidence}
-        </div>
       </div>
       
       <div className="mt-4 pt-3 border-t border-border/30 space-y-1.5">
@@ -55,7 +51,22 @@ export function SignalCard({ title, severity, evidence, explanation, confidence 
             style={{ width: `${confidence}%` }}
           />
         </div>
+        
+        <div className="text-[10px] text-secondary pt-1 leading-normal">
+          <span className="font-semibold text-foreground">Primary Driver:</span>{" "}
+          {evidence}
+        </div>
+
+        {onExplain && (
+          <button
+            onClick={onExplain}
+            className="w-full mt-2.5 py-1.5 text-[9px] font-bold text-center tracking-wider uppercase text-primary border border-primary/30 hover:bg-soft rounded transition-colors"
+          >
+            Explain Signal
+          </button>
+        )}
       </div>
     </div>
   );
 }
+

@@ -61,7 +61,7 @@ PathFinder executes a continuous, autonomous 5-step pipeline:
 * *Digital Signals:* Platform readiness, ERP maturity.
 
 
-* **Output:** A comprehensive **MSME Intelligence Profile**.
+* **Output:** A comprehensive **MSME Intelligence Profile** backed by our **Signal Provenance Engine** (exposing derived features, supporting records, source datasets, and mathematical formulas for every signal).
 
 ### Step 3: Agentic Reasoning (The Brain)
 

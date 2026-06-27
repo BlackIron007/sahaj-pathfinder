@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -11,14 +11,19 @@ import {
   Building2, 
   ChevronRight,
   FileCheck,
-  UserPlus
+  UserPlus,
+  X,
+  Database,
+  HelpCircle,
+  FileText
 } from "lucide-react";
 import { 
   fetchOpportunityDetail, 
   fetchOpportunitySignals, 
   fetchOpportunityRouteAnalysis, 
   fetchOpportunityEcosystem, 
-  fetchOpportunityTimeline 
+  fetchOpportunityTimeline,
+  fetchSignalProvenance
 } from "@/lib/api/opportunities";
 import { SignalCard } from "@/components/opportunities/signal-card";
 import { RouteComparison } from "@/components/opportunities/route-comparison";
@@ -29,6 +34,15 @@ export default function OpportunityDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
+
+  const [activeSignal, setActiveSignal] = useState<string | null>(null);
+
+  // Provenance Query
+  const { data: provenance, isLoading: isProvenanceLoading } = useQuery({
+    queryKey: ["signalProvenance", id, activeSignal],
+    queryFn: () => fetchSignalProvenance(id, activeSignal!),
+    enabled: !!activeSignal,
+  });
 
   // Hydrate all workspace parameters in parallel via React Query
   const { data: detail, isLoading: isDetailLoading, error: detailError } = useQuery({
@@ -299,7 +313,11 @@ export default function OpportunityDetailPage() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {signals?.map((signal) => (
-                <SignalCard key={signal.signal_id} {...signal} />
+                <SignalCard 
+                  key={signal.signal_id} 
+                  {...signal} 
+                  onExplain={() => setActiveSignal(signal.title)}
+                />
               ))}
             </div>
           </div>
@@ -329,6 +347,167 @@ export default function OpportunityDetailPage() {
         </div>
 
       </div>
+
+      {/* Signal Provenance Explanation Dialog Modal Overlay */}
+      {activeSignal && (
+        <div className="fixed inset-0 bg-secondary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-card border border-border w-full max-w-2xl rounded-lg shadow-xl overflow-hidden animate-in fade-in duration-200">
+            {/* Header */}
+            <div className="p-5 border-b border-border flex justify-between items-center bg-soft/20">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="h-4.5 w-4.5 text-primary" />
+                <h3 className="text-sm font-bold text-foreground">
+                  Signal Provenance: {activeSignal}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setActiveSignal(null)}
+                className="p-1 hover:bg-soft rounded text-secondary hover:text-foreground transition-colors"
+              >
+                <X className="h-4.5 w-4.5" />
+              </button>
+            </div>
+
+            {/* Content Body */}
+            <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+              {isProvenanceLoading ? (
+                <div className="flex flex-col items-center justify-center py-12 space-y-3">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                  <span className="text-xs text-secondary">Computing signal lineage from raw CSV files…</span>
+                </div>
+              ) : provenance ? (
+                <div className="space-y-5 text-xs">
+                  
+                  {/* Summary row */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-soft/30 border border-border/40 p-3 rounded">
+                      <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block mb-1">Signal Value</span>
+                      <span className="font-semibold text-foreground text-sm">{provenance.value}</span>
+                    </div>
+                    <div className="bg-soft/30 border border-border/40 p-3 rounded">
+                      <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block mb-1">Confidence Score</span>
+                      <span className="font-mono font-bold text-foreground text-sm">{provenance.confidence}%</span>
+                    </div>
+                  </div>
+
+                  {/* Formula Section */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Business-Readable Weighted Logic</span>
+                    {provenance.formula_weights && provenance.formula_weights.length > 0 ? (
+                      <div className="space-y-2">
+                        {provenance.formula_weights.map((w, idx) => (
+                          <div key={idx} className="bg-soft/40 border border-border/40 p-3 rounded">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-bold text-foreground">{w.factor}</span>
+                              <span className="font-mono font-bold text-primary bg-soft/80 px-2 py-0.5 rounded text-[10px]">Weight: {w.weight}</span>
+                            </div>
+                            <p className="text-secondary text-[11px] leading-relaxed">{w.reason}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="bg-soft/40 border border-border/50 p-3 rounded font-mono text-[11px] text-foreground whitespace-pre-wrap leading-relaxed">
+                        {provenance.formula}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Why these weights? */}
+                  {provenance.why_weights && (
+                    <div className="space-y-1.5 bg-soft/20 border border-border/30 p-3 rounded">
+                      <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Why these weights?</span>
+                      <p className="text-secondary leading-relaxed text-[11px]">
+                        {provenance.why_weights}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Derived From */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Derived Signals &amp; Features</span>
+                    <div className="flex flex-wrap gap-2">
+                      {provenance.derived_from.map((item, idx) => (
+                        <span key={idx} className="bg-card border border-border px-2.5 py-1 rounded text-foreground font-medium text-[11px]">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Supporting Evidence Records */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Supporting Underwriting Records</span>
+                    <div className="space-y-1.5">
+                      {provenance.supporting_records.map((rec, idx) => (
+                        <div key={idx} className="flex items-start gap-2 bg-soft/20 border border-border/30 p-2.5 rounded">
+                          <FileText className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-secondary leading-relaxed">{rec}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Dataset Sources */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Source Dataset Traceability</span>
+                    <div className="flex flex-wrap gap-2">
+                      {provenance.datasets.map((ds, idx) => (
+                        <span key={idx} className="flex items-center gap-1.5 bg-soft text-primary font-semibold px-2 py-0.5 rounded border border-border/80 text-[10px] uppercase font-mono">
+                          <Database className="h-3 w-3" /> {ds}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Business Interpretation */}
+                  <div className="space-y-1.5 border-t border-border/40 pt-4">
+                    <span className="text-[10px] text-secondary uppercase font-bold tracking-wider block">Business Interpretation</span>
+                    <p className="text-secondary leading-relaxed">
+                      {provenance.business_reason}
+                    </p>
+                  </div>
+
+                  {/* Metadata block */}
+                  {provenance.metadata && (
+                    <div className="space-y-1.5 border-t border-border/40 pt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-secondary font-mono">
+                      <div>
+                        <span className="block text-[9px] text-secondary/60 uppercase font-bold font-sans">Signal Generated Time</span>
+                        {provenance.metadata.signal_generated_time}
+                      </div>
+                      <div>
+                        <span className="block text-[9px] text-secondary/60 uppercase font-bold font-sans">Engine Version</span>
+                        {provenance.metadata.engine_version}
+                      </div>
+                      <div>
+                        <span className="block text-[9px] text-secondary/60 uppercase font-bold font-sans">Dataset Snapshot Version</span>
+                        {provenance.metadata.dataset_snapshot_version}
+                      </div>
+                      <div>
+                        <span className="block text-[9px] text-secondary/60 uppercase font-bold font-sans">Rule Version</span>
+                        {provenance.metadata.rule_version}
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              ) : (
+                <div className="text-center py-6 text-secondary text-xs">Failed to load provenance metadata.</div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 border-t border-border bg-soft/20 flex justify-end">
+              <button 
+                onClick={() => setActiveSignal(null)}
+                className="px-4 py-2 text-xs font-semibold rounded bg-primary text-card hover:bg-primary-dim transition-colors"
+              >
+                Close Provenance View
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

@@ -14,12 +14,12 @@ export function OfferSummaryCard({ title, value, subtitle, description }: OfferS
         {title}
       </div>
       
-      <div className="mt-2 flex-1 flex items-baseline gap-2">
-        <span className="text-xl font-bold tracking-tight text-foreground leading-none">
+      <div className="mt-1 flex-1 flex items-center">
+        <span className={`font-bold tracking-tight text-foreground leading-tight ${value.toString().length > 16 ? 'text-[13px]' : 'text-xl'}`}>
           {value}
         </span>
         {subtitle && (
-          <span className="text-[10px] text-primary font-mono font-semibold self-center">
+          <span className="text-[10px] text-primary font-mono font-semibold ml-2">
             {subtitle}
           </span>
         )}

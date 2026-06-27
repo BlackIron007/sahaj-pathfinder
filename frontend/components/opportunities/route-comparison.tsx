@@ -95,6 +95,84 @@ export function RouteComparison({ analysis }: RouteComparisonProps) {
                     </div>
                   </div>
 
+                  {/* Feature Contributions */}
+                  {item.influence_factors && item.influence_factors.length > 0 && (() => {
+                    const positiveFactors = item.influence_factors.filter(f => f.weight > 0);
+                    const negativeFactors = item.influence_factors.filter(f => f.weight <= 0);
+                    const sortedAbs = [...item.influence_factors].sort((a, b) => Math.abs(b.weight) - Math.abs(a.weight));
+                    const primaryDriver = sortedAbs[0];
+
+                    return (
+                      <div className="border-t border-border/40 pt-3 space-y-3">
+                        <span className="text-[10px] uppercase font-bold text-secondary tracking-wider block">
+                          Feature Contributions (What influenced this route score?)
+                        </span>
+
+                        {/* Primary Decision Driver */}
+                        {primaryDriver && (
+                          <div className="bg-soft/40 border border-border/40 p-2.5 rounded">
+                            <span className="text-[9px] uppercase font-bold text-primary tracking-wider block mb-1">Primary Decision Driver</span>
+                            <div className="flex justify-between items-center text-[11px]">
+                              <span className="font-bold text-foreground">{primaryDriver.factor}</span>
+                              <span className={`font-mono font-bold ${primaryDriver.weight > 0 ? "text-status-approved-accent" : "text-status-blocked-accent"}`}>
+                                {primaryDriver.weight > 0 ? "+" : ""}{primaryDriver.weight}% impact
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                          {/* Positive */}
+                          <div className="space-y-2">
+                            <span className="text-[9.5px] uppercase font-bold text-status-approved-accent tracking-wider block">Positive Contributors</span>
+                            {positiveFactors.length > 0 ? (
+                              <div className="space-y-2.5">
+                                {positiveFactors.map((f, idx) => (
+                                  <div key={idx} className="space-y-1">
+                                    <div className="flex justify-between text-[10.5px]">
+                                      <span className="text-secondary">{f.factor}</span>
+                                      <span className="font-mono font-bold text-status-approved-accent">+{f.weight}%</span>
+                                    </div>
+                                    <div className="bg-soft rounded-full h-1 overflow-hidden">
+                                      <div className="bg-status-approved-accent h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, f.weight * 1.5))}%` }} />
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="text-secondary/60 italic text-[10.5px]">No positive contributions.</span>
+                            )}
+                          </div>
+
+                          {/* Negative */}
+                          <div className="space-y-2">
+                            <span className="text-[9.5px] uppercase font-bold text-status-blocked-accent tracking-wider block">Negative Contributors</span>
+                            {negativeFactors.length > 0 ? (
+                              <div className="space-y-2.5">
+                                {negativeFactors.map((f, idx) => {
+                                  const absWeight = Math.abs(f.weight);
+                                  return (
+                                    <div key={idx} className="space-y-1">
+                                      <div className="flex justify-between text-[10.5px]">
+                                        <span className="text-secondary">{f.factor}</span>
+                                        <span className="font-mono font-bold text-status-blocked-accent">{f.weight}%</span>
+                                      </div>
+                                      <div className="bg-soft rounded-full h-1 overflow-hidden">
+                                        <div className="bg-status-blocked-accent h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, absWeight * 1.5))}%` }} />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <span className="text-secondary/60 italic text-[10.5px]">No negative contributions.</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
                   {/* Supporting evidence */}
                   <div className="border-t border-border/40 pt-3 text-[10px] text-secondary">
                     <span className="font-semibold text-foreground">Underwriting Evidence:</span> {item.evidence}

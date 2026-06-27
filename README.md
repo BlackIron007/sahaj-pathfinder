@@ -97,7 +97,7 @@ flowchart TD
 The repository contains high-fidelity UI screens demonstrating the end-to-end executive workflow:
 
 * **[Screen 1: Discovery Dashboard](./prototype/screen_01_dashboard.png)** - Tracks macro network growth and discovers MSME opportunities hidden within SBI ecosystems.
-* **[Screen 2: Acquisition Intelligence](./prototype/screen_02_acquisition_intelligence.png)** - Exposes the AI's internal logic, signal analysis, and comparative route evaluation.
+* **[Screen 2: Acquisition Intelligence](./prototype/screen_02_acquisition_intelligence.png)** - Exposes the AI's logic, signal analysis, comparative route evaluation, and the **Signal Provenance Engine** (providing complete explainability traces with formulas, derived features, supporting records, and source datasets).
 * **[Screen 3: Offer Workspace](./prototype/screen_03_offer_workspace.png)** - The RM interface to review the generated strategy, verify compliance, and launch the journey.
 * **[Screen 4: Impact Center](./prototype/screen_04_impact_center.png)** - Tracks conversion outcomes, loan book expansion, and the agent's continuous learning loop.
 
