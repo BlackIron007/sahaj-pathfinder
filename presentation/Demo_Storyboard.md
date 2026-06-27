@@ -1,129 +1,135 @@
-# Sahaj PathFinder: Demo Storyboard
+<div align="center">
 
-**Demo Objective:** Demonstrate how SBI can transform MSME acquisition from a brute-force *lead-generation* problem into a precision *acquisition intelligence* problem.
+# Demo Storyboard: Sahaj PathFinder
+**Category:** Agentic MSME Acquisition Intelligence Platform
 
-**The Lifecycle:** `Discover` → `Understand` → `Decide` → `Acquire` → `Expand`
+[![Demo](https://img.shields.io/badge/Demo_Duration-4_to_5_Minutes-2ea44f?style=for-the-badge)]()
+[![Audience](https://img.shields.io/badge/Audience-SBI_Executives_&_Judges-0055A5?style=for-the-badge)]()
+[![Prerequisites](https://img.shields.io/badge/Prerequisites-Prototype_running_locally-8a2be2?style=for-the-badge)]()
+
+*A high-impact, 5-minute executive walkthrough demonstrating how PathFinder transforms fragmented ecosystem data into governed, explainable acquisition decisions.*
 
 ---
+</div>
+
+## Demo Objective
+Demonstrate how Sahaj PathFinder enables SBI Relationship Managers (RMs) to discover hidden MSME opportunities, understand the deep business context, recommend the mathematically optimal acquisition strategy, and measure long-term business impact, all through a single, 100% explainable workflow.
 
 ## The Demo Scenario
-
-An existing SBI MSME customer uploads invoice information through **MSME Sahaj**. PathFinder autonomously discovers a supplier within that invoice who is *not* currently banking with SBI. The platform evaluates the supplier, determines the absolute most effective acquisition strategy, generates a personalized onboarding journey, and tracks the geometric business impact post-conversion.
-
----
-
-## Screen 1: Discovery Dashboard
-
-*The Relationship Manager (RM) opens Sahaj PathFinder to view the macro ecosystem.*
-
-* **Narrative:** The dashboard continuously monitors ecosystem signals across all SBI channels. Instead of a list of cold leads, PathFinder has identified high-intent acquisition opportunities hiding within existing customer networks.
-* **What the User Sees:** Total acquisition opportunities, Route distribution charts, High-priority MSMEs, Ecosystem growth indicators, and Discovery trends.
-* **Demo Action:** The RM clicks on **Precision Castings Pvt Ltd** to investigate further.
-
-> **The Takeaway:** PathFinder is not searching the internet for random leads. It is extracting guaranteed, high-intent opportunities already transacting inside SBI's infrastructure.
+An existing SBI Tier-1 corporate customer uploads a massive batch of invoice data through the **MSME Sahaj** platform for clearance. 
+*   **The Target:** One key supplier in that ledger (*Precision Chemicals Pvt. Ltd.*) is detected. They are **not** currently banking with SBI.
+*   **The Difference:** Instead of dumping this name into a CRM as just another cold lead, Sahaj PathFinder dynamically evaluates whether this business should be acquired, determines the absolute best acquisition pathway, prepares a ready-to-launch recommendation for the RM, and tracks the long-term governance outcome.
 
 ---
 
-## Screen 2: Acquisition Intelligence
+## Screen 1: Executive Discovery Dashboard
 
-*PathFinder exposes its internal reasoning and evaluates the target MSME.*
+### Narrative
+The Relationship Manager starts the day by opening the Sahaj PathFinder portal. Rather than displaying hundreds of disconnected, low-intent leads, the dashboard highlights high-probability acquisition opportunities continuously discovered from within SBI's own transactional ecosystem.
+The RM instantly grasps:
+*   Acquisition pipeline health & conversion metrics.
+*   Total ecosystem growth (Network Flywheel).
+*   High-priority, AI-flagged opportunities.
+*   Route distribution (Transaction, Advisor, Anchor, Direct).
+*   Recent real-time discoveries.
 
-* **Narrative:** The platform evaluates multiple unstructured signals to understand exactly *how* this specific business should be acquired.
+### User Interaction
+*   The presenter hovers over the ecosystem network graph, showing live nodes.
+*   **Click** on the high-priority prospect: `Precision Chemicals Pvt. Ltd.` to investigate.
 
-**Signals Detected:**
-
-* **Working Capital Stress:** Delayed invoice settlements suggest immediate liquidity needs.
-* **Anchor Relationship:** Strong commercial ties with an SBI-connected anchor customer.
-* **Advisor Influence:** Decision-making is influenced by an external Chartered Accountant.
-* **Digital Readiness:** Moderate digital maturity with existing business systems.
-
-**PathFinder Agent Route Evaluation:**
-
-| Acquisition Route | Confidence Score | Agent Rationale |
-| --- | --- | --- |
-| **Transaction Route** | **91%** | *(Selected)* Working capital need creates the strongest, fastest conversion opportunity. |
-| **Advisor Route** | 64% | CA influence exists, but liquidity is a more pressing pain point. |
-| **Anchor Route** | 48% | Viable, but indirect. |
-| **Direct Route** | 22% | Cold digital outreach will likely be ignored. |
-
-> **The Takeaway:** The system does not merely categorize the opportunity. It mathematically reasons through multiple potential futures before selecting the optimum strategy.
+> **Emphasis:**
+> *"Notice what is happening here: We are not spending marketing dollars searching outside SBI for prospects. We are using Graph Intelligence to discover highly lucrative businesses already transacting inside SBI's ecosystem."*
 
 ---
 
-## Screen 3: Acquisition Offer Workspace
+## Screen 2: Acquisition Intelligence (The XAI Layer)
 
-*The platform generates the final strategy for human review.*
+### Narrative
+The platform pulls back the curtain on the AI, explaining exactly *why* Precision Chemicals was discovered and *why* one specific acquisition strategy is mathematically superior to the others. Instead of presenting a single, opaque "lead score", PathFinder evaluates multiple futures simultaneously.
+The RM reviews:
+*   Discovery Score & Business Profile.
+*   Extracted Business Signals (Liquidity, Digital Readiness, etc.).
+*   Route Comparison (Head-to-head analysis of the 4 pathways).
+*   Supporting Evidence & Signal Provenance (The data paper-trail).
+*   Discovery Journey & Rejected Alternatives.
 
-* **Narrative:** The agent transforms its analysis into a complete, deployable acquisition journey. The RM reviews the recommendation before launching.
-* **What the User Sees:**
-* **Recommended Product:** MSME Sahaj Invoice Financing
-* **Opportunity Value:** ₹15 Lakh
-* **Agent Decision Factors:** Working capital stress, strong anchor relationship, high financing relevance, low acquisition friction.
-* **Compliance Review:** Verified-passes all required internal validation checks.
+### User Interaction
+*   **Expand** the *Working Capital Stress* signal and click **[Explain Signal]**.
+*   *Show:* The specific contributing datasets, the supporting delayed transactions, the confidence score, and the underlying mathematical calculation.
+*   **Expand** the *Transaction Route* explanation to show why it beat the *Advisor Route*.
 
-
-* **Demo Action:** The RM clicks **"Approve Strategy"**.
-
-> **The Takeaway:** PathFinder bridges the gap between abstract analytics and immediate commercial action by generating a ready-to-deploy, compliant banking journey.
-
----
-
-## Screen 4: Impact Center
-
-*The strategy executes. The platform tracks the ripple effect.*
-
-* **Narrative:** The RM tracks macro outcomes and observes how one acquisition geometrically expands the network.
-* **What the User Sees:**
-* **Business Outcomes:** Aggregate new MSMEs acquired, loan book growth, conversion rates, and acquisition efficiency (CAC reduction).
-* **Ecosystem Expansion:** The conversion of *Precision Castings* instantly unlocks visibility into additional sub-tier MSMEs connected to their specific ledger.
-* **Agent Insights & Learning Loop:** The system displays which routes are producing the highest success rates, continuously improving future routing decisions based on real-world outcomes.
-
-
-
-> **The Takeaway:** One successful, targeted acquisition creates a geometric expansion of multiple future acquisition opportunities.
+> **Emphasis:**
+> *"There is zero hallucination here. Every single recommendation is 100% transparent. The RM can inspect the exact invoice ledger and algorithmic math that triggered this recommendation before making any banking decision."*
 
 ---
 
-## The End-to-End System Flow
+## Screen 3: Offer Workspace (Human-in-the-Loop)
+
+### Narrative
+The selected acquisition strategy (Transaction Route) is seamlessly converted into an actionable, compliant proposal. The platform does the heavy lifting which includes preparing everything required for the RM, without ever removing human control.
+The workspace presents:
+*   The recommended SBI product (*MSME Sahaj Invoice Financing*).
+*   Total opportunity value & dynamic pricing.
+*   The core business objective.
+*   RBIA Compliance checks & KYC readiness.
+*   An AI-generated, hyper-personalized outreach draft.
+*   Projected downstream ecosystem impact.
+
+### User Interaction
+*   Review the AI-generated proposal draft.
+*   **Click [Approve Strategy]** to execute the Maker-Checker workflow.
+
+> **Emphasis:**
+> *"AI proposes; Humans dispose. The platform does the heavy analytical lifting, but the Relationship Manager remains the absolute final decision-maker. No spam is ever sent automatically."*
+
+---
+
+## Screen 4: Impact & Governance Center
+
+### Narrative
+The focus shifts from an individual micro-opportunity to macro portfolio performance. The RM now sees the cumulative business impact created by their approved strategies.
+The dashboard highlights:
+*   Acquisition performance & CAC reduction.
+*   Route effectiveness & hit rates.
+*   Ecosystem expansion (Geometric growth).
+*   Business outcomes (Loan book growth).
+*   Continuous learning feedback loop.
+*   AI Governance status.
+
+### User Interaction
+*   **Expand** the *AI Governance & Continuous Learning* section.
+*   Briefly demonstrate the feedback lifecycle, the Enterprise Model Registry, the Shadow Deployment metrics, and the strict production approval workflow.
+
+> **Emphasis:**
+> *"Every customer outcome improves our future recommendations, but only through strictly governed MLOps. We use shadow deployments and human-approved learning loops to ensure our AI never goes rogue."*
+
+---
+
+## The End-to-End System Workflow
 
 ```mermaid
 flowchart TD
-    %% Theme-Safe Styling (Visible on dark/light themes)
-    classDef default fill:#f2f0eb,stroke:#333,stroke-width:1px,color:#000;
-    classDef highlight fill:#d6e4ee,stroke:#1034a6,stroke-width:2px,color:#000;
-    classDef agent fill:#fbeeb8,stroke:#b8860b,stroke-width:2px,color:#000;
-    classDef success fill:#e6eed6,stroke:#2b542c,stroke-width:2px,color:#000;
+    %% Theme-Safe Styling
+    classDef default fill:#f8f9fa,stroke:#495057,stroke-width:1.5px,color:#000,font-weight:bold;
+    classDef discovery fill:#fbeeb8,stroke:#b8860b,stroke-width:2px,color:#000;
+    classDef reasoning fill:#e6eed6,stroke:#2b542c,stroke-width:2px,color:#000;
+    classDef action fill:#d6e4ee,stroke:#1034a6,stroke-width:2px,color:#000;
     linkStyle default stroke:#888,stroke-width:2px;
 
-    A(Existing SBI Customer) --> B(Invoice Uploaded)
-    B --> C[Discovery Engine]
-    C --> D(MSME Opportunity Identified)
-    D --> E[Signal Intelligence]
-    E --> F{PathFinder Agent}:::agent
-    F --> G(Route Evaluation):::agent
-    G --> H(Strategy Selection):::agent
-    H --> I[Offer Generation]
-    I --> J(RM Approval):::highlight
-    J --> K(Customer Acquisition):::success
-    K --> L(Ecosystem Expansion):::success
-    L -.->|Feeds Back Into System| M((Continuous Learning))
-    M -.-> F
-
+    A[Incoming Invoice Uploaded]:::default --> B[Ecosystem Discovery]:::discovery
+    B --> C[Signal Intelligence Extraction]:::discovery
+    C --> D{Agentic Route Evaluation}:::reasoning
+    D --> E[Offer Generation Workspace]:::action
+    E --> F[Relationship Manager Approval]:::action
+    F --> G[Customer Onboarded]:::default
+    G --> H[Impact Measurement]:::default
+    H --> I[Continuous Learning Pipeline]:::reasoning
+    I -.->|Governed Feedback Loop| D
 ```
-
 ---
 
-## Demo Success Matrix
+## Final Message
 
-| Core Capability | How it is Demonstrated |
-| --- | --- |
-| **Customer Acquisition** | Discovering un-banked MSMEs hidden entirely within SBI's existing ledgers. |
-| **Digital Adoption** | Forcing the adoption of *MSME Sahaj*, Digital Loans, and *YONO Business* as a prerequisite to unlocking liquidity. |
-| **Digital Engagement** | Delivering hyper-personalized outreach based on exact business context, not generic spam. |
-| **Agentic AI** | Evaluating 4 distinct acquisition paths, selecting the highest-conversion route, and learning from the outcome. |
+Sahaj PathFinder changes the acquisition process from simply identifying businesses to determining the best way to acquire each one.
 
-### The Final Message
-
-Traditional banking systems ask: *"Who should we target?"*
-**Sahaj PathFinder asks: *"How should we acquire them?"***
-This fundamental shift transforms SBI from operating a static lead-generation funnel into a self-expanding, intelligent acquisition engine.
+Rather than replacing Relationship Managers, it equips them with explainable intelligence, evidence-backed recommendations, and a continuously improving acquisition platform designed for enterprise banking.
