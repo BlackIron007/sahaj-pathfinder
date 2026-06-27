@@ -24,14 +24,19 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
-  const menuItems = [
+
+  const rmItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
     { name: "Acquisition Intelligence", href: "/acquisition-intelligence", icon: Search },
     { name: "Offer Workspace", href: "/offer-workspace", icon: Briefcase },
     { name: "Impact Center", href: "/impact-center", icon: TrendingUp },
-    { name: "Architecture", href: "#", icon: Network },
     { name: "Settings", href: "#", icon: Settings },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href) && href !== "#";
+  };
 
   return (
     <aside className={`w-64 bg-card border-r border-border h-screen flex flex-col fixed left-0 top-0 z-50 transition-transform duration-200 lg:translate-x-0 ${
@@ -52,35 +57,62 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         )}
       </div>
       
-      <nav className="flex-1 px-4 py-6 space-y-1">
-        {menuItems.map((item) => {
-          let isActive = false;
-          if (item.href === "/") {
-            isActive = pathname === "/";
-          } else {
-            isActive = pathname.startsWith(item.href) && item.href !== "#";
-          }
-          
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                isActive
-                  ? "bg-soft text-primary font-semibold border-l-2 border-primary"
-                  : "text-secondary hover:bg-soft hover:text-foreground"
-              }`}
-              onClick={onClose}
-            >
-              <Icon className={`h-4.5 w-4.5 ${isActive ? "text-primary" : "text-secondary"}`} />
-              {item.name}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-4 py-6 flex flex-col gap-6 overflow-y-auto">
+        {/* RM Workflow */}
+        <div className="space-y-1">
+          <p className="px-3 mb-2 text-[10px] uppercase tracking-widest font-semibold text-secondary/60">
+            RM Workflow
+          </p>
+          {rmItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  active
+                    ? "bg-soft text-primary font-semibold border-l-2 border-primary"
+                    : "text-secondary hover:bg-soft hover:text-foreground"
+                }`}
+                onClick={onClose}
+              >
+                <Icon className={`h-4 w-4 flex-shrink-0 ${active ? "text-primary" : "text-secondary"}`} />
+                {item.name}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-border" />
+
+        {/* Technical Showcase — Judge View */}
+        <div className="space-y-1">
+          <div className="px-3 mb-2 flex items-center gap-2">
+            <p className="text-[10px] uppercase tracking-widest font-semibold text-secondary/60">
+              Technical Showcase
+            </p>
+            <span className="text-[9px] font-bold bg-primary/10 text-primary border border-primary/30 px-1.5 py-0.5 rounded">
+              JUDGE
+            </span>
+          </div>
+          <Link
+            href="/architecture"
+            className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              isActive("/architecture")
+                ? "bg-soft text-primary font-semibold border-l-2 border-primary"
+                : "text-secondary hover:bg-soft hover:text-foreground"
+            }`}
+            onClick={onClose}
+          >
+            <Network className={`h-4 w-4 flex-shrink-0 ${isActive("/architecture") ? "text-primary" : "text-secondary"}`} />
+            Architecture
+          </Link>
+        </div>
       </nav>
 
-      {/* System Health Indicators */}
+      {/* System Health */}
       <div className="p-4 border-t border-border bg-soft/30 text-xs text-secondary flex flex-col gap-2">
         <div className="flex items-center justify-between text-[11px]">
           <span className="flex items-center gap-1.5"><Server className="h-3.5 w-3.5" /> Database Ingestion</span>

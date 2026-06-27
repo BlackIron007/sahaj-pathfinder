@@ -59,7 +59,7 @@ An existing SBI MSME customer uploads invoice information through **MSME Sahaj**
 * **Recommended Product:** MSME Sahaj Invoice Financing
 * **Opportunity Value:** ₹15 Lakh
 * **Agent Decision Factors:** Working capital stress, strong anchor relationship, high financing relevance, low acquisition friction.
-* **Compliance Review:** Verified—passes all required internal validation checks.
+* **Compliance Review:** Verified-passes all required internal validation checks.
 
 
 * **Demo Action:** The RM clicks **"Approve Strategy"**.

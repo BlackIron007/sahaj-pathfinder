@@ -4,7 +4,7 @@ import { QueryProvider } from "@/providers/query-provider";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 
 export const metadata: Metadata = {
-  title: "Sahaj PathFinder — SBI Acquisition Intelligence",
+  title: "Sahaj PathFinder - SBI Acquisition Intelligence",
   description: "Discovers MSMEs hidden inside SBI ecosystems and determines optimal acquisition strategies.",
 };
 

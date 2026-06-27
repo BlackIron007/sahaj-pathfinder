@@ -41,3 +41,15 @@ export async function fetchEcosystemGrowth(): Promise<EcosystemStats> {
 export async function fetchRecentDiscoveries(): Promise<DiscoveryEvent[]> {
   return apiClient<DiscoveryEvent[]>("/dashboard/recent-discoveries");
 }
+
+export interface DatasetItem {
+  name: string;
+  description: string;
+  columns: string[];
+  total_rows: number;
+  preview: Record<string, unknown>[];
+}
+
+export async function fetchSystemDatasets(): Promise<Record<string, DatasetItem>> {
+  return apiClient<Record<string, DatasetItem>>("/system/datasets");
+}
