@@ -37,6 +37,7 @@ export default function OpportunityDetailPage() {
   const [activeSignal, setActiveSignal] = useState<string | null>(null);
   const [activeJourneyStepIdx, setActiveJourneyStepIdx] = useState<number>(0);
   const [showFullBreakdown, setShowFullBreakdown] = useState(false);
+  const [showDecisionHistory, setShowDecisionHistory] = useState(false);
 
   // Provenance Query
   const { data: provenance, isLoading: isProvenanceLoading } = useQuery({
@@ -528,6 +529,56 @@ export default function OpportunityDetailPage() {
 
         </div>
 
+      </div>
+
+      {/* Decision History */}
+      <div className="bg-card border border-border rounded-lg p-6 space-y-4 mt-6">
+        <button
+          onClick={() => setShowDecisionHistory(!showDecisionHistory)}
+          className="w-full flex items-center justify-between focus:outline-none"
+        >
+          <h3 className="text-xs uppercase font-bold text-secondary tracking-widest">
+            Governance Decision History
+          </h3>
+          <span className="text-xs font-semibold text-primary">
+            {showDecisionHistory ? "Hide History" : "Show History"}
+          </span>
+        </button>
+        
+        {showDecisionHistory && (
+          <div className="pt-4 border-t border-border/40 text-xs space-y-3 leading-relaxed text-secondary animate-in slide-in-from-top-2 duration-150">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-4">
+              <div>
+                <span className="block font-bold text-foreground">Original Recommendation:</span>
+                <span className="font-mono">{detail.recommended_route} Route</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Final RM Decision:</span>
+                <span>Approved recommended pathway</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Reason for Override:</span>
+                <span>No override applied. Model route matched underwriting rationale.</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Final Outcome:</span>
+                <span className="font-semibold text-status-approved-accent">Offer Accepted (Active Loan)</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Model Version Used:</span>
+                <span className="font-mono">v2.3-production</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Timestamp:</span>
+                <span className="font-mono">2026-06-27 10:14:55</span>
+              </div>
+              <div>
+                <span className="block font-bold text-foreground">Future Training Weight:</span>
+                <span className="font-mono font-bold text-primary">1.0x (Standard reinforcement)</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Signal Provenance Explanation Dialog Modal Overlay */}

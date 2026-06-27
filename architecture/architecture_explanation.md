@@ -87,13 +87,12 @@ The Relationship Manager reviews the AI's logic on a dashboard and clicks "Appro
 
 ---
 
-## The Learning Loop
+## The Governed Learning Loop
 
-Every decision the agent makes generates a feedback loop. By tracking outcomes (Conversion success, drop-offs, engagement quality, revenue generated), the system continuously learns:
+Every decision, override, and loan activation generates a feedback trace. By mapping outcomes (Conversion success, manual overrides, drop-offs, loan defaults), the system continuously calibrates confidence weights:
 
-* Which routes convert best for specific industries.
-* Which hidden signals are the strongest predictors of switching banks.
-* Which financial offers succeed in each segment.
+* The engine proposes updated candidate models using these weights, rather than automatically overwriting production parameters.
+* **Human-in-the-loop**: Model promotion requires explicit authorization by the SBI Governance Board.
 
 ---
 
@@ -104,15 +103,15 @@ Most banking solutions rely on predictive classifiers. PathFinder relies on auto
 | Traditional Systems | Sahaj PathFinder |
 | --- | --- |
 | **Workflow:** `Input` → `Score` → `Action` | **Workflow:** `Input` → `Discover` → `Analyze` → `Reason` → `Compare` → `Select` → `Act` |
-| **Classification:** Merely categorizes leads. | **Orchestration:** Evaluates multiple paths, chooses the most effective option, explains its reasoning, and self-improves. |
+| **Classification:** Merely categorizes leads. | **Orchestration:** Evaluates multiple paths, chooses the most effective option, explains its reasoning, and proposes optimized candidate models. |
 
 ---
 
-## Production Architecture Vision
+## Production Architecture & Governance Vision
 
-To transition this from a hackathon prototype into a secure, enterprise-grade deployment at SBI:
+To transition this from a prototype into a secure, enterprise-grade deployment at SBI:
 
-* **Data Layer:** Direct ingestion from SBI transaction systems, MSME Sahaj, and YONO Business.
-* **Graph Layer:** **Neo4j** or **TigerGraph** for modeling multi-tier supply chains.
+* **Model Registry (MLflow):** Tracks and catalogs all deployed models (`v2.2`, `v2.3`, `v2.4-shadow`) along with training dataset snapshots and validation logs.
+* **Shadow Deployments:** Silent shadow runtime configurations test candidate models on live traffic without impacting live customer-facing parameters.
+* **Hot-Rollback Strategy:** Governed database endpoints support instant fallback to standbys within seconds if validation anomalies occur.
 * **Agent Layer:** **LangGraph** orchestrating secure, on-premise Enterprise LLMs (e.g., Llama-3) to ensure zero PII leakage and strict policy adherence.
-* **Experience Layer:** Native integration into the internal RM Workbench and internal SBI acquisition dashboards.

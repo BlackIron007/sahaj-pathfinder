@@ -113,15 +113,32 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       </nav>
 
       {/* System Health */}
-      <div className="p-4 border-t border-border bg-soft/30 text-xs text-secondary flex flex-col gap-2">
-        <div className="flex items-center justify-between text-[11px]">
-          <span className="flex items-center gap-1.5"><Server className="h-3.5 w-3.5" /> Database Ingestion</span>
+      <div className="p-4 border-t border-border bg-soft/30 flex flex-col gap-2 font-sans">
+        <div className="space-y-1">
+          <span className="text-[9px] uppercase font-bold text-secondary/60 tracking-wider block">System Versions</span>
+          <div className="text-[9.5px] text-secondary/70 font-mono space-y-0.5">
+            <div className="flex justify-between">
+              <span>Recommendation Engine</span>
+              <span>v2.3</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Discovery Engine</span>
+              <span>v1.8</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Graph Intelligence</span>
+              <span>v1.4</span>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-border/50 pt-1.5 flex items-center justify-between text-[11px] text-secondary">
+          <span className="flex items-center gap-1.5"><Server className="h-3.5 w-3.5" /> Ingestion Status</span>
           <span className="text-status-approved-accent font-semibold flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-status-approved-accent inline-block"></span>
             CSV Active
           </span>
         </div>
-        <div className="flex items-center justify-between text-[11px]">
+        <div className="flex items-center justify-between text-[11px] text-secondary">
           <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Platform Latency</span>
           <span className="font-mono font-semibold text-foreground">12ms</span>
         </div>

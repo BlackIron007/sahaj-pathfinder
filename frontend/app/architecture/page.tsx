@@ -220,7 +220,7 @@ const ARCH_LAYERS = [
         "RM Offer Workspace presents AI-drafted acquisition plan with full reasoning for approval",
         "Post-conversion events (50 records) are fed back into the scoring model",
         "Ecosystem expansion: each converted MSME discovers 3–5 new prospects via graph",
-        "Agent learning module adjusts route confidence weights every 30 days in production",
+        "Agent learning engine continuously proposes models with adjusted weights for human approval. It never adjusts production weights automatically.",
       ],
     },
   },
@@ -1615,100 +1615,113 @@ export default function ArchitectureShowcasePage() {
           )}
         </section>
 
-        {/* ─── Section: Agentic Architecture ─── */}
+        {/* ─── Section: Model Deployment Lifecycle ─── */}
         <section style={{ marginBottom: 44 }} aria-labelledby="agentic-heading">
           <div style={{ marginBottom: 16 }}>
             <h2 id="agentic-heading" style={{ fontSize: 17, fontWeight: 700, color: "#373223", margin: 0 }}>
-              Prototype vs. Production Architecture
+              Enterprise Model Deployment Lifecycle
             </h2>
             <p style={{ fontSize: 12.5, color: "#6b5d4f", marginTop: 4 }}>
-              What we built for this hackathon, and what a production SBI deployment would look like.
+              The step-by-step governed transition strategy from formula-based validation to live multi-agent execution.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.1fr 1.1fr", gap: 16, alignItems: "stretch" }}>
-            {/* Prototype */}
-            <div style={{
-              background: "#fffbf2", border: "1.5px solid #e8e0d4",
-              borderRadius: 10, padding: 22,
-            }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#b57a3d",
-                textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>
-                Current Prototype
+          
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, alignItems: "stretch", marginBottom: 16 }}>
+            {/* Phase 1: Prototype */}
+            <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#b57a3d", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 1: Current Prototype
               </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#373223", marginBottom: 14 }}>
-                Formula-Based Rule Engine
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Formula-Based Rules
               </div>
-              {[
-                "Deterministic weighted scoring formulas",
-                "FastAPI + Pandas + CSV ingestion",
-                "In-memory graph joins for relationships",
-                "Fully explainable with no LLM dependency",
-                "Every computed signal stores derivation, evidence, confidence, and source datasets",
-                "Next.js frontend with React Query",
-              ].map((b) => (
-                <div key={b} style={{ display: "flex", alignItems: "center", gap: 7,
-                  marginBottom: 8, fontSize: 12.5, color: "#6b5d4f" }}>
-                  <CheckCircle size={13} color="#b57a3d" style={{ flexShrink: 0 }} />
-                  {b}
-                </div>
-              ))}
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#6b5d4f", lineHeight: "1.5em" }}>
+                <li>Deterministic heuristic weights scoring formulas</li>
+                <li>In-memory graph joins for entity relationships</li>
+                <li>Zero LLM dependencies ensuring full traceability</li>
+              </ul>
             </div>
 
-            {/* Migration Strategy */}
-            <div style={{
-              background: "#fffbf2", border: "1.5px dashed #b57a3d",
-              borderRadius: 10, padding: 22,
-            }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#b57a3d",
-                textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>
-                Migration Strategy
+            {/* Phase 2: Migration Strategy */}
+            <div style={{ background: "#fffbf2", border: "1.5px dashed #b57a3d", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#b57a3d", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 2: Migration Strategy
               </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#373223", marginBottom: 14 }}>
-                Incremental LangGraph Adoption
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Incremental LangGraph
               </div>
-              {[
-                "Transition current pandas scoring to localized state machine nodes",
-                "Integrate LangGraph supervisor agent to route complex edge-cases",
-                "Gradually replace hardcoded heuristic checks with agentic reasoning models",
-                "Expose signal outputs to feedback loop for continuous offline training",
-                "Establish dual-run mode: validate agent reasoning against rule baseline",
-                "Gradual database migration from localized memory NetworkX to Neo4j",
-              ].map((b) => (
-                <div key={b} style={{ display: "flex", alignItems: "center", gap: 7,
-                  marginBottom: 8, fontSize: 12.5, color: "#6b5d4f" }}>
-                  <CheckCircle size={13} color="#b57a3d" style={{ flexShrink: 0 }} />
-                  {b}
-                </div>
-              ))}
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#6b5d4f", lineHeight: "1.5em" }}>
+                <li>Port localized scoring formulas to state nodes</li>
+                <li>Supervisor routing handles edge cases incrementally</li>
+                <li>Continuous parameter validation dual-run baseline</li>
+              </ul>
             </div>
 
-            {/* Production */}
-            <div style={{
-              background: "#fffbf2", border: "2px solid #715b3e",
-              borderRadius: 10, padding: 22,
-            }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#715b3e",
-                textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>
-                Production SBI Stack
+            {/* Phase 3: Offline Validation */}
+            <div style={{ background: "#fffbf2", border: "1.5px dashed #b57a3d", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#b57a3d", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 3: Offline Validation
               </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#373223", marginBottom: 14 }}>
-                LangGraph Supervisor + Multi-Agent
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Historical Replay Gate
               </div>
-              {[
-                "LangGraph Supervisor orchestrates 4 specialist sub-agents",
-                "Each sub-agent calls tools: graph, signals, scoring, drafting",
-                "Full reasoning trace logged to audit store",
-                "Human-in-the-loop RM approval gate before execution",
-                "Monthly feedback loop recalibrates confidence weights",
-                "Neo4j + Kafka + PostgreSQL production data stack",
-              ].map((b) => (
-                <div key={b} style={{ display: "flex", alignItems: "center", gap: 7,
-                  marginBottom: 8, fontSize: 12.5, color: "#373223" }}>
-                  <CheckCircle size={13} color="#3a684d" style={{ flexShrink: 0 }} />
-                  {b}
-                </div>
-              ))}
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#6b5d4f", lineHeight: "1.5em" }}>
+                <li>Precision backtesting over historical SBI outcomes</li>
+                <li>Systemic false-positive variance thresholds checks</li>
+                <li>Model parameter weights checkpoint validation</li>
+              </ul>
             </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, alignItems: "stretch" }}>
+            {/* Phase 4: Shadow Deployment */}
+            <div style={{ background: "#fffbf2", border: "1.5px dashed #715b3e", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#715b3e", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 4: Shadow Deployment
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Silent Background Runs
+              </div>
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#6b5d4f", lineHeight: "1.5em" }}>
+                <li>Evaluate candidate weights alongside live traffic</li>
+                <li>Proposals logged without impacting active RMs</li>
+                <li>Compare live decisions to flag drift risk</li>
+              </ul>
+            </div>
+
+            {/* Phase 5: Production Stack */}
+            <div style={{ background: "#fffbf2", border: "2px solid #715b3e", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#715b3e", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 5: Production Stack
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Multi-Agent Supervisor
+              </div>
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#373223", lineHeight: "1.5em" }}>
+                <li>LangGraph supervisor routes live RM requests</li>
+                <li>Full trace audits stored in governed log repository</li>
+                <li>Monthly feedback loops update weight options</li>
+              </ul>
+            </div>
+
+            {/* Phase 6: Rollback Controls */}
+            <div style={{ background: "#fffbf2", border: "1.5px solid #715b3e", borderRadius: 10, padding: 20 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#715b3e", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>
+                Phase 6: Rollback Controls
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#373223", marginBottom: 10 }}>
+                Hot-Standby Rollback
+              </div>
+              <ul style={{ paddingLeft: 14, margin: 0, fontSize: 11.5, color: "#6b5d4f", lineHeight: "1.5em" }}>
+                <li>Maintain previous versions as hot standbys</li>
+                <li>Instant fallback if drift or routing failures occur</li>
+                <li>Rollback triggers log automatically to audit logs</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div style={{ marginTop: 14, background: "#f5eddd", padding: "12px 18px", borderRadius: 8, border: "1px solid #c9bfb0", fontSize: 11.5, color: "#715b3e" }}>
+            <strong>Governance Constraint:</strong> Newly proposed models are never promoted to production autonomously. Every stage progression requires explicit human approval sign-off.
           </div>
         </section>
 

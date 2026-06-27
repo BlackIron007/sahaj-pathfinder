@@ -28,3 +28,14 @@ Instead of a single funnel, the Agentic Router dynamically deploys one of four d
 * **Advisor Route:** Deployed when CA influence is strong. *(Triggers outreach through empanelled tax consultants).*
 * **Anchor Route:** Deployed for deep supply chains. *(Leverages existing Tier-1 corporate relationships).*
 * **Transaction Route:** Deployed during liquidity stress. *(Transforms an unpaid invoice into an instant financing pull).*
+
+---
+
+## Model Governance, Registry & Shadow Deployment Lifecycle
+
+To protect live SBI operations and maintain strict regulatory compliance, Sahaj PathFinder operates under a strict governance framework:
+
+1. **Human-in-the-Loop Gateways**: The AI recommends routes and drafts strategy assets, but Relationship Managers must approve every action before it deploys to live customers.
+2. **Continuous Proposed Learning**: RM decisions, overrides, and final loan activation outcomes are mapped back to the model as feedback signals. The learning loop proposes updated weights but *never* modifies production models automatically.
+3. **MLflow Model Registry**: All candidate models (e.g., shadow `v2.4`) are registered with training snapshot references, validation metrics, and human approval notes.
+4. **Shadow Runs & Rollback Policy**: Proposed models run silently in shadow mode alongside live production (`v2.3`) to evaluate variance. Hot-rollback standbys (such as `v2.2`) are maintained for instant parameter reversal if any confidence drift is detected.
