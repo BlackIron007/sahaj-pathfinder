@@ -1,77 +1,131 @@
+<div align="center">
+
 # Technology Stack: Sahaj PathFinder
 
-**Agentic MSME Acquisition Intelligence Platform**
+**Category:** Agentic MSME Acquisition Intelligence Platform
 
-Sahaj PathFinder is architected as an enterprise-ready Agentic AI platform. The technology stack is deliberately bifurcated to satisfy three competing objectives:
+*A deterministic, explainable prototype architecture designed for seamless migration into SBI's governed, multi-agent production infrastructure.*
 
-1. **Rapid Prototype Development:** Delivering a functional, high-impact prototype for the hackathon.
-2. **Scalable Production Deployment:** Ensuring the architecture can migrate seamlessly into SBI’s internal infrastructure.
-3. **Secure & Explainable AI:** Guaranteeing that every automated acquisition routing decision is deterministic, auditable, and strictly compliant with banking regulations.
+---
+</div>
+
+## Executive Overview
+
+Sahaj PathFinder is intentionally designed with a **two-stage architecture**.
+
+The current prototype strictly prioritizes explainability, deterministic reasoning, rapid iteration, and an enterprise-grade user experience. The production architecture extends this foundation into a governed, multi-agent platform capable of operating securely within SBI's internal infrastructure.
+
+This strict separation allows the prototype to remain fully auditable today while providing a realistic, zero-friction migration path toward enterprise deployment tomorrow.
 
 ---
 
-## 1. The Hackathon MVP Stack (Local Execution)
+## 1. Current Prototype Stack (Hackathon Scope)
 
-*This stack powers the current repository, designed for lightweight local execution, rapid iteration, and high-fidelity demonstrations.*
+The MVP is built on a modular, high-performance architecture engineered for speed, strict type safety, and 100% auditable enterprise logic.
 
-### Agentic Core & LLMs
+### Architecture Stack Matrix
 
-* **Orchestration:** `LangGraph` (Constructs the deterministic state-machine workflow for route evaluation, preventing LLM hallucination).
-* **Tool Binding:** `LangChain` (Provides the framework for the agent to query the graph and draft structured JSON outputs).
-* **Inference Engine (Multi-LLM):**
-* *Routing/Reasoning:* `Llama-3-8B-Instruct` (Fast, localized reasoning).
-* *Complex Data Parsing:* `GPT-4o-mini` / `Gemini 2.5 Flash` (Used strictly for parsing unstructured synthetic invoice inputs).
+| Frontend | Backend | Intelligence (XAI) | Data Layer |
+| :--- | :--- | :--- | :--- |
+| • **Next.js 15** &bull; React<br>• **TypeScript** &bull; Tailwind<br>• **shadcn/ui** &bull; Framer<br>• **React Flow** _(Graphs)_<br>• **Recharts** _(Dashboards)_<br>• **TanStack Query** | • **FastAPI** Framework<br>• **Python 3.12** Core<br>• **Pydantic** Validation<br>• **Pandas** Processing<br>• **Uvicorn** ASGI Server | • **Python + Pandas** Engine<br>• **Rule-Based** Extraction<br>• **Weighted** Scoring<br>• **Signal** Provenance<br>• **Feature** Contribution<br>• **HITL** Workflows | • **12 Relational CSVs**<br>• **NetworkX** Graphs<br>• **Pandas** Ingestion<br>• **PostgreSQL**  |
 
+> [!NOTE]
+> **The Deterministic Guarantee:** PathFinder **does not** rely on an LLM for business-critical decision making. The intelligence layer uses a 100% explainable reasoning engine to guarantee absolute mathematical trust, reproducible recommendations, and complete auditability.
 
-
-### Data & Graph Intelligence
-
-* **Graph Engine:** `NetworkX` (Handles localized, in-memory graph construction and ecosystem relationship traversal for the prototype).
-* **Data Processing:** `Pandas` (Processes synthetic MSME profiles, invoice relationships, and signal generation).
-* **Storage:** Local `CSV` datasets acting as simulated database tables.
-
-### Frontend & Visualization
-
-* **Application Framework:** `Next.js (React)` (Delivers a high-performance, production-grade Single Page Application for the Executive Dashboard and Offer Workspace).
-* **UI Architecture:** `Tailwind CSS` + `shadcn/ui` (Ensures a premium, pixel-perfect enterprise fintech aesthetic while maintaining extreme speed for hackathon prototyping).
-* **Continuous Ecosystem Discovery:** `React Flow` & `Recharts` (Enables continuous ecosystem discovery mapping and node attributes inspections natively in the browser, eliminating the latency of server-side generation).
 
 ---
 
-## 2. The SBI Enterprise Stack (Production Target)
+## 2. Production Evolution (SBI Target State)
 
-*The target architecture required to deploy PathFinder securely inside SBI’s on-premise, RBI-compliant infrastructure.*
+The enterprise architecture replaces prototype components incrementally while strictly preserving the core business logic.
 
-| Component | MVP Prototype | Enterprise Target State | Justification for SBI |
-| --- | --- | --- | --- |
-| **Data Ingestion** | Synthetic CSVs | **Apache Kafka & Spark** | Real-time streaming of NEFT/RTGS rails and *MSME Sahaj* API ledgers. |
-| **Graph Database** | NetworkX (In-Memory) | **Neo4j Enterprise / TigerGraph** | Highly scalable, persistent storage for multi-tier supply chain traversal. |
-| **AI Inference** | Commercial APIs | **Self-Hosted Quantized SLMs** | On-premise deployment (e.g., vLLM hosting Llama-3) ensuring zero PII data leakage. |
-| **Data Storage** | Local Files | **PostgreSQL + S3 Object Storage** | ACID-compliant storage for audit logs, outreach history, and conversion events. |
-| **Frontend** | Next.js (React) | **React Micro-frontends / Angular** | Native integration directly into the existing SBI Relationship Manager (RM) Workbench via modular micro-frontends. |
-
----
-
-## 3. Architectural Mapping
-
-The PathFinder system maps specific technologies to distinct operational layers to ensure modularity. If SBI wishes to swap out an underlying LLM or database, the core routing logic remains intact.
-
-| System Layer | Core Responsibility | Assigned Technology (MVP) |
+| Capability | Hackathon Prototype | Enterprise Target |
 | --- | --- | --- |
-| **1. Discovery Engine** | Counterparty extraction & identification | `Python` + `Pandas` |
-| **2. Signal Intelligence** | Detecting liquidity & compliance stress | `Python` + `Regex` + `NLP` |
-| **3. Graph Intelligence** | Mapping anchor/advisor influence | `NetworkX` |
-| **4. PathFinder Agent** | State management & route reasoning | `LangGraph` |
-| **5. Tool Calling** | Data retrieval & payload formatting | `LangChain` |
-| **6. Strategy Execution**| Presentation of generated outreach | `Next.js` + `React Flow` |
+| **Decision Engine** | Deterministic Weighted Engine | **LangGraph Supervisor** |
+| **Graph Intelligence** | NetworkX (In-Memory) | **Neo4j Enterprise** |
+| **Data Processing** | Pandas (Batch) | **Apache Spark** |
+| **Event Processing** | CSV Ingestion | **Apache Kafka** |
+| **Persistent Storage** | CSV + Local SQLite | **PostgreSQL + Object Storage** |
+| **AI Models** | Rule-based Reasoning | **Enterprise LLMs / SLMs** |
+| **Model Governance** | Simulated Registry | **MLflow Registry** |
+| **Observability** | Internal Logging | **LangSmith + OpenTelemetry** |
+| **Deployment** | Local Prototype | **Kubernetes** |
 
 ---
 
-## 4. Core Engineering Principles
+## 3. Architecture Mapping
 
-To ensure this prototype transitions successfully from a hackathon concept to enterprise software, the codebase adheres to strict design principles:
+Every technology selected maps directly to a strict business capability, ensuring no "bloatware."
 
-* **Explainable AI (XAI):** The `LangGraph` state machine and our **Signal Provenance Engine** force the model to output its reasoning step-by-step and provide a direct trace to the underlying CSV files, supporting records, formulas, and confidence scores for absolute audit transparency.
-* **Human-in-the-Loop (HITL):** The system generates the strategy, but execution halts at the "Offer Workspace" until an authorized Relationship Manager explicitly approves the payload.
-* **Zero-Knowledge Routing:** The agent evaluates anonymized financial signals and graph edges; it does not require access to highly sensitive PII to determine the optimal acquisition route.
-* **Modular Architecture:** Built to evolve. The `NetworkX` graph can be replaced by a `Neo4j` connection string in production without rewriting the agent's logic.
+| Layer / Responsibility | Prototype Technology | Enterprise Evolution |
+| --- | --- | --- |
+| **Ecosystem Discovery:** *Discover hidden MSMEs* | Python + Pandas | Kafka + Spark |
+| **Signal Intelligence:** *Generate business signals* | Rule Engine | Agentic Signal Analysis |
+| **Graph Intelligence:** *Relationship reasoning* | NetworkX | Neo4j |
+| **Route Evaluation:** *Compare acquisition strategies* | Weighted Decision Engine | LangGraph Supervisor |
+| **Explainability:** *Decision traceability* | Signal Provenance Engine | LangSmith + Provenance APIs |
+| **Offer Generation:** *RM recommendations* | FastAPI Services | Multi-Agent Orchestration |
+| **Governance:** *Human approval & auditing* | Governance Engine | MLflow + Shadow Deployment |
+
+---
+
+## 4. AI Governance Stack
+
+Enterprise AI requires far more than just accurate predictions. PathFinder incorporates strict Risk Based Internal Audit (RBIA) governance throughout the entire technology stack.
+
+| Governance Capability | Prototype Execution | Enterprise Execution |
+| --- | --- | --- |
+| **Human Approval** | RM Approval UI Workflow | Integrated SBI Approval Policies |
+| **Explainability** | Signal Provenance Engine | Enterprise XAI Services |
+| **Model Registry** | Simulated Registry | MLflow Model Registry |
+| **Shadow Deployment** | Simulated Evaluation | Production Shadow Inference |
+| **Offline Validation** | Simulated Replay | Automated Backtesting Pipelines |
+| **Rollback Strategy** | Version Simulation | One-Click Production Rollback |
+
+---
+
+## 5. Core Engineering Principles
+
+The entire PathFinder platform was engineered from day one following five non-negotiable principles:
+
+### 1. Explainability First
+
+Every single recommendation can be traced back to its supporting signals, contributing features, confidence score, mathematical calculations, and source datasets.
+
+### 2. Human-in-the-Loop (HITL)
+
+PathFinder *recommends*. Relationship Managers *approve*. The platform is built to augment human financial expertise, never to autonomously replace it.
+
+### 3. Governance Before Automation
+
+No production model is ever promoted automatically. Production models must evolve through a strict pipeline:
+
+```mermaid
+flowchart LR
+    %% Theme-Safe Styling
+    linkStyle default stroke:#888,stroke-width:2px;
+    classDef default fill:#f8f9fa,stroke:#495057,stroke-width:1.5px,color:#000,font-weight:bold;
+
+    A[Candidate Model] --> B[Offline Validation]
+    B --> C[Shadow Deployment]
+    C --> D[Governance Review]
+    D --> E[Production Release]
+    E -.-> F((Rollback Ready))
+
+```
+
+### 4. Incremental Modernization
+
+Prototype technologies can be replaced independently without changing business workflows. This microservices approach minimizes migration risk while allowing gradual enterprise adoption.
+
+### 5. Enterprise Scalability
+
+The architecture is intentionally modular. Every major subsystem (including graph intelligence, decision engines, AI orchestration, and storage) can evolve independently as SBI's deployment requirements mature.
+
+---
+
+## Conclusion
+
+The current Sahaj PathFinder prototype prioritizes explainability, deterministic reasoning, and enterprise governance while successfully demonstrating the complete acquisition intelligence workflow.
+
+Its highly modular architecture provides a clear, risk-free migration path from a hackathon prototype directly to a production-grade SBI platform, ultimately powered by governed multi-agent AI, real-time ecosystem intelligence, and enterprise-scale infrastructure.
