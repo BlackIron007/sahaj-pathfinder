@@ -25,7 +25,7 @@ export function InsightCard({ insights }: InsightCardProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {insights.map((ins) => (
-          <div key={ins.id} className="bg-soft/20 border border-border/40 p-5 rounded-md flex flex-col justify-between hover:border-primary/50 transition-colors h-36">
+          <div key={ins.id} className="bg-soft/20 border border-border/40 p-5 rounded-md flex flex-col justify-between hover:border-primary/50 transition-colors min-h-[144px]">
             <div className="flex items-center gap-2 border-b border-border/10 pb-2">
               {getIcon(ins.title)}
               <span className="text-[10px] font-bold text-primary uppercase tracking-wider block">

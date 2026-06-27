@@ -140,18 +140,18 @@ const ARCH_LAYERS = [
   },
   {
     id: 1,
-    label: "Graph Discovery",
+    label: "Ecosystem Discovery Engine",
     sublabel: "Relationship Intelligence",
     Icon: Network,
     detail: {
-      title: "Graph Discovery Engine",
+      title: "Ecosystem Discovery Engine",
       badge: "200 edges · 50 anchors",
       tag: "PROTOTYPE",
       bullets: [
-        "200 cross-entity graph edges map MSME ↔ Anchor ↔ Advisor ↔ SBI relationships",
-        "In-memory graph traversal surfaces warm introduction pathways within 3 hops",
-        "Prototype uses pandas joins; production will use Neo4j Aura with GDS algorithms",
-        "Discovery pipeline updated on 6-hour micro-batch cadence in production",
+        "The graph is not used for visualization. The graph is the discovery engine powering PathFinder.",
+        "Engine continuously analyzes: invoice, graph expansion, community detection, signal extraction, opportunity creation, route evaluation.",
+        "In-memory graph traversal surfaces warm introduction pathways within 3 hops.",
+        "Prototype uses pandas joins; production will use Neo4j Aura with Graph Data Science (GDS) algorithms.",
       ],
     },
   },
@@ -525,8 +525,10 @@ const RouteResultCard = memo(function RouteResultCard({
 
 const ReasoningPipeline = memo(function ReasoningPipeline({
   nodeStates,
+  recommendedRoute,
 }: {
   nodeStates: NodeState[];
+  recommendedRoute?: string;
 }) {
   return (
     <div
@@ -542,6 +544,11 @@ const ReasoningPipeline = memo(function ReasoningPipeline({
         const isPending = state === "pending";
         const StepIcon = step.Icon;
 
+        // Synchronize highlight colors with selected route
+        const activeColor = recommendedRoute && ROUTE_META[recommendedRoute]
+          ? ROUTE_META[recommendedRoute].color
+          : "#715b3e";
+
         return (
           <React.Fragment key={step.id}>
             <div
@@ -552,10 +559,10 @@ const ReasoningPipeline = memo(function ReasoningPipeline({
                 aria-label={`${step.label}: ${state}`}
                 style={{
                   width: 46, height: 46, borderRadius: "50%",
-                  background: isDone ? "#3a684d" : isActive ? "#715b3e" : "#f0ebe1",
+                  background: isDone ? "#3a684d" : isActive ? activeColor : "#f0ebe1",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   border: isActive ? "2.5px solid #b57a3d" : isDone ? "none" : "1.5px solid #e0d8cc",
-                  boxShadow: isActive ? "0 0 0 4px rgba(113,91,62,0.12)" : "none",
+                  boxShadow: isActive ? `0 0 0 4px ${activeColor}1e` : "none",
                   marginBottom: 8,
                   transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
                 }}
@@ -880,9 +887,10 @@ export default function ArchitectureShowcasePage() {
   const [nodeStates, setNodeStates] = useState<NodeState[]>(
     REASONING_STEPS.map(() => "pending")
   );
-  const animationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const animationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [reasoningLogs, setReasoningLogs] = useState<string[]>([]);
+  const [showReasoningTrace, setShowReasoningTrace] = useState(false);
 
   // Dataset explorer
   const [showDataExplorer, setShowDataExplorer] = useState(false);
@@ -931,6 +939,7 @@ export default function ArchitectureShowcasePage() {
   const animatePipeline = useCallback(async (result: SimulateResult) => {
     setIsSimulating(true);
     setReasoningLogs([]);
+    setNodeStates(REASONING_STEPS.map(() => "pending"));
     const logs = [
       "Ingested raw customer transaction files and digital profiles.",
       "Traversed graph nodes. Found CA advisor connection strength of 80%.",
@@ -1215,19 +1224,33 @@ export default function ArchitectureShowcasePage() {
           </div>
           <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
             borderRadius: 12, padding: "22px 20px 16px" }}>
-            <ReasoningPipeline nodeStates={nodeStates} />
+            <ReasoningPipeline nodeStates={nodeStates} recommendedRoute={simResult?.recommended_route} />
             {reasoningLogs.length > 0 && (
-              <div style={{
-                marginTop: 18, borderTop: "1.5px solid #ede8e1", paddingTop: 14,
-                fontFamily: "monospace", fontSize: 11, color: "#6b5d4f",
-                display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto"
-              }}>
-                {reasoningLogs.map((log, idx) => (
-                  <div key={idx} style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                    <span style={{ color: "#715b3e", fontWeight: "bold" }}>&gt;</span>
-                    <span>{log}</span>
+              <div style={{ marginTop: 14 }}>
+                <button
+                  onClick={() => setShowReasoningTrace(!showReasoningTrace)}
+                  style={{
+                    background: "none", border: "none", color: "#715b3e",
+                    fontSize: 12, fontWeight: 700, cursor: "pointer",
+                    padding: 0, display: "flex", alignItems: "center", gap: 4,
+                  }}
+                >
+                  {showReasoningTrace ? "Hide reasoning trace" : "Show reasoning trace"}
+                </button>
+                {showReasoningTrace && (
+                  <div style={{
+                    marginTop: 14, borderTop: "1.5px solid #ede8e1", paddingTop: 14,
+                    fontFamily: "monospace", fontSize: 11, color: "#6b5d4f",
+                    display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto"
+                  }}>
+                    {reasoningLogs.map((log, idx) => (
+                      <div key={idx} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                        <span style={{ color: "#715b3e", fontWeight: "bold" }}>&gt;</span>
+                        <span>{log}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>
@@ -1602,7 +1625,7 @@ export default function ArchitectureShowcasePage() {
               What we built for this hackathon, and what a production SBI deployment would look like.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 16, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.1fr 1.1fr", gap: 16, alignItems: "stretch" }}>
             {/* Prototype */}
             <div style={{
               background: "#fffbf2", border: "1.5px solid #e8e0d4",
@@ -1631,10 +1654,32 @@ export default function ArchitectureShowcasePage() {
               ))}
             </div>
 
-            {/* Arrow */}
-            <div style={{ textAlign: "center", padding: "0 4px" }}>
-              <ArrowRight size={28} color="#715b3e" />
-              <div style={{ fontSize: 10, color: "#6b5d4f", marginTop: 5, whiteSpace: "nowrap" }}>Phase 1+</div>
+            {/* Migration Strategy */}
+            <div style={{
+              background: "#fffbf2", border: "1.5px dashed #b57a3d",
+              borderRadius: 10, padding: 22,
+            }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#b57a3d",
+                textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>
+                Migration Strategy
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#373223", marginBottom: 14 }}>
+                Incremental LangGraph Adoption
+              </div>
+              {[
+                "Transition current pandas scoring to localized state machine nodes",
+                "Integrate LangGraph supervisor agent to route complex edge-cases",
+                "Gradually replace hardcoded heuristic checks with agentic reasoning models",
+                "Expose signal outputs to feedback loop for continuous offline training",
+                "Establish dual-run mode: validate agent reasoning against rule baseline",
+                "Gradual database migration from localized memory NetworkX to Neo4j",
+              ].map((b) => (
+                <div key={b} style={{ display: "flex", alignItems: "center", gap: 7,
+                  marginBottom: 8, fontSize: 12.5, color: "#6b5d4f" }}>
+                  <CheckCircle size={13} color="#b57a3d" style={{ flexShrink: 0 }} />
+                  {b}
+                </div>
+              ))}
             </div>
 
             {/* Production */}

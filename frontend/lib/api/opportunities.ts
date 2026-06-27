@@ -9,6 +9,19 @@ export interface OpportunityItem {
   status: "Approved" | "Blocked" | "Warning" | "Pending Review";
   conversion_probability: number;
   priority: string;
+  discovery_score: number;
+  is_rejected: boolean;
+  rejection_reasons?: string[];
+  evidence?: string[];
+  breakdown?: {
+    network_connectivity: number;
+    invoice_strength: number;
+    anchor_trust: number;
+    advisor_confidence: number;
+    digital_readiness: number;
+    growth_potential: number;
+    working_capital_need: number;
+  };
 }
 
 export interface OpportunityDetail {
@@ -124,5 +137,32 @@ export async function fetchOpportunityTimeline(id: string): Promise<ProgressStep
 
 export async function fetchSignalProvenance(oppId: string, signalName: string): Promise<SignalProvenance> {
   return apiClient<SignalProvenance>(`/opportunities/${oppId}/signals/${encodeURIComponent(signalName)}/provenance`);
+}
+
+export interface DiscoveryJourneyStep {
+  step: string;
+  evidence: string;
+  completed: boolean;
+}
+
+export interface EcosystemDiscoveryDetails {
+  discovery_score: number;
+  is_rejected: boolean;
+  rejection_reasons: string[];
+  evidence: string[];
+  journey: DiscoveryJourneyStep[];
+  breakdown: {
+    network_connectivity: number;
+    invoice_strength: number;
+    anchor_trust: number;
+    advisor_confidence: number;
+    digital_readiness: number;
+    growth_potential: number;
+    working_capital_need: number;
+  };
+}
+
+export async function fetchOpportunityDiscovery(id: string): Promise<EcosystemDiscoveryDetails> {
+  return apiClient<EcosystemDiscoveryDetails>(`/opportunities/${id}/discovery`);
 }
 

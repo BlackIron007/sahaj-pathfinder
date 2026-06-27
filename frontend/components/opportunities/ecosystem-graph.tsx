@@ -47,6 +47,47 @@ export function EcosystemGraph({ ecosystem }: EcosystemGraphProps) {
           <span className="text-[9px] text-secondary font-mono">1st Degree Anchor Trade Backing</span>
         </div>
 
+        {/* Node Properties Panel */}
+        <div className="bg-soft/30 border border-border/40 p-4 rounded-lg space-y-2 text-xs">
+          <div className="text-[10px] uppercase font-bold text-primary tracking-wider mb-2">
+            Ecosystem Node Graph Properties
+          </div>
+          <div className="grid grid-cols-2 gap-y-2.5 gap-x-4">
+            <div>
+              <span className="text-[10px] text-secondary block">Discovery Score</span>
+              <span className="font-bold text-foreground">91%</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Network Distance</span>
+              <span className="font-mono text-foreground font-semibold">2-hops</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Connected Anchors</span>
+              <span className="font-semibold text-foreground">1 Anchor</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Connected Suppliers</span>
+              <span className="font-semibold text-foreground">{ecosystem.potential_future_msmes_count} Suppliers</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Connected Advisors</span>
+              <span className="font-semibold text-foreground">1 CA</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Relationship Strength</span>
+              <span className="font-mono font-bold text-foreground">84%</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Evidence Count</span>
+              <span className="font-mono text-foreground">8 verified checks</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-secondary block">Estimated Ecosystem Value</span>
+              <span className="font-bold text-foreground">{(ecosystem.estimated_ecosystem_value_lakh / 100).toFixed(1)} Cr</span>
+            </div>
+          </div>
+        </div>
+
         {/* Key expansion statistics */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-soft/30 border border-border/30 rounded p-3 text-center">

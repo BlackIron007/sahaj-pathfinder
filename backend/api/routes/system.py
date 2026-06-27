@@ -4,6 +4,7 @@ from fastapi import APIRouter, status
 from backend.core.config import settings
 from backend.services.data_loader import data_loader_service
 from backend.schemas.data_models import DatasetStats
+from backend.api.routes.opportunities import calculate_discovery_details
 
 router = APIRouter()
 
@@ -70,6 +71,8 @@ async def get_dashboard_opportunities() -> List[Dict[str, Any]]:
         else:
             status_val = "Warning"
             
+        disc = calculate_discovery_details(o.msme_id)
+            
         results.append({
             "opportunity_id": o.opportunity_id,
             "msme_id": o.msme_id,
@@ -78,7 +81,12 @@ async def get_dashboard_opportunities() -> List[Dict[str, Any]]:
             "potential_value_lakh": o.opportunity_value_lakh,
             "status": status_val,
             "conversion_probability": o.conversion_probability,
-            "priority": o.priority
+            "priority": o.priority,
+            "discovery_score": disc.get("discovery_score", 75),
+            "is_rejected": disc.get("is_rejected", False),
+            "rejection_reasons": disc.get("rejection_reasons", []),
+            "evidence": disc.get("evidence", []),
+            "breakdown": disc.get("breakdown", {})
         })
     return results
 

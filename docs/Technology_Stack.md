@@ -34,7 +34,7 @@ Sahaj PathFinder is architected as an enterprise-ready Agentic AI platform. The 
 
 * **Application Framework:** `Next.js (React)` (Delivers a high-performance, production-grade Single Page Application for the Executive Dashboard and Offer Workspace).
 * **UI Architecture:** `Tailwind CSS` + `shadcn/ui` (Ensures a premium, pixel-perfect enterprise fintech aesthetic while maintaining extreme speed for hackathon prototyping).
-* **Network Visualization:** `React Flow` & `Recharts` (Handles complex, interactive ecosystem graph rendering and dynamic confidence-score metrics natively in the browser, eliminating the latency of server-side image generation).
+* **Continuous Ecosystem Discovery:** `React Flow` & `Recharts` (Enables continuous ecosystem discovery mapping and node attributes inspections natively in the browser, eliminating the latency of server-side generation).
 
 ---
 

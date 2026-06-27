@@ -25,8 +25,8 @@ import { ExecutiveSummary } from "@/components/opportunities/executive-summary";
 
 export default function ImpactCenterPage() {
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(true);
-  const [isNetworkOpen, setIsNetworkOpen] = useState(true);
-  const [isInsightsOpen, setIsInsightsOpen] = useState(true);
+  const [isNetworkOpen, setIsNetworkOpen] = useState(false);
+  const [isInsightsOpen, setIsInsightsOpen] = useState(false);
   const [isLearningOpen, setIsLearningOpen] = useState(true);
 
   // Queries
