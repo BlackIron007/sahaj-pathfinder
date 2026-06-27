@@ -1,10 +1,26 @@
-# Sahaj PathFinder: End-to-End System Flow
+<div align="center">
 
-Sahaj PathFinder operates as an agentic acquisition intelligence system that transforms fragmented ecosystem signals into targeted acquisition actions. 
+# End-to-End System Flow: Sahaj PathFinder
+**Category:** Agentic MSME Acquisition Intelligence Platform
 
-Instead of generating generic marketing leads, the system executes a continuous six-stage autonomous workflow.
+[![Workflow](https://img.shields.io/badge/Workflow-Autonomous_Routing-2ea44f?style=for-the-badge)]()
+[![Approval](https://img.shields.io/badge/Approval-Human--in--the--Loop-ffc107?style=for-the-badge)]()
+[![Governance](https://img.shields.io/badge/Governance-RBIA_Compliant-8a2be2?style=for-the-badge)]()
 
-## The Autonomous Acquisition Lifecycle
+*A transparent, 6-stage operational pipeline transforming raw SBI ecosystem signals into high-conversion, fully governed acquisition journeys.*
+
+---
+</div>
+
+## Executive Summary
+
+**Sahaj PathFinder** is an Acquisition Intelligence Platform that transforms fragmented ecosystem signals into explainable, governed acquisition decisions. 
+
+Rather than generating generic marketing leads that sit idly in a CRM, the platform operates as a continuous engine: discovering MSMEs, evaluating multiple acquisition pathways, recommending the optimal engagement strategy, supporting Relationship Manager decision-making, and learning from business outcomes through a strictly governed feedback loop.
+
+---
+
+## The Acquisition Intelligence Lifecycle
 
 ```mermaid
 flowchart TD
@@ -15,103 +31,68 @@ flowchart TD
     classDef action fill:#d6e4ee,stroke:#1034a6,stroke-width:2px,color:#000;
     linkStyle default stroke:#888,stroke-width:2px;
 
-    A[1. Signal Collection\nMSME Sahaj, NEFT, Anchors]:::signal --> B[2. Opportunity Discovery\nExtract Non-SBI Counterparties]:::signal
-    B --> C[3. Intelligence Generation\nMap Stress & Growth Signals]:::signal
-    C --> D{4. Agent Reasoning\nEvaluate Conversion Probability}:::agent
-    
-    D -->|High Digital Readiness| E1(Direct Route):::route
-    D -->|Strong CA Influence| E2(Advisor Route):::route
-    D -->|Supply Chain Trust| E3(Anchor Route):::route
-    D -->|Working Capital Gap| E4(Transaction Route):::route
-    
-    E1 --> F[5. Offer Creation\nPersonalize Outreach & Pricing]:::action
+    A[1. Signal Collection\nMSME Sahaj, NEFT, Anchors]:::signal --> B[2. Ecosystem Discovery\nIdentify Hidden MSMEs]:::signal
+    B --> C[3. Signal Intelligence\nGenerate Business Signals]:::signal
+    C --> D{4. Decision Intelligence\nCompare Acquisition Routes}:::agent
+
+    D -->|Digital Ready| E1(Direct Route):::route
+    D -->|Advisor Driven| E2(Advisor Route):::route
+    D -->|Anchor Ecosystem| E3(Anchor Route):::route
+    D -->|Liquidity Need| E4(Transaction Route):::route
+
+    E1 --> F[5. Offer Workspace\nGenerate RM Recommendation]:::action
     E2 --> F
     E3 --> F
     E4 --> F
-    
-    F --> G[6. SBI Journey Activation\nApprove, Deploy, Onboard]:::action
-    G -.->|Feedback Loop: Conversion Outcomes| D
 
+    F --> G[6. RM Approval & Customer Journey]:::action
+    G -.->|Feedback Loop| D
 ```
+---
+
+## Why This Architecture Is Different
+
+| Feature | Traditional Acquisition | Sahaj PathFinder |
+| --- | --- | --- |
+| **Target Identification** | Lead scoring models | **Ecosystem discovery & extraction** |
+| **Context** | Static CRM records | **Dynamic relationship graph reasoning** |
+| **Strategy** | Single, fixed recommendation | **Multi-route parallel evaluation** |
+| **Trust** | Black-box scoring | **100% Complete explainability (XAI)** |
+| **RM Role** | Manual prioritization | **AI-assisted decision approval** |
+| **Evolution** | Static models | **Governed continuous learning** |
+
+*The platform is designed to augment Relationship Managers with superhuman context, rather than attempt to replace them.*
 
 ---
 
-## The 6-Stage Execution Walkthrough
+## Enterprise Evolution Target
 
-To understand the agent's logic, consider this real-world operational example:
+The current prototype intentionally prioritizes deterministic reasoning, explainability, and governance. Production deployment will extend this architecture incrementally, minimizing operational risk while preserving auditability.
 
-### Step 1: Signal Collection
-
-The platform continuously ingests disconnected signals from multiple SBI ecosystems, including invoice uploads from *MSME Sahaj*, transaction histories, existing supplier relationships, and corporate anchor networks. At this stage, the data is entirely fragmented.
-
-### Step 2: Opportunity Discovery
-
-The Discovery Engine parses these signals to identify unseen opportunities hiding in plain sight.
-
-* **Example Trigger:** An existing SBI corporate customer uploads a payable invoice.
-* **Discovery:** The system extracts the supplier, *Precision Castings Pvt Ltd*, and verifies they do not currently hold an SBI account. The system flags them as a new acquisition candidate.
-
-### Step 3: Intelligence Generation
-
-The Signal Intelligence Layer enriches this raw opportunity by analyzing historical data to build a comprehensive MSME profile:
-
-* **Working Capital Stress:** Detects increasing payment delays and large pending receivables.
-* **Growth Signals:** Detects increasing transaction volume.
-* **Advisor Signals:** Identifies CA-led financial decisions.
-* **Digital Readiness:** Assesses ERP adoption and existing digital workflows.
-
-### Step 4: Agent Reasoning
-
-Unlike a rule-based system that blindly pushes a lead to a CRM, the PathFinder Agent evaluates all available signals and simulates multiple acquisition strategies:
-
-1. **Direct Route:** Offer digital onboarding immediately. *(Rejected: Low digital readiness).*
-2. **Advisor Route:** Engage through trusted advisors. *(Rejected: Too slow for immediate need).*
-3. **Anchor Route:** Use existing corporate relationships. *(Viable, but indirect).*
-4. **Transaction Route:** Lead with a financing opportunity. *(Selected).*
-
-* **Agent Rationale:** The Transaction Route is selected because *Precision Castings* shows acute working capital stress. An immediate liquidity offer yields the highest conversion probability with the lowest acquisition friction.
-
-### Step 5: Personalized Offer Creation
-
-Having selected the Transaction Route, the platform uses generative AI to draft a hyper-personalized engagement strategy tailored to the exact friction point.
-
-* **Product:** MSME Sahaj Invoice Financing
-* **Offer Amount:** ₹15 Lakh (Pre-calculated based on verified anchor invoices)
-* **Expected Conversion:** 91%
-
-### Step 6: SBI Journey Activation
-
-The Relationship Manager reviews the AI's logic on a dashboard and clicks "Approve." The strategy launches a structured onboarding process:
-
-> `Approve Strategy` → `Send Offer` → `Digital Onboarding` → `YONO Business Activation` → `Acquired Customer`
+| Subsystem | MVP Prototype Execution | Enterprise Target Execution |
+| --- | --- | --- |
+| **Decision Engine** | Weighted Decision Engine | **LangGraph Supervisor** |
+| **Graph Database** | NetworkX (In-Memory) | **Neo4j Enterprise** |
+| **Data Ingestion** | CSV Dataset Simulation | **Kafka Event Streams** |
+| **Model Registry** | Simulated Local Registry | **MLflow Enterprise Registry** |
+| **Observability** | Internal Python Logging | **LangSmith + OpenTelemetry** |
 
 ---
 
-## The Governed Learning Loop
+## The 5 Engineering Principles
 
-Every decision, override, and loan activation generates a feedback trace. By mapping outcomes (Conversion success, manual overrides, drop-offs, loan defaults), the system continuously calibrates confidence weights:
+The architecture follows five non-negotiable principles throughout every stage of the workflow:
 
-* The engine proposes updated candidate models using these weights, rather than automatically overwriting production parameters.
-* **Human-in-the-loop**: Model promotion requires explicit authorization by the SBI Governance Board.
-
----
-
-## Why This Is Genuine Agentic AI
-
-Most banking solutions rely on predictive classifiers. PathFinder relies on autonomous orchestration.
-
-| Traditional Systems | Sahaj PathFinder |
-| --- | --- |
-| **Workflow:** `Input` → `Score` → `Action` | **Workflow:** `Input` → `Discover` → `Analyze` → `Reason` → `Compare` → `Select` → `Act` |
-| **Classification:** Merely categorizes leads. | **Orchestration:** Evaluates multiple paths, chooses the most effective option, explains its reasoning, and proposes optimized candidate models. |
+1. **Explainability First:** Every recommendation mathematically exposes its evidence, calculations, and confidence.
+2. **Human-in-the-Loop:** Relationship Managers authorize and approve every single customer-facing action.
+3. **Governance Before Automation:** Candidate models require offline validation, shadow deployment, and human board approval before entering production.
+4. **Continuous Learning:** Business outcomes improve future recommendations through structured, labeled feedback.
+5. **Incremental Modernization:** Enterprise capabilities replace prototype components gradually via microservices, without disrupting RM workflows.
 
 ---
 
-## Production Architecture & Governance Vision
+## Conclusion
 
-To transition this from a prototype into a secure, enterprise-grade deployment at SBI:
+Sahaj PathFinder combines ecosystem discovery, explainable decision intelligence, governed AI, and continuous learning into a single, cohesive acquisition platform.
 
-* **Model Registry (MLflow):** Tracks and catalogs all deployed models (`v2.2`, `v2.3`, `v2.4-shadow`) along with training dataset snapshots and validation logs.
-* **Shadow Deployments:** Silent shadow runtime configurations test candidate models on live traffic without impacting live customer-facing parameters.
-* **Hot-Rollback Strategy:** Governed database endpoints support instant fallback to standbys within seconds if validation anomalies occur.
-* **Agent Layer:** **LangGraph** orchestrating secure, on-premise Enterprise LLMs (e.g., Llama-3) to ensure zero PII leakage and strict policy adherence.
+The current prototype demonstrates the complete acquisition lifecycle using deterministic reasoning and human oversight, while providing a realistic, derisked migration path toward an enterprise-scale, multi-agent architecture operating securely within SBI's massive ecosystem.
