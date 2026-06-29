@@ -3,9 +3,16 @@
 import React, { useState } from "react";
 import { Sidebar } from "@/components/sidebar";
 import { TopNav } from "@/components/top-nav";
+import { usePathname } from "next/navigation";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  const isDemoLanding = pathname === "/demo";
+
+  if (isDemoLanding) {
+    return <div className="min-h-screen bg-background">{children}</div>;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

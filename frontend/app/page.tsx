@@ -13,8 +13,12 @@ import {
 } from "@/lib/api/dashboard";
 import { fetchOpportunities } from "@/lib/api/opportunities";
 import { AlertCircle } from "lucide-react";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible } from "@/lib/cameraDirector";
+import React, { useEffect } from "react";
 
 export default function ExecutiveDashboard() {
+  const { isDemoMode, currentScene, triggerTransition, triggerFinalFade } = useDemo();
   // Query 1: Metric stats
   const {
     data: stats,
@@ -67,6 +71,64 @@ export default function ExecutiveDashboard() {
 
   const hasErrors = statsError || routesError || ecosystemError || timelineError || oppsError;
   const isGlobalLoading = isStatsLoading || isRoutesLoading || isEcosystemLoading || isTimelineLoading || isOppsLoading;
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 1 || isGlobalLoading) return;
+    let active = true;
+
+    const runScene1 = async () => {
+      // Start at top — let viewer orient
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(1000);
+      if (!active) return;
+
+      // Glow KPI row — show we are in an intelligence dashboard
+      const kpis = document.querySelector('[data-demo="dashboard-kpis"]') as HTMLElement | null;
+      if (kpis) {
+        kpis.style.transition = "all 0.5s ease-in-out";
+        kpis.style.boxShadow = "0 0 28px rgba(113, 91, 62, 0.18)";
+        kpis.style.borderRadius = "8px";
+      }
+      await observe(1800);
+      if (!active) return;
+      if (kpis) kpis.style.boxShadow = "none";
+
+      // Scroll to the opportunity table section using DOM element visibility check
+      await scrollUntilVisible('[data-demo="opportunity-table"]');
+      if (!active) return;
+
+      // Linger on the queue — viewers read it
+      await observe(1800);
+      if (!active) return;
+
+      triggerTransition("/acquisition-intelligence/OP001", 2);
+    };
+
+    runScene1();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isGlobalLoading]);
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 6 || isGlobalLoading) return;
+    let active = true;
+
+    const runScene6 = async () => {
+      // Return to top of Dashboard — the lasting executive image
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
+      // Hold 3–4 seconds at the top of the dashboard with NO scrolling and NO interactions
+      await observe(3500);
+      if (!active) return;
+
+      // Fade to background colour — clean ending
+      triggerFinalFade();
+    };
+
+    runScene6();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isGlobalLoading]);
 
   if (hasErrors) {
     return (
@@ -124,7 +186,7 @@ export default function ExecutiveDashboard() {
       </div>
 
       {/* 4. KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div data-demo="dashboard-kpis" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title="New Opportunities"
           value={stats?.new_opportunities ?? 0}
@@ -156,7 +218,7 @@ export default function ExecutiveDashboard() {
       </div>
 
       {/* Grid: Table & Timeline Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div data-demo="opportunity-table" className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
           <OpportunityTable
             opportunities={opportunities ?? []}

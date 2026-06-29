@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom } from "@/lib/cameraDirector";
 import { 
   ArrowLeft, 
   MapPin, 
@@ -109,6 +111,51 @@ export default function OfferWorkspacePage() {
   const isLoading = isDetailLoading || isDraftLoading || isComplianceLoading || isImpactLoading;
   const isActionLoading = approveMutation.isPending || requestChangesMutation.isPending || assignBranchMutation.isPending || recalculateMutation.isPending;
 
+  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 4 || isLoading) return;
+    let active = true;
+
+    const runScene4Detail = async () => {
+      // 1. Start at top — let viewer see the full workspace header
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(1000);
+      if (!active) return;
+
+      // 2. Scroll until Recalculate button is visible, click it
+      await scrollUntilVisible('[data-demo="recalculate-btn"]');
+      await verifyAndClick('[data-demo="recalculate-btn"]');
+
+      // 3. Camera stays — wait for recalculation query state change to complete
+      await waitStateChange(() => !recalculateMutation.isPending);
+      await observe(1500); // let viewer watch updated proposal values
+      if (!active) return;
+
+      // 4. Scroll until compliance checklist is visible
+      await scrollUntilVisible('[data-demo="compliance-checklist"]');
+      if (!active) return;
+      await observe(1000);
+
+      // 5. Scroll until business impact estimates are visible
+      await scrollUntilVisible('[data-demo="business-impact"]');
+      if (!active) return;
+      await observe(1000);
+
+      // 6. Continuous panoramic exploration to bottom of page (Activity Log, Outreach Preview & decision panels)
+      await panoramicScrollToBottom(400, 120);
+      if (!active) return;
+      await observe(1500);
+      if (!active) return;
+
+      triggerTransition("/impact-center", 5);
+    };
+
+    runScene4Detail();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isLoading]);
+
   if (detailError || (!isLoading && !detail)) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-4 font-sans">
@@ -195,6 +242,7 @@ export default function OfferWorkspacePage() {
         {/* Action Header Button */}
         <div className="flex items-center gap-2 pl-10 md:pl-0 md:pt-4">
           <button 
+            data-demo="recalculate-btn"
             onClick={() => recalculateMutation.mutate()}
             disabled={isActionLoading}
             className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded border border-border bg-card text-foreground hover:bg-soft transition-colors disabled:opacity-50"
@@ -267,7 +315,7 @@ export default function OfferWorkspacePage() {
           />
 
           {/* Section 2: Compliance Checklist (Collapsible) */}
-          <div className="border border-border rounded-lg bg-card overflow-hidden">
+          <div data-demo="compliance-checklist" className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
               onClick={() => setIsComplianceOpen(!isComplianceOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
@@ -283,7 +331,7 @@ export default function OfferWorkspacePage() {
           </div>
 
           {/* Section 3: Impact Grid Projections (Collapsible) */}
-          <div className="border border-border rounded-lg bg-card overflow-hidden">
+          <div data-demo="business-impact" className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
               onClick={() => setIsImpactOpen(!isImpactOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
@@ -302,7 +350,7 @@ export default function OfferWorkspacePage() {
           {draft && <OutreachPreview draft={draft} />}
 
           {/* Section 5: Offer Details Grid (Collapsible) */}
-          <div className="border border-border rounded-lg bg-card overflow-hidden">
+          <div data-demo="offer-details" className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
               onClick={() => setIsDetailsOpen(!isDetailsOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"

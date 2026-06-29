@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { ChevronRight, ShieldAlert, ChevronDown } from "lucide-react";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible, focusResult } from "@/lib/cameraDirector";
 import { Badge } from "@/components/ui/badge";
 import {
   fetchImpactSummary,
@@ -26,12 +28,13 @@ import { ExecutiveSummary } from "@/components/opportunities/executive-summary";
 export default function ImpactCenterPage() {
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(true);
   const [isNetworkOpen, setIsNetworkOpen] = useState(false);
-  const [isInsightsOpen, setIsInsightsOpen] = useState(false);
+  const [isInsightsOpen, setIsInsightsOpen] = useState(true);
   const [isLearningOpen, setIsLearningOpen] = useState(true);
   const [isGovernanceOpen, setIsGovernanceOpen] = useState(false);
   const [isRegistryOpen, setIsRegistryOpen] = useState(false);
   const [selectedRegistryModel, setSelectedRegistryModel] = useState<string | null>(null);
   const [animatedStepIdx, setAnimatedStepIdx] = useState(-1);
+
 
   useEffect(() => {
     if (isGovernanceOpen) {
@@ -78,6 +81,66 @@ export default function ImpactCenterPage() {
   });
 
   const isLoading = isSummaryLoading || isRoutesLoading || isNetworkLoading || isInsightsLoading || isLearningLoading;
+
+  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 5 || isLoading) return;
+    let active = true;
+
+    const runScene5 = async () => {
+      // 1. Start at top — let viewer orient on metrics
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(1000);
+      if (!active) return;
+
+      // 2. Scroll slowly down until AI Governance is perfectly visible
+      for (let y = 40; y <= 400; y += 40) {
+        window.scrollTo({ top: y, behavior: "smooth" });
+        await observe(220);
+        if (!active) return;
+      }
+      await scrollUntilVisible('[data-demo="impact-governance"]');
+      if (!active) return;
+      await observe(500);
+      setIsGovernanceOpen(true);
+
+      // 3. Camera stays focused on AI Governance learning loop animation (11 steps)
+      await focusResult('[data-demo="impact-governance"]', 3200);
+      if (!active) return;
+
+      // 4. Scroll until Model Registry is visible
+      await scrollUntilVisible('[data-demo="model-registry-toggle"]');
+      if (!active) return;
+      await observe(600);
+      setIsRegistryOpen(true);
+
+      // 5. Camera stays focused on registry table — let viewer inspect details
+      await focusResult('[data-demo="model-registry-toggle"]', 1200);
+      if (!active) return;
+      setSelectedRegistryModel("v2.3");
+      
+      // Wait for registry details card
+      await observe(2000); // let viewer inspect production metadata
+      if (!active) return;
+      setSelectedRegistryModel(null);
+      await observe(600);
+      if (!active) return;
+
+      // 6. Close panel selections
+      setIsRegistryOpen(false);
+      setIsGovernanceOpen(false);
+      await observe(400);
+      if (!active) return;
+
+      // 7. Transition immediately back to Dashboard — no bottom scroll or extra pause
+      triggerTransition("/", 6);
+    };
+
+    runScene5();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isLoading]);
 
   if (summaryError || (!isLoading && !summary)) {
     return (
@@ -268,6 +331,7 @@ export default function ImpactCenterPage() {
       {/* Section 6: AI Governance & Continuous Learning (Collapsible, final section) */}
       <div className="border border-border rounded-lg bg-card overflow-hidden">
         <button 
+          data-demo="impact-governance"
           onClick={() => setIsGovernanceOpen(!isGovernanceOpen)}
           className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
         >
@@ -351,6 +415,7 @@ export default function ImpactCenterPage() {
             {/* C. Governed Model Registry (collapsed by default) */}
             <div className="space-y-3 border-t border-border/40 pt-6">
               <div 
+                data-demo="model-registry-toggle"
                 onClick={() => setIsRegistryOpen(!isRegistryOpen)}
                 className="flex items-center justify-between cursor-pointer group bg-soft/10 p-3.5 border border-border/40 rounded-lg hover:border-primary/50 transition-colors"
               >
@@ -371,7 +436,7 @@ export default function ImpactCenterPage() {
               </div>
               
               {isRegistryOpen && (
-                <div className="overflow-x-auto pt-2 animate-in slide-in-from-top-2 duration-150">
+                <div data-demo="model-registry-table" className="overflow-x-auto pt-2 animate-in slide-in-from-top-2 duration-150">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
                       <tr className="bg-soft/40 border-b border-border text-secondary font-semibold uppercase tracking-wider text-[10px]">

@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible } from "@/lib/cameraDirector";
 import Link from "next/link";
 import { Search, ArrowRight, AlertCircle } from "lucide-react";
 import { fetchOpportunities } from "@/lib/api/opportunities";
@@ -15,7 +17,31 @@ export default function OfferQueuePage() {
     queryKey: ["opportunitiesListOfferQueue"],
     queryFn: fetchOpportunities,
   });
+  const { isDemoMode, currentScene, triggerTransition } = useDemo();
 
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 4 || isLoading) return;
+    let active = true;
+
+    const runScene4List = async () => {
+      // Orient viewer at top of queue
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(800);
+      if (!active) return;
+
+      // Drift camera down until the offer table is visible
+      await scrollUntilVisible('[data-demo="offer-table"]');
+      if (!active) return;
+      await observe(1500); // viewer reads queue rows
+      if (!active) return;
+
+      triggerTransition(`/offer-workspace/OP001`, 4);
+    };
+
+    runScene4List();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isLoading]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState("all");
@@ -196,7 +222,7 @@ export default function OfferQueuePage() {
         </div>
 
         {/* Table View */}
-        <div className="overflow-x-auto">
+        <div data-demo="offer-table" className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="bg-soft/40 border-b border-border text-secondary font-semibold uppercase tracking-wider text-[10px]">
@@ -231,6 +257,7 @@ export default function OfferQueuePage() {
                     <td className="p-4 font-mono text-secondary">{offer.last_updated}</td>
                     <td className="p-4 text-right">
                       <Link 
+                        data-demo="offer-view-btn"
                         href={`/offer-workspace/${offer.id}`}
                         className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded border border-primary/20 text-primary hover:bg-soft hover:border-primary/45 transition-colors"
                       >

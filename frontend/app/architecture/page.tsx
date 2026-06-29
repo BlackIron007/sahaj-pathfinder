@@ -9,6 +9,8 @@ import React, {
 } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, focusResult, panoramicScrollToBottom } from "@/lib/cameraDirector";
 import {
   ChevronRight,
   Terminal,
@@ -897,6 +899,86 @@ export default function ArchitectureShowcasePage() {
   const [selectedDataset, setSelectedDataset] = useState("msme_profiles");
   const [activeExplorerSignal, setActiveExplorerSignal] = useState<string | null>(null);
 
+  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 3) return;
+    let active = true;
+
+    const runScene3 = async () => {
+      // 1. Start at top — scroll until the entire SVG diagram is fully visible on screen
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await scrollUntilVisible('[data-demo="architecture-diagram"]');
+      if (!active) return;
+
+      // Highlight Layer 3 then Layer 4 while diagram is visible
+      setActiveLayer(3);
+      await observe(1200);
+      if (!active) return;
+      setActiveLayer(4);
+      await observe(1200);
+      if (!active) return;
+
+      // 2. Drift camera down until simulation dropdown is visible
+      await scrollUntilVisible('[data-demo="simulation-msme-select"]');
+      if (!active) return;
+      await observe(600);
+
+      // 3. Prefill MSME M002
+      setSelectedMSME("M002");
+      
+      // Wait for prefill data to arrive
+      await waitStateChange(() => document.body.innerText.includes("Prefilled from"));
+      await observe(1000);
+      if (!active) return;
+
+      // 4. Calibrate sliders — still visible in viewport
+      setWcStress(80);
+      setAdvisorInf(50);
+      await observe(1000);
+      if (!active) return;
+
+      // 5. Scroll until Run Simulation button is visible, click it
+      await scrollUntilVisible('[data-demo="simulation-button"]');
+      await verifyAndClick('[data-demo="simulation-button"]');
+
+      // 6. Camera follows result — shift camera back to the Agent Reasoning Pipeline to watch node animations
+      await focusResult('[data-demo="agent-reasoning-pipeline"]', 4600);
+      if (!active) return;
+
+      // 7. Scroll until simulation results is visible
+      await scrollUntilVisible('[data-demo="simulation-results"]');
+      if (!active) return;
+      await observe(1200);
+
+      // 8. Scroll until reasoning trace toggle is visible, expand it
+      await scrollUntilVisible('[data-demo="reasoning-trace-toggle"]');
+      if (!active) return;
+      await observe(600);
+      setShowReasoningTrace(true);
+      
+      // Wait until trace content animates/renders
+      await waitStateChange(() => !!document.querySelector('[data-demo="reasoning-trace-content"]'));
+      await observe(2200); // watch trace contents
+      if (!active) return;
+      setShowReasoningTrace(false);
+      await observe(600);
+      if (!active) return;
+
+      // 9. Continuous panoramic exploration to bottom of page (Dataset Statistics)
+      await panoramicScrollToBottom(400, 120);
+      if (!active) return;
+      await observe(1500);
+      if (!active) return;
+
+      triggerTransition("/offer-workspace", 4);
+    };
+
+    runScene3();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene]);
+
   // ── Queries ──────────────────────────────────────────────────────────────────
 
   const { data: datasetStats } = useQuery({
@@ -1115,7 +1197,7 @@ export default function ArchitectureShowcasePage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24,
             alignItems: "start", marginTop: 28 }}>
             {/* SVG Diagram */}
-            <div style={{ background: "#fff9ee", border: "1.5px solid #e8e0d4",
+            <div data-demo="architecture-diagram" style={{ background: "#fff9ee", border: "1.5px solid #e8e0d4",
               borderRadius: 12, padding: "20px 16px" }}>
               <ArchitectureDiagram
                 activeLayer={activeLayer}
@@ -1222,12 +1304,13 @@ export default function ArchitectureShowcasePage() {
               below to animate this pipeline in real time.
             </p>
           </div>
-          <div style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
+          <div data-demo="agent-reasoning-pipeline" style={{ background: "#fffbf2", border: "1.5px solid #e8e0d4",
             borderRadius: 12, padding: "22px 20px 16px" }}>
             <ReasoningPipeline nodeStates={nodeStates} recommendedRoute={simResult?.recommended_route} />
             {reasoningLogs.length > 0 && (
               <div style={{ marginTop: 14 }}>
                 <button
+                  data-demo="reasoning-trace-toggle"
                   onClick={() => setShowReasoningTrace(!showReasoningTrace)}
                   style={{
                     background: "none", border: "none", color: "#715b3e",
@@ -1238,7 +1321,9 @@ export default function ArchitectureShowcasePage() {
                   {showReasoningTrace ? "Hide reasoning trace" : "Show reasoning trace"}
                 </button>
                 {showReasoningTrace && (
-                  <div style={{
+                  <div
+                    data-demo="reasoning-trace-content"
+                    style={{
                     marginTop: 14, borderTop: "1.5px solid #ede8e1", paddingTop: 14,
                     fontFamily: "monospace", fontSize: 11, color: "#6b5d4f",
                     display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto"
@@ -1279,6 +1364,7 @@ export default function ArchitectureShowcasePage() {
                 </label>
                 <select
                   id="msme-select"
+                  data-demo="simulation-msme-select"
                   value={selectedMSME}
                   onChange={(e) => setSelectedMSME(e.target.value)}
                   disabled={isPending}
@@ -1323,6 +1409,7 @@ export default function ArchitectureShowcasePage() {
               </div>
 
               <button
+                data-demo="simulation-button"
                 onClick={handleSimulate}
                 disabled={isPending || isSimulating || !selectedMSME}
                 aria-busy={isPending || isSimulating}
@@ -1346,7 +1433,7 @@ export default function ArchitectureShowcasePage() {
             </div>
 
             {/* Right — Results */}
-            <div>
+            <div data-demo="simulation-results">
               {!simResult && !isPending && !isSimulating && (
                 <div style={{
                   background: "#fffbf2", border: "1.5px dashed #c9bfb0",

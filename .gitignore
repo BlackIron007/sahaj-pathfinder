@@ -54,3 +54,10 @@ logs/
 # Compiled source
 backend.zip
 frontend.zip
+
+# TypeScript build cache
+*.tsbuildinfo
+.tsbuildinfo
+
+# Qodo / Code assistance caches
+.qodo/

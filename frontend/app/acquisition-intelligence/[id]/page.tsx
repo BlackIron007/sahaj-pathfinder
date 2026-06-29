@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useDemo } from "@/providers/demo-provider";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom } from "@/lib/cameraDirector";
 import { 
   ArrowLeft, 
   MapPin, 
@@ -38,6 +40,8 @@ export default function OpportunityDetailPage() {
   const [activeJourneyStepIdx, setActiveJourneyStepIdx] = useState<number>(0);
   const [showFullBreakdown, setShowFullBreakdown] = useState(false);
   const [showDecisionHistory, setShowDecisionHistory] = useState(false);
+
+
 
   // Provenance Query
   const { data: provenance, isLoading: isProvenanceLoading } = useQuery({
@@ -74,6 +78,78 @@ export default function OpportunityDetailPage() {
   });
 
   const isLoading = isDetailLoading || isSignalsLoading || isRouteLoading || isEcosystemLoading;
+
+  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+  useEffect(() => {
+    if (!isDemoMode || currentScene !== 2 || isLoading || !detail) return;
+    let active = true;
+
+    const runScene2 = async () => {
+      // 1. Begin at top — orient viewer on opportunity header
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(1000);
+      if (!active) return;
+
+      // 2. Scroll until Discovery Summary is visible
+      await scrollUntilVisible('[data-demo="discovery-summary"]');
+      if (!active) return;
+      await observe(600);
+
+      // 3. Expand score breakdown
+      setShowFullBreakdown(true);
+      await observe(1800); // watch the accordion open
+      if (!active) return;
+
+      // 4. Scroll until Route Evaluation is visible
+      await scrollUntilVisible('[data-demo="route-evaluation"]');
+      if (!active) return;
+      await observe(1200);
+
+      // 5. Scroll until Signals grid is visible
+      await scrollUntilVisible('[data-demo="signal-cards"]');
+      if (!active) return;
+      await observe(800);
+
+      // 6. Verify first signal explain button is visible, click it
+      await scrollUntilVisible('[data-demo="explain-signal"]');
+      await verifyAndClick('[data-demo="explain-signal"]');
+      
+      // Wait until modal state loaded
+      await waitStateChange(() => !!document.querySelector('[data-demo="signal-modal-content"]'));
+      await observe(600); // let modal animate open
+      if (!active) return;
+
+      // 7. Scroll through modal content
+      const modalContent = document.querySelector('[data-demo="signal-modal-content"]');
+      if (modalContent) {
+        for (const delta of [120, 120, 120]) {
+          modalContent.scrollBy({ top: delta, behavior: "smooth" });
+          await observe(900);
+          if (!active) return;
+        }
+      }
+      await observe(1000);
+      if (!active) return;
+
+      // 8. Close modal
+      await verifyAndClick('[data-demo="signal-modal-close"]');
+      await observe(800);
+      if (!active) return;
+
+      // 9. Continuous panoramic exploration to bottom of page (Governance/Decision History)
+      await panoramicScrollToBottom(400, 120);
+      if (!active) return;
+      await observe(1500);
+      if (!active) return;
+
+      triggerTransition("/architecture", 3);
+    };
+
+    runScene2();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, currentScene, isLoading, detail, signals]);
 
   if (detailError || (!isLoading && !detail)) {
     return (
@@ -240,7 +316,7 @@ export default function OpportunityDetailPage() {
 
           {/* Discovery Score Summary Card */}
           {discoveryDetails && (
-            <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+            <div data-demo="discovery-summary" className="bg-card border border-border rounded-lg p-6 space-y-4">
               <div className="flex justify-between items-center border-b border-border pb-3">
                 <h3 className="text-xs uppercase font-bold text-secondary tracking-widest">
                   Ecosystem Discovery Score Summary
@@ -282,6 +358,7 @@ export default function OpportunityDetailPage() {
               {/* View Full Breakdown Disclosure Collapse */}
               <div className="pt-2">
                 <button
+                  data-demo="view-breakdown"
                   onClick={() => setShowFullBreakdown(!showFullBreakdown)}
                   className="text-xs font-semibold text-primary hover:text-primary-dim flex items-center gap-1 focus:outline-none"
                 >
@@ -316,7 +393,9 @@ export default function OpportunityDetailPage() {
           )}
 
           {/* Route Comparison Widget */}
+          <div data-demo="route-evaluation">
           {routeAnalysis && <RouteComparison analysis={routeAnalysis} />}
+          </div>
 
           {/* Structured Decision Rationale split into 3 cards */}
           {selectedRouteItem && (
@@ -391,7 +470,7 @@ export default function OpportunityDetailPage() {
             <h3 className="text-xs uppercase font-bold text-secondary tracking-widest border-b border-border pb-2">
               Detected Ingestion Signals
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div data-demo="signal-cards" className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {signals?.map((signal) => (
                 <SignalCard 
                   key={signal.signal_id} 
@@ -583,7 +662,7 @@ export default function OpportunityDetailPage() {
 
       {/* Signal Provenance Explanation Dialog Modal Overlay */}
       {activeSignal && (
-        <div className="fixed inset-0 bg-secondary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div data-demo="signal-modal" className="fixed inset-0 bg-secondary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-card border border-border w-full max-w-2xl rounded-lg shadow-xl overflow-hidden animate-in fade-in duration-200">
             {/* Header */}
             <div className="p-5 border-b border-border flex justify-between items-center bg-soft/20">
@@ -594,6 +673,7 @@ export default function OpportunityDetailPage() {
                 </h3>
               </div>
               <button 
+                data-demo="signal-modal-close"
                 onClick={() => setActiveSignal(null)}
                 className="p-1 hover:bg-soft rounded text-secondary hover:text-foreground transition-colors"
               >
@@ -602,7 +682,7 @@ export default function OpportunityDetailPage() {
             </div>
 
             {/* Content Body */}
-            <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+            <div data-demo="signal-modal-content" className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
               {isProvenanceLoading ? (
                 <div className="flex flex-col items-center justify-center py-12 space-y-3">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>

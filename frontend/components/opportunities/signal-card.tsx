@@ -59,6 +59,7 @@ export function SignalCard({ title, severity, evidence, explanation, confidence,
 
         {onExplain && (
           <button
+            data-demo="explain-signal"
             onClick={onExplain}
             className="w-full mt-2.5 py-1 text-[9.5px] font-bold text-center tracking-wider uppercase text-secondary/75 hover:text-primary hover:underline transition-colors focus:outline-none"
           >
