@@ -1,8 +1,8 @@
-<p align="center">
+﻿<p align="center">
   <img src="./github_assets/hero-banner.png" alt="Sahaj PathFinder Banner" width="100%">
 </p>
 
-<h1 align="center">Sahaj PathFinder</h1>
+<h1 align="center" id="top">Sahaj PathFinder</h1>
 
 <p align="center">
 <b>Agentic MSME Acquisition Intelligence Engine</b><br>
@@ -27,17 +27,23 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 
 <p align="center">
 
-<a href="#-experience-sahaj-pathfinder">Experience</a>
+<a href="#experience-sahaj-pathfinder">Experience</a>
 •
-<a href="#-30-second-executive-scan">Executive Scan</a>
+<a href="#30-second-executive-scan">Executive Scan</a>
 •
-<a href="#-the-core-insight">Core Insight</a>
+<a href="#the-core-insight">Core Insight</a>
 •
-<a href="#-platform-capabilities">Capabilities</a>
+<a href="#platform-experience">Prototype</a>
 •
-<a href="#-technical-architecture">Architecture</a>
+<a href="#enterprise-ai-principles">Enterprise AI</a>
 •
-<a href="#-documentation">Documentation</a>
+<a href="#from-prototype-to-production">Production</a>
+•
+<a href="#repository-documentation">Documentation</a>
+•
+<a href="#repository-structure">Repository</a>
+•
+<a href="#running-the-prototype-locally">Run Locally</a>
 
 </p>
 
@@ -46,7 +52,7 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 > [!TIP]
 > **New here?**
 >
-> Watch the interactive walkthrough below. In under two minutes you will understand the complete acquisition journey before diving into the technical details.
+> Watch the interactive walkthrough below. In under two minutes you will understand the complete acquisition lifecycle before diving into the technical details.
 
 <br>
 
@@ -65,6 +71,18 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 
 </p>
 
+<p align="center">
+
+<a href="YOUR_YOUTUBE_LINK">
+<img src="https://img.shields.io/badge/Watch_Full_Demo-YouTube-red?style=for-the-badge&logo=youtube">
+</a>
+
+</p>
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
+
 ---
 
 # 30-Second Executive Scan
@@ -77,6 +95,10 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 | **Prototype** | Interactive production-style prototype built with Next.js and FastAPI using a synthetic relational banking dataset. |
 | **Differentiator** | Every recommendation is fully explainable, continuously evaluated, human-governed, and designed for enterprise deployment rather than black-box automation. |
 | **Built For** | SBI Global Fintech Fest 2026 - Agentic AI & Emerging Technology |
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
 ---
 
@@ -117,6 +139,10 @@ Rather than forcing every business through the same onboarding funnel, PathFinde
 > **The objective is not to predict who will become a customer.**
 >
 > The objective is to determine **which acquisition pathway gives each MSME the highest probability of becoming a customer.**
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
 ---
 
@@ -177,7 +203,7 @@ Every recommendation follows these principles:
 | **Auditable** | Model versions, recommendation history, overrides, approvals, and deployment decisions remain fully traceable. |
 | **Continuously Learning** | Customer outcomes and RM decisions become supervised feedback used for future model improvement under governance controls. |
 
-> [!NOTE]
+> [vanilla note]
 > The current repository demonstrates these enterprise workflows through an interactive production-style prototype. The recommendation engine uses deterministic business rules to ensure complete explainability today, while the architecture is intentionally designed to evolve toward governed agentic orchestration without changing the surrounding platform.
 
 ---
@@ -189,7 +215,7 @@ Rather than demonstrating isolated screens, Sahaj PathFinder was built as a cont
 Each workspace represents one stage of the MSME acquisition lifecycle, allowing judges to experience how discovery evolves into intelligence, intelligence into action, and action into measurable business impact.
 
 <p align="center">
-  <img src="./github_assets/prototype_overview.png" alt="Prototype Overview" width="100%">
+  <img src="./github_assets/prototype-overview.png" alt="Prototype Overview" width="100%">
 </p>
 
 ---
@@ -220,10 +246,12 @@ Instead of showcasing isolated AI capabilities, every workspace answers a differ
 | **Did the strategy create business value?** | Impact Center |
 | **Can we trust the AI?** | Architecture Explorer |
 
----
-
 > [!TIP]
 > Every recommendation shown throughout the prototype is connected to the same synthetic banking ecosystem, allowing judges to follow one MSME through the complete acquisition journey: From ecosystem discovery to governed deployment and continuous learning.
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
 ---
 
@@ -256,47 +284,20 @@ The objective is to build an AI system that a regulated financial institution ca
 
 Unlike conventional machine learning systems that periodically retrain on historical data, PathFinder continuously captures operational feedback generated during everyday banking activities.
 
-```text
-Recommendation Generated
-          │
-          ▼
-Relationship Manager Decision
-          │
-          ▼
-Customer Response
-          │
-          ▼
-Loan Outcome
-          │
-          ▼
-Feedback Repository
-          │
-          ▼
-Candidate Model Training
-          │
-          ▼
-Offline Validation
-          │
-          ▼
-Shadow Evaluation
-          │
-          ▼
-Governance Approval
-          │
-          ▼
-Production Deployment
-```
+**<kbd>RECOMMENDATION</kbd>** ➔ **<kbd>RM_DECISION</kbd>** ➔ **<kbd>CUSTOMER_RESPONSE</kbd>** ➔ **<kbd>LOAN_OUTCOME</kbd>** ➔ **<kbd>FEEDBACK_REPO</kbd>** ➔ **<kbd>MODEL_TRAINING</kbd>** ➔ **<kbd>OFFLINE_VALIDATION</kbd>** ➔ **<kbd>SHADOW_EVAL</kbd>** ➔ **<kbd>GOVERNANCE</kbd>** ➔ **<kbd>DEPLOYMENT</kbd>**
 
 At no point does the system automatically replace a production model.
 
 Every promotion requires validation, governance approval, version tracking, and rollback capability.
 
----
-
 > [!IMPORTANT]
 > **The current prototype intentionally uses deterministic business rules rather than opaque AI predictions.**
 >
 > This guarantees complete explainability throughout the prototype while demonstrating an architecture that can progressively evolve toward governed agentic orchestration using enterprise-grade LLMs and graph intelligence.
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
 ---
 
@@ -333,9 +334,13 @@ That means each capability can evolve independently without redesigning the over
 | **Offer Intelligence** | Dynamic pricing, policy-aware product recommendations, customer-specific personalization. |
 | **Learning Pipeline** | Automated offline evaluation, shadow deployment, continuous governance, versioned model registry. |
 
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
+
 ---
 
-## Repository Documentation
+# Repository Documentation
 
 The repository is intentionally organized for two audiences.
 
@@ -345,9 +350,16 @@ The repository is intentionally organized for two audiences.
 | **Technical Judge** | Architecture → Technology Stack → Implementation Roadmap |
 | **Developer** | Source Code → Sample Dataset → Interactive Prototype |
 
-<details>
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
-<summary><b>Repository Structure</b></summary>
+---
+
+# Repository Structure
+
+<details>
+<summary><b>Click to expand Repository Structure</b></summary>
 
 [<kbd>**sahaj-pathfinder/**</kbd>](./)  
 &nbsp;&nbsp;├── [<kbd>**architecture/**</kbd>](./architecture/) _(Technical Blueprints)_  
@@ -381,6 +393,79 @@ The repository is intentionally organized for two audiences.
 &nbsp;&nbsp;└── <kbd>README.md</kbd> **← You are here**
 
 </details>
+
+---
+
+# Running the Prototype Locally
+
+<details>
+<summary><b>Click to expand Running Locally instructions</b></summary>
+
+### Prerequisites
+* Python 3.10 or higher
+* Node.js 18 or higher (with npm)
+* Git
+
+### Cloning the Repository
+```bash
+git clone https://github.com/BlackIron007/sahaj-pathfinder.git
+cd sahaj-pathfinder
+```
+
+### Backend Setup
+1. Navigate to the backend directory and create a Python virtual environment:
+   ```bash
+   cd backend
+   python -m venv .venv
+   ```
+2. Activate the virtual environment:
+   * **Windows (cmd/powershell)**:
+     ```powershell
+     .venv\Scripts\activate
+     ```
+   * **macOS/Linux**:
+     ```bash
+     source .venv/bin/activate
+     ```
+3. Install dependencies and the backend package in editable mode:
+   ```bash
+   pip install -r requirements.txt
+   pip install -e .
+   ```
+4. Run the FastAPI development server:
+   ```bash
+   python -m uvicorn backend.main:app --port 8000 --reload
+   ```
+
+### Frontend Setup
+1. In a new terminal window, navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install npm dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+3. Run the Next.js development server:
+   ```bash
+   npm run dev
+   ```
+
+### Localhost Access
+Once both services are running, the application can be accessed via:
+* **Frontend Application**: [http://localhost:3000](http://localhost:3000)
+* **Backend FastAPI Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+* **Built-in Presentation Mode**: [http://localhost:3000/demo](http://localhost:3000/demo)
+
+### Workflow Overview
+* The Next.js frontend handles page routing, layout, and presentation mode hooks.
+* The FastAPI backend serves the mock opportunity data, signal provenance formulas, and route simulation pipelines.
+
+</details>
+
+<p align="right">
+<a href="#top">Back to top</a>
+</p>
 
 ---
 
