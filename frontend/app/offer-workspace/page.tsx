@@ -3,7 +3,9 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, ensureReachedPageBottom } from "@/lib/cameraDirector";
+import { executiveConfig } from "@/lib/executiveConfig";
+import { hoverAndClick } from "@/lib/cursorController";
 import Link from "next/link";
 import { Search, ArrowRight, AlertCircle } from "lucide-react";
 import { fetchOpportunities } from "@/lib/api/opportunities";
@@ -17,7 +19,7 @@ export default function OfferQueuePage() {
     queryKey: ["opportunitiesListOfferQueue"],
     queryFn: fetchOpportunities,
   });
-  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+  const { isDemoMode, currentScene, triggerTransition, isExecutiveMode } = useDemo();
 
   useEffect(() => {
     if (!isDemoMode || currentScene !== 4 || isLoading) return;
@@ -35,13 +37,38 @@ export default function OfferQueuePage() {
       await observe(1500); // viewer reads queue rows
       if (!active) return;
 
-      triggerTransition(`/offer-workspace/OP001`, 4);
+      // Get first opportunity action link dynamically
+      const firstBtnSelector = '[data-demo="offer-table"] tbody tr:first-child a[data-demo="offer-view-btn"]';
+      const btn = document.querySelector(firstBtnSelector) as HTMLAnchorElement | null;
+      if (btn) btn.click();
     };
 
-    runScene4List();
+    const runExecutiveScene4List = async () => {
+      // Orient viewer at top of queue
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2000);
+      if (!active) return;
+
+      // Slow panoramic scroll down to the table
+      await scrollUntilVisible('[data-demo="offer-table"]');
+      if (!active) return;
+      await observe(3000); // narrative pause to check queue
+
+      // Highlight and click the first proposal's "View Offer Workspace" link dynamically (no hardcoding)
+      const firstBtnSelector = '[data-demo="offer-table"] tbody tr:first-child a[data-demo="offer-view-btn"]';
+      await ensureReachedPageBottom();
+      await hoverAndClick(firstBtnSelector);
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene4List();
+    } else {
+      runScene4List();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isLoading]);
+  }, [isDemoMode, currentScene, isLoading, isExecutiveMode]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState("all");

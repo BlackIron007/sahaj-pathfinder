@@ -5,7 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom, ensureReachedPageBottom } from "@/lib/cameraDirector";
+import { hoverAndClick } from "@/lib/cursorController";
+import { executiveConfig } from "@/lib/executiveConfig";
 import { 
   ArrowLeft, 
   MapPin, 
@@ -111,10 +113,12 @@ export default function OfferWorkspacePage() {
   const isLoading = isDetailLoading || isDraftLoading || isComplianceLoading || isImpactLoading;
   const isActionLoading = approveMutation.isPending || requestChangesMutation.isPending || assignBranchMutation.isPending || recalculateMutation.isPending;
 
-  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+
+  const { isDemoMode, currentScene, triggerTransition, isExecutiveMode } = useDemo();
 
   useEffect(() => {
-    if (!isDemoMode || currentScene !== 4 || isLoading) return;
+    if (!isDemoMode || currentScene !== 4 || isLoading || !detail) return;
     let active = true;
 
     const runScene4Detail = async () => {
@@ -151,10 +155,69 @@ export default function OfferWorkspacePage() {
       triggerTransition("/impact-center", 5);
     };
 
-    runScene4Detail();
+    const runExecutiveScene4Detail = async () => {
+      // 1. Start at top — let viewer see the full workspace header
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2000);
+      if (!active) return;
+
+      // 2. Offer Details overview — scroll and pause
+      // Scroll to the main metadata cards container
+      const overviewEl = document.querySelector('[data-demo="recalculate-btn"]')?.parentElement?.parentElement as HTMLElement | null;
+      if (overviewEl) {
+        const targetY = window.scrollY + overviewEl.getBoundingClientRect().top - window.innerHeight * 0.35;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+      }
+      await observe(2000);
+      if (!active) return;
+
+      // 3. Recalculate Offer — viewport center, cursor move, hover, click, wait, pause
+      await scrollUntilVisible('[data-demo="recalculate-btn"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      await hoverAndClick('[data-demo="recalculate-btn"]');
+      await waitStateChange(() => !recalculateMutation.isPending);
+      await observe(2500); // let viewer watch updated proposal values
+      if (!active) return;
+
+      // 4. Compliance Checklist — scroll and pause
+      await scrollUntilVisible('[data-demo="compliance-checklist"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 5. Business Impact — scroll and pause
+      await scrollUntilVisible('[data-demo="business-impact"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 6. Underwriting Decision Panel / Request Changes (Edit Review) — scroll, hover, click, wait
+      await scrollUntilVisible('[data-demo="request-changes-btn"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      await hoverAndClick('[data-demo="request-changes-btn"]');
+      await waitStateChange(() => detail.status === "Needs Revision");
+      await observe(3500); // observe updated status banner
+      if (!active) return;
+
+      // 7. Activity Log & Outreach — scroll and pause
+      await panoramicScrollToBottom(executiveConfig.scrollStepDelay, executiveConfig.scrollStepPx);
+      await observe(2000);
+      if (!active) return;
+
+      // 8. Navigate to Impact Center via sidebar click
+      await ensureReachedPageBottom();
+      await hoverAndClick('[data-demo="sidebar-link-impact-center"]');
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene4Detail();
+    } else {
+      runScene4Detail();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isLoading]);
+  }, [isDemoMode, currentScene, isLoading, isExecutiveMode]);
 
   if (detailError || (!isLoading && !detail)) {
     return (

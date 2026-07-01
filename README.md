@@ -80,7 +80,7 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 </p>
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -97,7 +97,7 @@ Turning SBI's existing transaction ecosystem into its next customer acquisition 
 | **Built For** | SBI Global Fintech Fest 2026 - Agentic AI & Emerging Technology |
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -141,7 +141,7 @@ Rather than forcing every business through the same onboarding funnel, PathFinde
 > The objective is to determine **which acquisition pathway gives each MSME the highest probability of becoming a customer.**
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -203,7 +203,7 @@ Every recommendation follows these principles:
 | **Auditable** | Model versions, recommendation history, overrides, approvals, and deployment decisions remain fully traceable. |
 | **Continuously Learning** | Customer outcomes and RM decisions become supervised feedback used for future model improvement under governance controls. |
 
-> [vanilla note]
+> [!NOTE]
 > The current repository demonstrates these enterprise workflows through an interactive production-style prototype. The recommendation engine uses deterministic business rules to ensure complete explainability today, while the architecture is intentionally designed to evolve toward governed agentic orchestration without changing the surrounding platform.
 
 ---
@@ -214,8 +214,8 @@ Rather than demonstrating isolated screens, Sahaj PathFinder was built as a cont
 
 Each workspace represents one stage of the MSME acquisition lifecycle, allowing judges to experience how discovery evolves into intelligence, intelligence into action, and action into measurable business impact.
 
-<p align="center">
-  <img src="./github_assets/prototype-overview.png" alt="Prototype Overview" width="100%">
+<p align="right">
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -250,7 +250,7 @@ Instead of showcasing isolated AI capabilities, every workspace answers a differ
 > Every recommendation shown throughout the prototype is connected to the same synthetic banking ecosystem, allowing judges to follow one MSME through the complete acquisition journey: From ecosystem discovery to governed deployment and continuous learning.
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -296,7 +296,7 @@ Every promotion requires validation, governance approval, version tracking, and 
 > This guarantees complete explainability throughout the prototype while demonstrating an architecture that can progressively evolve toward governed agentic orchestration using enterprise-grade LLMs and graph intelligence.
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -335,7 +335,7 @@ That means each capability can evolve independently without redesigning the over
 | **Learning Pipeline** | Automated offline evaluation, shadow deployment, continuous governance, versioned model registry. |
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -351,7 +351,7 @@ The repository is intentionally organized for two audiences.
 | **Developer** | Source Code → Sample Dataset → Interactive Prototype |
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---
@@ -455,7 +455,7 @@ cd sahaj-pathfinder
 Once both services are running, the application can be accessed via:
 * **Frontend Application**: [http://localhost:3000](http://localhost:3000)
 * **Backend FastAPI Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
-* **Built-in Presentation Mode**: [http://localhost:3000/demo](http://localhost:3000/demo)
+* **Built-in Presentation Mode**: [http://localhost:3000/executive-demo](http://localhost:3000/executive-demo)
 
 ### Workflow Overview
 * The Next.js frontend handles page routing, layout, and presentation mode hooks.
@@ -464,7 +464,7 @@ Once both services are running, the application can be accessed via:
 </details>
 
 <p align="right">
-<a href="#top">Back to top</a>
+  <a href="#top"><sub><b>BACK TO TOP</b></sub></a>
 </p>
 
 ---

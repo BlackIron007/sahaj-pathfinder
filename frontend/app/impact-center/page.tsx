@@ -5,7 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { ChevronRight, ShieldAlert, ChevronDown } from "lucide-react";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible, focusResult } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, focusResult, panoramicScrollToBottom, waitStateChange, scrollThroughExpandedContent, ensureReachedPageBottom } from "@/lib/cameraDirector";
+import { hoverAndClick } from "@/lib/cursorController";
+import { executiveConfig } from "@/lib/executiveConfig";
 import { Badge } from "@/components/ui/badge";
 import {
   fetchImpactSummary,
@@ -82,7 +84,8 @@ export default function ImpactCenterPage() {
 
   const isLoading = isSummaryLoading || isRoutesLoading || isNetworkLoading || isInsightsLoading || isLearningLoading;
 
-  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+
+  const { isDemoMode, currentScene, triggerTransition, isExecutiveMode } = useDemo();
 
   useEffect(() => {
     if (!isDemoMode || currentScene !== 5 || isLoading) return;
@@ -137,10 +140,90 @@ export default function ImpactCenterPage() {
       triggerTransition("/", 6);
     };
 
-    runScene5();
+    const runExecutiveScene5 = async () => {
+      // 1. Start at top — let viewer orient on metrics
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2000);
+      if (!active) return;
+
+      // 2. Route Performance Leaderboard — scroll and pause
+      await scrollUntilVisible('[data-demo="leaderboard-toggle"]');
+      await observe(2500);
+      if (!active) return;
+
+      // 3. Ecosystem Expansion Network Graph — scroll and pause
+      await scrollUntilVisible('[data-demo="network-toggle"]');
+      await observe(2500);
+      if (!active) return;
+
+      // 4. Success Story & Executive Summary
+      const successStory = document.querySelector('[data-demo="network-toggle"]')?.parentElement?.nextElementSibling as HTMLElement | null;
+      if (successStory) {
+        const targetY = window.scrollY + successStory.getBoundingClientRect().top - window.innerHeight * 0.35;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+      }
+      await observe(2000);
+      if (!active) return;
+
+      // 5. Continuous Learning Pipeline — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="learning-toggle"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      
+      const learningBtn = document.querySelector('[data-demo="learning-toggle"]') as HTMLButtonElement | null;
+      if (learningBtn && learningBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="learning-toggle"]');
+      }
+      await scrollThroughExpandedContent('[data-demo="learning-toggle"]');
+      if (!active) return;
+
+      // 6. AI Governance Learning Loop — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="impact-governance"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+
+      const govBtn = document.querySelector('[data-demo="impact-governance"]') as HTMLButtonElement | null;
+      if (govBtn && govBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="impact-governance"]');
+      }
+      await scrollThroughExpandedContent('[data-demo="impact-governance"]');
+      if (!active) return;
+
+      // 7. Governed Model Registry — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="model-registry-toggle"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+
+      const registryBtn = document.querySelector('[data-demo="model-registry-toggle"]') as HTMLButtonElement | null;
+      if (registryBtn && registryBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="model-registry-toggle"]');
+      }
+      await waitStateChange(() => !!document.querySelector('[data-demo="model-registry-table"]'));
+      await scrollThroughExpandedContent('[data-demo="model-registry-table"]');
+      if (!active) return;
+
+      // Click row "v2.3" to view its governance metadata details card (Universal Accordion: expand only)
+      await hoverAndClick('[data-demo="registry-row-v2-3"]');
+      
+      // Wait and scroll through expanded model detail card
+      const detailCardSelector = '[data-demo="registry-row-v2-3"]';
+      await scrollThroughExpandedContent(detailCardSelector);
+      if (!active) return;
+
+      // 8. Navigate back to Dashboard via sidebar click (leave everything open)
+      await ensureReachedPageBottom();
+      await hoverAndClick('[data-demo="sidebar-link-dashboard"]');
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene5();
+    } else {
+      runScene5();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isLoading]);
+  }, [isDemoMode, currentScene, isLoading, isExecutiveMode]);
 
   if (summaryError || (!isLoading && !summary)) {
     return (
@@ -251,6 +334,7 @@ export default function ImpactCenterPage() {
           {/* Section 1: Route Performance (Collapsible) */}
           <div className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
+              data-demo="leaderboard-toggle"
               onClick={() => setIsLeaderboardOpen(!isLeaderboardOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
             >
@@ -267,6 +351,7 @@ export default function ImpactCenterPage() {
           {/* Section 2: Ecosystem Expansion Relationship Mapping (Collapsible) */}
           <div className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
+              data-demo="network-toggle"
               onClick={() => setIsNetworkOpen(!isNetworkOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
             >
@@ -283,6 +368,7 @@ export default function ImpactCenterPage() {
           {/* Section 4: Agent Intelligence Insights (Collapsible) */}
           <div className="border border-border rounded-lg bg-card overflow-hidden">
             <button 
+              data-demo="insights-toggle"
               onClick={() => setIsInsightsOpen(!isInsightsOpen)}
               className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
             >
@@ -314,6 +400,8 @@ export default function ImpactCenterPage() {
       {/* Section 5: Model Learning Loop & Metrics (Collapsible) */}
       <div className="border border-border rounded-lg bg-card overflow-hidden">
         <button 
+          data-demo="learning-toggle"
+          aria-expanded={isLearningOpen}
           onClick={() => setIsLearningOpen(!isLearningOpen)}
           className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
         >
@@ -332,6 +420,7 @@ export default function ImpactCenterPage() {
       <div className="border border-border rounded-lg bg-card overflow-hidden">
         <button 
           data-demo="impact-governance"
+          aria-expanded={isGovernanceOpen}
           onClick={() => setIsGovernanceOpen(!isGovernanceOpen)}
           className="w-full flex items-center justify-between p-4 focus:outline-none bg-soft/20 border-b border-border/40"
         >
@@ -416,6 +505,7 @@ export default function ImpactCenterPage() {
             <div className="space-y-3 border-t border-border/40 pt-6">
               <div 
                 data-demo="model-registry-toggle"
+                aria-expanded={isRegistryOpen}
                 onClick={() => setIsRegistryOpen(!isRegistryOpen)}
                 className="flex items-center justify-between cursor-pointer group bg-soft/10 p-3.5 border border-border/40 rounded-lg hover:border-primary/50 transition-colors"
               >
@@ -459,6 +549,7 @@ export default function ImpactCenterPage() {
                         return (
                           <React.Fragment key={m.model}>
                             <tr 
+                              data-demo={`registry-row-${m.model.replace(/\./g, "-")}`}
                               onClick={() => setSelectedRegistryModel(isSelected ? null : m.model)}
                               className="hover:bg-soft/20 cursor-pointer transition-colors"
                             >

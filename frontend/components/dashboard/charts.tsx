@@ -19,7 +19,7 @@ export function RouteDistributionChart({ routeData }: { routeData: RouteCount[] 
   const COLORS = ["#715b3e", "#6b5d4f", "#b9b29c", "#f5eddd"];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 flex flex-col h-full justify-between">
+    <div data-demo="route-distribution-chart" className="bg-card border border-border rounded-lg p-6 flex flex-col h-full justify-between">
       <div>
         <h3 className="text-xs uppercase font-bold text-secondary tracking-widest border-b border-border pb-3 mb-6">Route Distribution</h3>
         <div className="h-64">
@@ -67,7 +67,7 @@ export function EcosystemGrowthChart({ ecosystemData }: { ecosystemData?: Ecosys
   ];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 flex flex-col h-full justify-between">
+    <div data-demo="ecosystem-growth-chart" className="bg-card border border-border rounded-lg p-6 flex flex-col h-full justify-between">
       <div>
         <h3 className="text-xs uppercase font-bold text-secondary tracking-widest border-b border-border pb-3 mb-6">Ecosystem Nodes</h3>
         <div className="h-64">

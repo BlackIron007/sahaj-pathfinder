@@ -10,7 +10,9 @@ import React, {
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, focusResult, panoramicScrollToBottom } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, focusResult, panoramicScrollToBottom, scrollThroughExpandedContent, ensureReachedPageBottom, animateScrollTo } from "@/lib/cameraDirector";
+import { hoverAndClick } from "@/lib/cursorController";
+import { executiveConfig } from "@/lib/executiveConfig";
 import {
   ChevronRight,
   Terminal,
@@ -643,6 +645,7 @@ const ArchitectureDiagram = memo(function ArchitectureDiagram({
         return (
           <g
             key={layer.id}
+            data-demo={`arch-layer-${layer.id}`}
             onClick={() => onSelectLayer(layer.id)}
             onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelectLayer(layer.id)}
             tabIndex={0}
@@ -899,7 +902,9 @@ export default function ArchitectureShowcasePage() {
   const [selectedDataset, setSelectedDataset] = useState("msme_profiles");
   const [activeExplorerSignal, setActiveExplorerSignal] = useState<string | null>(null);
 
-  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+  const { isDemoMode, currentScene, triggerTransition, isExecutiveMode } = useDemo();
+
+
 
   useEffect(() => {
     if (!isDemoMode || currentScene !== 3) return;
@@ -974,10 +979,140 @@ export default function ArchitectureShowcasePage() {
       triggerTransition("/offer-workspace", 4);
     };
 
-    runScene3();
+    const runExecutiveScene3 = async () => {
+      // 1. Start at top — let viewer orient
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2000);
+      if (!active) return;
+
+      // 2. Architecture layer diagram — scroll to center the complete diagram vertically in the viewport
+      const diagEl = document.querySelector('[data-demo="architecture-diagram"]') as HTMLElement | null;
+      if (diagEl) {
+        const diagRect = diagEl.getBoundingClientRect();
+        const centerScrollY = window.scrollY + diagRect.top - (window.innerHeight - diagRect.height) / 2;
+        await animateScrollTo(Math.max(0, centerScrollY), 1000);
+      } else {
+        await scrollUntilVisible('[data-demo="architecture-diagram"]');
+      }
+      await observe(3500); // narrator pause to explain the overall 6-layer system architecture
+      if (!active) return;
+
+      // Explain and click all 6 layers sequentially without dynamic scroll disruptions
+      for (let i = 0; i < 6; i++) {
+        await hoverAndClick(`[data-demo="arch-layer-${i}"]`);
+        await observe(1800);
+        if (!active) return;
+      }
+
+      // 3. Drift camera down until simulation dropdown is visible
+      await scrollUntilVisible('[data-demo="simulation-msme-select"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 4. Prefill MSME scenario M002
+      // Highlight the select control first
+      await hoverAndClick('[data-demo="simulation-msme-select"]');
+      setSelectedMSME("M002");
+      // Wait for prefill state change to render text
+      await waitStateChange(() => document.body.innerText.includes("Prefilled from"));
+      await observe(2500);
+      if (!active) return;
+
+      // 5. Calibrate sliders — WC stress and Advisor influence
+      setWcStress(80);
+      setAdvisorInf(50);
+      await observe(2000);
+      if (!active) return;
+
+      // 6. Run Simulation
+      await scrollUntilVisible('[data-demo="simulation-button"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      await hoverAndClick('[data-demo="simulation-button"]');
+
+      // 7. Watch reasoning pipeline animated steps (fast scroll to capture active pulses instantly)
+      const pipelineEl = document.querySelector('[data-demo="agent-reasoning-pipeline"]') as HTMLElement | null;
+      if (pipelineEl) {
+        const pipeRect = pipelineEl.getBoundingClientRect();
+        const targetScrollY = window.scrollY + pipeRect.top - window.innerHeight * 0.25;
+        await animateScrollTo(Math.max(0, targetScrollY), 500); // Accelerated 500ms scroll duration
+        await observe(600);
+      } else {
+        await scrollUntilVisible('[data-demo="agent-reasoning-pipeline"]');
+      }
+      await observe(5500);
+      if (!active) return;
+
+      // 8. Simulation Results
+      await scrollUntilVisible('[data-demo="simulation-results"]');
+      await observe(2500);
+      if (!active) return;
+
+      // 9. Migration Strategy & Production stack (Shadow deployment timeline)
+      // Scroll to the lifecycle stack section directly below results
+      const lifecycleSection = document.querySelector('[data-demo="simulation-results"]')?.nextElementSibling as HTMLElement | null;
+      if (lifecycleSection) {
+        const targetY = window.scrollY + lifecycleSection.getBoundingClientRect().top - window.innerHeight * 0.35;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+      }
+      await observe(2500);
+      if (!active) return;
+
+      // 10. Reasoning Trace log — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="reasoning-trace-toggle"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      
+      const traceBtn = document.querySelector('[data-demo="reasoning-trace-toggle"]') as HTMLButtonElement | null;
+      if (traceBtn && traceBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="reasoning-trace-toggle"]');
+      }
+      await waitStateChange(() => !!document.querySelector('[data-demo="reasoning-trace-content"]'));
+      await scrollThroughExpandedContent('[data-demo="reasoning-trace-content"]');
+      if (!active) return;
+
+      // 11. Dataset Explorer schema previews — Universal Accordion (expand only)
+      await scrollUntilVisible('[data-demo="dataset-explorer-toggle"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+
+      const explorerBtn = document.querySelector('[data-demo="dataset-explorer-toggle"]') as HTMLButtonElement | null;
+      if (explorerBtn && explorerBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="dataset-explorer-toggle"]');
+      }
+      await waitStateChange(() => !!document.getElementById("data-explorer"));
+      await observe(1500); // pause to show the default dataset is untouched
+      if (!active) return;
+
+      // Hover and click the second dataset (Invoice Transactions) to demonstrate dataset switching
+      await hoverAndClick('[data-demo="dataset-item-invoice-transactions"]');
+      await observe(2500); // pause to let user view the newly selected dataset preview
+      if (!active) return;
+
+      // 12. Model Deployment Lifecycle — scroll and pause
+      await scrollUntilVisible('[data-demo="deployment-lifecycle"]');
+      await observe(3500); // narrator pause to explain enterprise lifecycle stages
+      if (!active) return;
+
+      // 13. Technology Blueprint — scroll and pause
+      await scrollUntilVisible('[data-demo="technology-blueprint"]');
+      await observe(3500); // narrator pause to explain blueprint stack
+      if (!active) return;
+
+      // 14. Navigate to Offer Workspace via sidebar click
+      await ensureReachedPageBottom();
+      await hoverAndClick('[data-demo="sidebar-link-offer-workspace"]');
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene3();
+    } else {
+      runScene3();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene]);
+  }, [isDemoMode, currentScene, isExecutiveMode]);
 
   // ── Queries ──────────────────────────────────────────────────────────────────
 
@@ -1563,6 +1698,7 @@ export default function ArchitectureShowcasePage() {
           {/* Expand dataset explorer */}
           <button
             onClick={() => setShowDataExplorer((v) => !v)}
+            data-demo="dataset-explorer-toggle"
             aria-expanded={showDataExplorer}
             aria-controls="data-explorer"
             className="no-print"
@@ -1627,6 +1763,7 @@ export default function ArchitectureShowcasePage() {
 
                         return (
                           <button key={key} onClick={() => setSelectedDataset(key)}
+                            data-demo={`dataset-item-${key.toLowerCase().replace(/_/g, "-")}`}
                             aria-pressed={isSelected}
                             style={{
                               display: "block", width: "100%", textAlign: "left",
@@ -1703,7 +1840,7 @@ export default function ArchitectureShowcasePage() {
         </section>
 
         {/* ─── Section: Model Deployment Lifecycle ─── */}
-        <section style={{ marginBottom: 44 }} aria-labelledby="agentic-heading">
+        <section data-demo="deployment-lifecycle" style={{ marginBottom: 44 }} aria-labelledby="agentic-heading">
           <div style={{ marginBottom: 16 }}>
             <h2 id="agentic-heading" style={{ fontSize: 17, fontWeight: 700, color: "#373223", margin: 0 }}>
               Enterprise Model Deployment Lifecycle
@@ -1813,7 +1950,7 @@ export default function ArchitectureShowcasePage() {
         </section>
 
         {/* ─── Section: Technology Blueprint ─── */}
-        <section style={{ marginBottom: 44 }} aria-labelledby="tech-heading">
+        <section data-demo="technology-blueprint" style={{ marginBottom: 44 }} aria-labelledby="tech-heading">
           <div style={{ marginBottom: 16 }}>
             <h2 id="tech-heading" style={{ fontSize: 17, fontWeight: 700, color: "#373223", margin: 0 }}>
               Technology Blueprint

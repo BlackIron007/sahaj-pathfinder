@@ -15,6 +15,7 @@ interface DemoContextType {
   nextScene: () => void;
   showFinalFade: boolean;
   triggerFinalFade: () => void;
+  isExecutiveMode: boolean;
 }
 
 const DemoContext = createContext<DemoContextType | undefined>(undefined);
@@ -39,13 +40,20 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [isOverlayActive, setIsOverlayActive] = useState(false);
   const [overlayText, setOverlayText]   = useState<{ title: string; subtitle: string } | null>(null);
   const [showFinalFade, setShowFinalFade] = useState(false);
+  const [isExecutiveMode, setIsExecutiveMode] = useState(false);
+  const [lastOverlayPath, setLastOverlayPath] = useState("");
 
   useEffect(() => {
     const rec = searchParams.get("recording");
     if (rec === "true") setIsRecording(true);
 
+    const exec = searchParams.get("executive");
+    if (pathname === "/executive-demo" || exec === "true") {
+      setIsExecutiveMode(true);
+    }
+
     const sceneParam = searchParams.get("scene");
-    if (pathname === "/demo" || sceneParam) {
+    if (pathname === "/demo" || pathname === "/executive-demo" || sceneParam) {
       setIsDemoMode(true);
       if (sceneParam) {
         const idx = parseInt(sceneParam);
@@ -60,15 +68,31 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
     }
   }, [currentScene]);
 
+  // Synchronize currentScene state automatically and trigger overlay when pathname changes
+  useEffect(() => {
+    if (!isDemoMode || pathname === lastOverlayPath) return;
+    
+    let nextSceneIndex = 0;
+    if (pathname === "/acquisition-intelligence" || pathname.startsWith("/acquisition-intelligence/")) {
+      nextSceneIndex = 2;
+    } else if (pathname === "/architecture") {
+      nextSceneIndex = 3;
+    } else if (pathname === "/offer-workspace" || pathname.startsWith("/offer-workspace/")) {
+      nextSceneIndex = 4;
+    } else if (pathname === "/impact-center") {
+      nextSceneIndex = 5;
+    } else if (pathname === "/") {
+      nextSceneIndex = (currentScene === 5 || currentScene === 6) ? 6 : 1;
+    }
+
+    if (nextSceneIndex > 0 && nextSceneIndex !== currentScene) {
+      setLastOverlayPath(pathname);
+      runOverlayCycle(nextSceneIndex, pathname);
+    }
+  }, [pathname, isDemoMode]);
+
   /**
    * Show scene overlay OVER the NEW page.
-   * Sequence:
-   *   1. Push route immediately (page begins loading/rendering behind overlay)
-   *   2. Set scene index so page's useEffect fires when it mounts
-   *   3. Show overlay (fade in instantly — it was already hidden)
-   *   4. Hold 1100ms
-   *   5. Fade out (400ms)
-   *   6. Return — page is already rendered, scroll begins
    */
   const runOverlayCycle = async (sceneIndex: number, path: string) => {
     const meta = SCENE_METADATA[sceneIndex];
@@ -81,7 +105,10 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
       setOverlayText(meta);
       setIsOverlayActive(true);
 
-      await new Promise((r) => setTimeout(r, 1200)); // hold
+      // Increase overlay display time slightly if in executive mode for narrator comfort
+      const holdTime = isExecutiveMode ? 2000 : 1200;
+      await new Promise((r) => setTimeout(r, holdTime)); // hold
+      
       setIsOverlayActive(false);
       await new Promise((r) => setTimeout(r, 420)); // fade-out transition
     } else {
@@ -118,7 +145,7 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
   const endPresentation = () => {
     setIsDemoMode(false);
     setCurrentScene(0);
-    router.push("/demo");
+    router.push(isExecutiveMode ? "/executive-demo" : "/demo");
   };
 
   const triggerFinalFade = () => setShowFinalFade(true);
@@ -129,7 +156,7 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
         isDemoMode, isRecording, currentScene,
         isOverlayActive, overlayText,
         startPresentation, triggerTransition, endPresentation, nextScene,
-        showFinalFade, triggerFinalFade,
+        showFinalFade, triggerFinalFade, isExecutiveMode,
       }}
     >
       {isDemoMode && (
@@ -175,15 +202,15 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      {/* Final fade-to-black for end of demo */}
+      {/* Standard final fade-to-beige blank screen for both demo modes */}
       <div
         style={{
           position: "fixed", inset: 0,
           background: "#fff9ee",
           zIndex: 99999,
-          pointerEvents: "none",
+          pointerEvents: showFinalFade ? "auto" : "none",
           opacity: showFinalFade ? 1 : 0,
-          transition: "opacity 1.2s ease-in-out",
+          transition: "opacity 1.5s ease-in-out",
         }}
       />
 

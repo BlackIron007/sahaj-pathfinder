@@ -5,7 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, verifyAndClick, waitStateChange, panoramicScrollToBottom, scrollThroughExpandedContent, ensureReachedPageBottom } from "@/lib/cameraDirector";
+import { hoverAndClick } from "@/lib/cursorController";
+import { executiveConfig } from "@/lib/executiveConfig";
 import { 
   ArrowLeft, 
   MapPin, 
@@ -79,7 +81,9 @@ export default function OpportunityDetailPage() {
 
   const isLoading = isDetailLoading || isSignalsLoading || isRouteLoading || isEcosystemLoading;
 
-  const { isDemoMode, currentScene, triggerTransition } = useDemo();
+  const { isDemoMode, currentScene, triggerTransition, isExecutiveMode } = useDemo();
+
+
 
   useEffect(() => {
     if (!isDemoMode || currentScene !== 2 || isLoading || !detail) return;
@@ -146,10 +150,116 @@ export default function OpportunityDetailPage() {
       triggerTransition("/architecture", 3);
     };
 
-    runScene2();
+    const runExecutiveScene2 = async () => {
+      // 1. Begin at top — let viewer orient
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2000);
+      if (!active) return;
+
+      // 2. Entity Profile Metrics (Business Context) — scroll and pause
+      await scrollUntilVisible('[data-demo="entity-profile-metrics"]'); // Let's scroll past the header to the entity profile
+      await observe(2500);
+      if (!active) return;
+
+      // 3. Ecosystem Discovery Score — scroll and pause
+      await scrollUntilVisible('[data-demo="discovery-summary"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 4. Expand Score Breakdown — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="view-breakdown"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      
+      const breakdownBtn = document.querySelector('[data-demo="view-breakdown"]') as HTMLButtonElement | null;
+      if (breakdownBtn && breakdownBtn.getAttribute("aria-expanded") !== "true") {
+        await hoverAndClick('[data-demo="view-breakdown"]');
+      }
+      await scrollThroughExpandedContent('[data-demo="discovery-summary"]');
+      if (!active) return;
+
+      // 5. Route Evaluation Comparison — scroll and pause
+      await scrollUntilVisible('[data-demo="route-evaluation"]');
+      await observe(2500);
+      if (!active) return;
+
+      // 6. Advantages & Bottlenecks cards — scroll and pause
+      const prosCards = document.querySelector('[data-demo="route-evaluation"]')?.nextElementSibling as HTMLElement | null;
+      if (prosCards) {
+        const targetY = window.scrollY + prosCards.getBoundingClientRect().top - window.innerHeight * 0.35;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+      }
+      await observe(2500);
+      if (!active) return;
+
+      // 7. Ingestion Signals Grid — scroll and pause
+      await scrollUntilVisible('[data-demo="signal-cards"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 8. Signal Provenance — scroll, hover, click explain, read modal, scroll modal, close
+      await scrollUntilVisible('[data-demo="explain-signal"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      await hoverAndClick('[data-demo="explain-signal"]');
+      
+      // Wait for modal and inspect
+      await waitStateChange(() => !!document.querySelector('[data-demo="signal-modal-content"]'));
+      await observe(2000);
+      if (!active) return;
+
+      // Scroll modal content slowly
+      const modalContent = document.querySelector('[data-demo="signal-modal-content"]');
+      if (modalContent) {
+        for (const delta of [100, 100, 100]) {
+          modalContent.scrollBy({ top: delta, behavior: "smooth" });
+          await observe(1500);
+          if (!active) return;
+        }
+      }
+      await observe(2000);
+      if (!active) return;
+
+      // Close modal
+      await hoverAndClick('[data-demo="signal-modal-close"]');
+      await observe(executiveConfig.pauseAfterClick);
+      if (!active) return;
+
+      // 9. Ecosystem Graph Visual & Discovery Journey — scroll and pause
+      const journeyTimeline = document.querySelector('[data-demo="signal-cards"]')?.nextElementSibling as HTMLElement | null;
+      if (journeyTimeline) {
+        const targetY = window.scrollY + journeyTimeline.getBoundingClientRect().top - window.innerHeight * 0.35;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+      }
+      await observe(2500);
+      if (!active) return;
+
+      // 10. Governance Decision History — Universal Accordion (expand only) & Post-Expansion Scroll
+      await scrollUntilVisible('[data-demo="decision-history-toggle"]');
+      await observe(executiveConfig.pauseBeforeClick);
+      if (!active) return;
+      
+      const decisionBtn = document.querySelector('[data-demo="decision-history-toggle"]') as HTMLButtonElement | null;
+      if (decisionBtn && !decisionBtn.innerText.includes("Hide")) {
+        await hoverAndClick('[data-demo="decision-history-toggle"]');
+      }
+      await scrollThroughExpandedContent('[data-demo="decision-history-toggle"]');
+      if (!active) return;
+
+      // 11. Navigate to Technical Showcase: Architecture via sidebar click
+      await ensureReachedPageBottom();
+      await hoverAndClick('[data-demo="sidebar-link-architecture"]');
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene2();
+    } else {
+      runScene2();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isLoading, detail, signals]);
+  }, [isDemoMode, currentScene, isLoading, detail, signals, isExecutiveMode]);
 
   if (detailError || (!isLoading && !detail)) {
     return (
@@ -242,7 +352,7 @@ export default function OpportunityDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Entity Profile Metrics Categorized */}
-          <div className="bg-card border border-border rounded-lg p-6">
+          <div data-demo="entity-profile-metrics" className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-xs uppercase font-bold text-secondary tracking-widest border-b border-border pb-3 mb-4">
               Entity Profile Metrics
             </h3>
@@ -614,6 +724,7 @@ export default function OpportunityDetailPage() {
       <div className="bg-card border border-border rounded-lg p-6 space-y-4 mt-6">
         <button
           onClick={() => setShowDecisionHistory(!showDecisionHistory)}
+          data-demo="decision-history-toggle"
           className="w-full flex items-center justify-between focus:outline-none"
         >
           <h3 className="text-xs uppercase font-bold text-secondary tracking-widest">

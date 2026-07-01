@@ -70,6 +70,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               <Link
                 key={item.name}
                 href={item.href}
+                data-demo={`sidebar-link-${item.name.toLowerCase().replace(/\s+/g, "-")}`}
                 className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   active
                     ? "bg-soft text-primary font-semibold border-l-2 border-primary"
@@ -99,6 +100,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           </div>
           <Link
             href="/architecture"
+            data-demo="sidebar-link-architecture"
             className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
               isActive("/architecture")
                 ? "bg-soft text-primary font-semibold border-l-2 border-primary"

@@ -58,6 +58,7 @@ export function DecisionPanel({
           {/* Primary Filled Bronze Button */}
           <div className="space-y-1">
             <button 
+              data-demo="approve-strategy-btn"
               onClick={onApprove}
               disabled={isActionLoading || status === "Approved"}
               className="w-full py-2 text-xs font-bold uppercase tracking-wider rounded bg-primary text-card hover:bg-primary-dim transition-colors disabled:opacity-50"
@@ -74,6 +75,7 @@ export function DecisionPanel({
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="flex-1 space-y-1">
                 <button 
+                  data-demo="request-changes-btn"
                   onClick={onRequestChanges}
                   disabled={isActionLoading}
                   className="w-full py-1.5 text-[9px] font-bold uppercase tracking-wider border border-border rounded bg-card text-foreground hover:bg-soft transition-colors text-center"

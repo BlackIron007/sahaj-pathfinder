@@ -14,11 +14,13 @@ import {
 import { fetchOpportunities } from "@/lib/api/opportunities";
 import { AlertCircle } from "lucide-react";
 import { useDemo } from "@/providers/demo-provider";
-import { observe, scrollUntilVisible } from "@/lib/cameraDirector";
+import { observe, scrollUntilVisible, ensureReachedPageBottom } from "@/lib/cameraDirector";
+import { executiveConfig } from "@/lib/executiveConfig";
+import { hoverAndClick } from "@/lib/cursorController";
 import React, { useEffect } from "react";
 
 export default function ExecutiveDashboard() {
-  const { isDemoMode, currentScene, triggerTransition, triggerFinalFade } = useDemo();
+  const { isDemoMode, currentScene, triggerTransition, triggerFinalFade, isExecutiveMode } = useDemo();
   // Query 1: Metric stats
   const {
     data: stats,
@@ -104,10 +106,57 @@ export default function ExecutiveDashboard() {
       triggerTransition("/acquisition-intelligence/OP001", 2);
     };
 
-    runScene1();
+    const runExecutiveScene1 = async () => {
+      // 1. Arrive at top of page — let viewer orient
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(2500);
+      if (!active) return;
+
+      // 2. Welcome Header — pause for narration
+      await observe(1500);
+      if (!active) return;
+
+      // 3. Scroll to center KPI metric cards row
+      await scrollUntilVisible('[data-demo="dashboard-kpis"]');
+      const kpis = document.querySelector('[data-demo="dashboard-kpis"]') as HTMLElement | null;
+      if (kpis) {
+        kpis.style.transition = "all 0.6s ease-in-out";
+        kpis.style.boxShadow = "0 0 35px rgba(113, 91, 62, 0.25)";
+        kpis.style.borderRadius = "8px";
+      }
+      await observe(2500);
+      if (!active) return;
+      if (kpis) kpis.style.boxShadow = "none";
+
+      // 4. Scroll to center Route Distribution Chart
+      await scrollUntilVisible('[data-demo="route-distribution-chart"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 5. Scroll to center Ecosystem Nodes Chart
+      await scrollUntilVisible('[data-demo="ecosystem-growth-chart"]');
+      await observe(2000);
+      if (!active) return;
+
+      // 6. Scroll to center Opportunities Table & Timeline
+      await scrollUntilVisible('[data-demo="opportunity-table"]');
+      await observe(2500);
+      if (!active) return;
+
+      // 7. Verify page bottom before navigating away
+      await ensureReachedPageBottom();
+      await hoverAndClick('[data-demo="sidebar-link-acquisition-intelligence"]');
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene1();
+    } else {
+      runScene1();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isGlobalLoading]);
+  }, [isDemoMode, currentScene, isGlobalLoading, isExecutiveMode]);
 
   useEffect(() => {
     if (!isDemoMode || currentScene !== 6 || isGlobalLoading) return;
@@ -125,10 +174,27 @@ export default function ExecutiveDashboard() {
       triggerFinalFade();
     };
 
-    runScene6();
+    const runExecutiveScene6 = async () => {
+      // Return to top of Dashboard
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await observe(3000); // exactly 3 seconds narration dwell
+      if (!active) return;
+
+      // Fade to background colour — clean blank screen ending
+      triggerFinalFade();
+    };
+
+    if (isExecutiveMode) {
+      runExecutiveScene6();
+    } else {
+      runScene6();
+    }
+
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDemoMode, currentScene, isGlobalLoading]);
+  }, [isDemoMode, currentScene, isGlobalLoading, isExecutiveMode]);
+
+
 
   if (hasErrors) {
     return (
